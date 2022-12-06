@@ -1,6 +1,7 @@
 {
   "name": "infra.nextjs-grpc.projects.utkusarioglu.com",
   "dockerComposeFile": [
+    "../.docker/docker-compose.common.yml",
     "../.docker/docker-compose.dev.yml",
     "docker-compose.yml"
   ],

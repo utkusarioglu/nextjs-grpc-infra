@@ -2,13 +2,11 @@ version: "3.9"
 
 services:
   nextjs-grpc-infra:
-    container_name: nextjs-grpc-infra
-    image: utkusarioglu/tf-devcontainer:1.2.18
     environment:
-      TZ: Etc/UTC0
+      PERSISTENT_VOLUMES_ROOT: ${HOME}/dev/volumes/nextjs-grpc
     extra_hosts:
-      infra.nextjs-grpc.projects.utkusarioglu.com: host-gateway
-    volumes:
-      - type: bind
-        source: ..
-        target: /utkusarioglu-com/projects/nextjs-grpc/infra
+      local.targets.infra.nextjs-grpc.projects.utkusarioglu.com: host-gateway
+      nextjs-grpc.utkusarioglu.com: host-gateway
+      grafana.nextjs-grpc.utkusarioglu.com: host-gateway
+      jaeger.nextjs-grpc.utkusarioglu.com: host-gateway
+      prometheus.nextjs-grpc.utkusarioglu.com: host-gateway
