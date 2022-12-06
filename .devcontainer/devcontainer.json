@@ -11,7 +11,9 @@
     "vscode": {
       "extensions": [
         "golang.go",
-        "hashicorp.terraform"
+        "hashicorp.terraform",
+        "hashicorp.hcl",
+        "ms-kubernetes-tools.vscode-kubernetes-tools"
       ],
       "settings": {
         "workbench.colorCustomizations": {
