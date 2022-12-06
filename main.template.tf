@@ -1,3 +1,3 @@
 output "greeting" {
-  value = "Hello, tf-repo-template!"
+  value = "Hello, nextjs-grpc-infra!"
 }

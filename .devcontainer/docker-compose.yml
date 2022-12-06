@@ -1,6 +1,6 @@
 version: "3.9"
 services:
-  tf-repo-template:
+  nextjs-grpc-infra:
     command: /bin/sh -c "while sleep 1000; do :; done"
     environment:
       GH_TOKEN: ${GH_TOKEN}
@@ -17,8 +17,8 @@ services:
 
 volumes:
   vscode-server-extensions:
-    name: tf-repo-template-vscode-server-extensions
+    name: nextjs-grpc-infra-vscode-server-extensions
   vscode-server-insiders-extensions:
-    name: tf-repo-template-vscode-server-insiders-extensions
+    name: nextjs-grpc-infra-vscode-server-insiders-extensions
   go:
-    name: tf-repo-template-go
+    name: nextjs-grpc-infra-go
