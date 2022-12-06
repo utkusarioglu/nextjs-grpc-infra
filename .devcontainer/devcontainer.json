@@ -1,12 +1,12 @@
 {
-  "name": "tf-repo-template.templates.utkusarioglu.com",
+  "name": "infra.nextjs-grpc.projects.utkusarioglu.com",
   "dockerComposeFile": [
     "../.docker/docker-compose.dev.yml",
     "docker-compose.yml"
   ],
   "postCreateCommand": "scripts/post-create-command.sh",
-  "service": "tf-repo-template",
-  "workspaceFolder": "/utkusarioglu-com/templates/tf-repo-template",
+  "service": "nextjs-grpc-infra",
+  "workspaceFolder": "/utkusarioglu-com/projects/nextjs-grpc/infra",
   "customizations": {
     "vscode": {
       "extensions": [
@@ -15,8 +15,7 @@
       ],
       "settings": {
         "workbench.colorCustomizations": {
-          "activityBar.background": "#FF0000",
-          "activityBar.foreground": "#000000"
+          "activityBar.background": "#171244"
         }
       }
     }

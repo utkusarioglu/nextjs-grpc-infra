@@ -1,4 +1,4 @@
-module utkusarioglu.com/templates/tf-repo-template
+module utkusarioglu.com/templates/nextjs-grpc-infra
 
 go 1.18
 
