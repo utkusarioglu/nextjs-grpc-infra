@@ -1,0 +1,53 @@
+version: "3.9"
+
+services:
+  nextjs-grpc-infra:
+    container_name: nextjs-grpc-infra
+    image: utkusarioglu/tf-k8s-devcontainer:1.2.18
+    environment:
+      TZ: Etc/UTC0
+      TARGET_VOLUMES_ROOT: /var/lib/rancher/k3s/storage
+      CLUSTER_REGION: eu-central-1
+    volumes:
+      - type: bind
+        source: ".."
+        target: /utkusarioglu-com/projects/nextjs-grpc/infra
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+      # - type: bind
+      #   source: ../../../configs/app/services
+      #   target: /utkusarioglu-com/projects/nextjs-grpc/infra/configs/app/services
+      - type: bind
+        source: ../../api
+        target: /utkusarioglu-com/projects/nextjs-grpc/api
+      - type: bind
+        source: ../../certificates
+        target: /utkusarioglu-com/projects/nextjs-grpc/certificates
+      - type: bind
+        source: ../../grafana
+        target: /utkusarioglu-com/projects/nextjs-grpc/grafana
+      - type: bind
+        source: ../../jaeger
+        target: /utkusarioglu-com/projects/nextjs-grpc/jaeger
+      - type: bind
+        source: ../../loki
+        target: /utkusarioglu-com/projects/nextjs-grpc/loki
+      - type: bind
+        source: ../../ms
+        target: /utkusarioglu-com/projects/nextjs-grpc/ms
+      - type: bind
+        source: ../../otel-collectors
+        target: /utkusarioglu-com/projects/nextjs-grpc/otel-collectors
+      - type: bind
+        source: ../../prometheus
+        target: /utkusarioglu-com/projects/nextjs-grpc/prometheus
+      - type: bind
+        source: ../../rbac
+        target: /utkusarioglu-com/projects/nextjs-grpc/rbac
+      - type: bind
+        source: ../../secrets
+        target: /utkusarioglu-com/projects/nextjs-grpc/secrets
+      - type: bind
+        source: ../../e2e
+        target: /utkusarioglu-com/projects/nextjs-grpc/e2e

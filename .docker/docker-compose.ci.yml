@@ -1,0 +1,20 @@
+version: "3.9"
+
+services:
+  nextjs-grpc-infra:
+    user: 0:0
+    network_mode: host
+    extra_hosts:
+      local.targets.infra.nextjs-grpc.projects.utkusarioglu.com: 127.0.0.1
+      nextjs-grpc.utkusarioglu.com: 127.0.0.1
+      grafana.nextjs-grpc.utkusarioglu.com: 127.0.0.1
+      jaeger.nextjs-grpc.utkusarioglu.com: 127.0.0.1
+      prometheus.nextjs-grpc.utkusarioglu.com: 127.0.0.1
+      vault.nextjs-grpc.utkusarioglu.com: 127.0.0.1
+    environment:
+      GITHUB_WORKSPACE: ${GITHUB_WORKSPACE}
+      SKIP_STAGES: ${SKIP_STAGES}
+      TERRATEST_REPOS: ${TERRATEST_REPOS}
+      PERSISTENT_VOLUMES_ROOT: ${HOME}/volumes
+    working_dir: /utkusarioglu-com/projects/nextjs-grpc/infra
+    entrypoint: scripts/run-tests-entrypoint.sh
