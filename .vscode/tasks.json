@@ -1,0 +1,138 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Run tests",
+      "detail": "Run tests using TerraTest",
+      "type": "shell",
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      },
+      "command": "scripts/run-tests.sh",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "new",
+        "showReuseMessage": false,
+        "clear": false,
+        "close": false
+      },
+      "icon": {
+        "id": "beaker",
+        "color": "terminal.ansiYellow"
+      },
+      "runOptions": {
+        "instanceLimit": 1
+      }
+    },
+    {
+      "label": "terraform destroy",
+      "detail": "Destroy the resources managed by this repo",
+      "type": "shell",
+      "command": "scripts/terraform.sh",
+      "args": [
+        "destroy",
+        "${input:tfApplyDestroyExtraArgs}"
+      ],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "new",
+        "showReuseMessage": false,
+        "clear": false,
+        "close": false
+      },
+      "runOptions": {
+        "instanceLimit": 1
+      },
+      "icon": {
+        "id": "debug-stop",
+        "color": "terminal.ansiGreen"
+      }
+    },
+    {
+      "label": "terraform apply",
+      "detail": "Create & alter the resources",
+      "type": "shell",
+      "command": "scripts/terraform.sh",
+      "args": [
+        "apply",
+        "${input:tfApplyDestroyExtraArgs}"
+      ],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "new",
+        "showReuseMessage": false,
+        "clear": false,
+        "close": false
+      },
+      "icon": {
+        "id": "play",
+        "color": "terminal.ansiGreen"
+      }
+    },
+    {
+      "label": "terraform init",
+      "detail": "Initialize Terraform providers",
+      "type": "shell",
+      "command": "terraform",
+      "args": [
+        "init"
+      ],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "new",
+        "showReuseMessage": false,
+        "clear": false,
+        "close": false
+      },
+      "runOptions": {
+        "instanceLimit": 1
+      },
+      "icon": {
+        "id": "chevron-up",
+        "color": "terminal.ansiGreen"
+      }
+    },
+    {
+      "label": "terraform plan",
+      "detail": "Initialize Terraform providers",
+      "type": "shell",
+      "command": "scripts/terraform.sh",
+      "args": [
+        "plan",
+      ],
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "new",
+        "showReuseMessage": false,
+        "clear": false,
+        "close": false
+      },
+      "icon": {
+        "id": "checklist",
+        "color": "terminal.ansiGreen"
+      },
+      "runOptions": {
+        "instanceLimit": 1,
+      }
+    },
+  ],
+  "inputs": [
+    {
+      "id": "tfApplyDestroyExtraArgs",
+      "description": "Extra args to add for Terraform apply and destroy",
+      "default": "--auto-approve",
+      "type": "promptString"
+    }
+  ]
+}

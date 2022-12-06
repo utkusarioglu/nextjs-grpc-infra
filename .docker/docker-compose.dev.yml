@@ -1,0 +1,14 @@
+version: "3.9"
+
+services:
+  tf-repo-template:
+    container_name: tf-repo-template
+    image: utkusarioglu/tf-devcontainer:1.2.18
+    environment:
+      TZ: Etc/UTC0
+    extra_hosts:
+      tf-repo-template.templates.utkusarioglu.com: host-gateway
+    volumes:
+      - type: bind
+        source: ..
+        target: /utkusarioglu-com/templates/tf-repo-template

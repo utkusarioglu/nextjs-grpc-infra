@@ -1,0 +1,24 @@
+version: "3.9"
+services:
+  tf-repo-template:
+    command: /bin/sh -c "while sleep 1000; do :; done"
+    environment:
+      GH_TOKEN: ${GH_TOKEN}
+    volumes:
+      - type: volume
+        source: vscode-server-extensions
+        target: /home/terraform/.vscode-server/extensions
+      - type: volume
+        source: vscode-server-insiders-extensions
+        target: /home/terraform/.vscode-server-insiders/extensions
+      - type: volume
+        source: go
+        target: /go
+
+volumes:
+  vscode-server-extensions:
+    name: tf-repo-template-vscode-server-extensions
+  vscode-server-insiders-extensions:
+    name: tf-repo-template-vscode-server-insiders-extensions
+  go:
+    name: tf-repo-template-go

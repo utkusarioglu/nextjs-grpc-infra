@@ -1,0 +1,24 @@
+{
+  "name": "tf-repo-template.templates.utkusarioglu.com",
+  "dockerComposeFile": [
+    "../.docker/docker-compose.dev.yml",
+    "docker-compose.yml"
+  ],
+  "postCreateCommand": "scripts/post-create-command.sh",
+  "service": "tf-repo-template",
+  "workspaceFolder": "/utkusarioglu-com/templates/tf-repo-template",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "golang.go",
+        "hashicorp.terraform"
+      ],
+      "settings": {
+        "workbench.colorCustomizations": {
+          "activityBar.background": "#FF0000",
+          "activityBar.foreground": "#000000"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,3 @@
+[submodule ".elam"]
+	path = .elam
+	url = https://github.com/utkusarioglu/elam.git
