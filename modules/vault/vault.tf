@@ -1,9 +1,9 @@
 resource "helm_release" "vault" {
   count           = local.deployment_configs.vault.count
-  name            = "vault"
-  repository      = "https://helm.releases.hashicorp.com"
-  chart           = "vault"
-  version         = "0.22.0"
+  name            = var.vault_resource_name
+  repository      = var.vault_resource_repository
+  chart           = var.vault_resource_chart
+  version         = var.vault_resource_version
   namespace       = kubernetes_namespace.this.metadata[0].name
   cleanup_on_fail = true
   lint            = true

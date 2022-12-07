@@ -1,19 +1,19 @@
-variable "ingress_nginx_chart_name" {
+variable "ingress_nginx_resource_name" {
   type        = string
   description = "Name of the ingress resource"
 }
 
-variable "ingress_nginx_chart_chart" {
+variable "ingress_nginx_resource_chart" {
   type        = string
-  description = "Resource chart name"
+  description = "Resource resource name"
 }
 
-variable "ingress_nginx_chart_repository" {
+variable "ingress_nginx_resource_repository" {
   type        = string
-  description = "Url of the repository of the chart"
+  description = "Url of the repository of the resource"
 }
 
-variable "ingress_nginx_chart_version" {
+variable "ingress_nginx_resource_version" {
   type        = string
   description = "Version for the resource"
 }

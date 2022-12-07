@@ -1,18 +1,20 @@
 
 inputs = {
-  cluster_name            = "nextjs-grpc"
-  sld                     = "nextjs-grpc.utkusarioglu"
-  tld                     = "com"
-  persistent_volumes_root = "/var/lib/rancher/k3s/storage"
+  cluster_name = "nextjs-grpc"
 
-  project_root_path = ".."
+  sld = "nextjs-grpc.utkusarioglu"
+  tld = "com"
+
+  persistent_volumes_root = "/var/lib/rancher/k3s/storage"
+  project_root_path       = ".."
+
+  deployment_mode = "all"
+
   helm_timeout_unit = 400
   helm_atomic       = true
-  deployment_mode   = "all"
 
-  assets_path  = "assets"
-  secrets_path = "secrets"
-
+  assets_path           = "${get_repo_root()}/assets"
+  secrets_path          = "${get_repo_root()}/secrets"
   intermediate_crt_path = "${get_repo_root()}/.certs/intermediate/intermediate.crt"
   intermediate_key_path = "${get_repo_root()}/.certs/intermediate/intermediate.key"
   ca_crt_path           = "${get_repo_root()}/.certs/root/root.crt"

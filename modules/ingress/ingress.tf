@@ -1,9 +1,9 @@
 resource "helm_release" "ingress" {
   count      = local.deployment_configs.ingress.count
-  name       = var.ingress_nginx_chart_name
-  chart      = var.ingress_nginx_chart_chart
-  repository = var.ingress_nginx_chart_repository
-  version    = var.ingress_nginx_chart_version
+  name       = var.ingress_nginx_resource_name
+  chart      = var.ingress_nginx_resource_chart
+  repository = var.ingress_nginx_resource_repository
+  version    = var.ingress_nginx_resource_version
   namespace  = kubernetes_namespace.ingress[0].metadata[0].name
   timeout    = var.helm_timeout_unit * 2
   atomic     = var.helm_atomic
