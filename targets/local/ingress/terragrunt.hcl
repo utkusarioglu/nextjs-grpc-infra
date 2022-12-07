@@ -5,6 +5,17 @@ include {
 terraform {
   source = "${get_repo_root()}/modules/ingress"
 
+  extra_arguments "ingres_nginx_vars" {
+    commands = [
+      "apply",
+      "plan",
+      "destroy",
+    ]
+    required_var_files = [
+      "${get_repo_root()}/vars/ingress-nginx.local.tfvars"
+    ]
+  }
+
   before_hook "start_k3d_cluster" {
     commands = [
       "apply"
