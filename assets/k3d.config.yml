@@ -1,0 +1,106 @@
+apiVersion: k3d.io/v1alpha4
+kind: Simple
+metadata:
+  name: nextjs-grpc-infra-target-local
+servers: 1
+agents: 5
+kubeAPI:
+  host: local.targets.infra.nextjs-grpc.projects.utkusarioglu.com
+  hostIP: "127.0.0.1"
+  hostPort: "6443"
+ports:
+  - port: 80:80
+    nodeFilters:
+      - loadbalancer
+  - port: 443:443
+    nodeFilters:
+      - loadbalancer
+    # This is used by vault UI
+  - port: 8200:8200
+    nodeFilters:
+      - agent:0
+      - agent:2
+      - agent:4
+volumes:
+  - volume: ${PERSISTENT_VOLUMES_ROOT}/ethereum-pv:/${TARGET_VOLUMES_ROOT}/ethereum-pv
+    nodeFilters:
+      - agent:3
+      - agent:4
+  - volume: ${PERSISTENT_VOLUMES_ROOT}/server-0:${TARGET_VOLUMES_ROOT}
+    nodeFilters:
+      - server:0
+  - volume: ${PERSISTENT_VOLUMES_ROOT}/worker-0:${TARGET_VOLUMES_ROOT}
+    nodeFilters:
+      - agent:0
+  - volume: ${PERSISTENT_VOLUMES_ROOT}/worker-1:${TARGET_VOLUMES_ROOT}
+    nodeFilters:
+      - agent:1
+  - volume: ${PERSISTENT_VOLUMES_ROOT}/worker-2:${TARGET_VOLUMES_ROOT}
+    nodeFilters:
+      - agent:2
+  - volume: ${PERSISTENT_VOLUMES_ROOT}/worker-3:${TARGET_VOLUMES_ROOT}
+    nodeFilters:
+      - agent:3
+  - volume: ${PERSISTENT_VOLUMES_ROOT}/worker-4:${TARGET_VOLUMES_ROOT}
+    nodeFilters:
+      - agent:4
+options:
+  k3d:
+    wait: true
+    timeout: "60s"
+    disableLoadbalancer: false
+    disableImageVolume: false
+    disableRollback: false
+  k3s:
+    extraArgs:
+      - arg: --tls-san=local.targets.infra.nextjs-grpc.projects.utkusarioglu.com
+        nodeFilters:
+          - server:*
+      - arg: --disable=traefik
+        nodeFilters:
+          - server:0
+      - arg: --node-taint=node-role.kubernetes.io/control-plane=true:NoExecute
+        nodeFilters:
+          - server:*
+      - arg: --node-name=server-0
+        nodeFilters:
+          - server:0
+      - arg: --node-name=worker-0
+        nodeFilters:
+          - agent:0
+      - arg: --node-name=worker-1
+        nodeFilters:
+          - agent:1
+      - arg: --node-name=worker-2
+        nodeFilters:
+          - agent:2
+      - arg: --node-name=worker-3
+        nodeFilters:
+          - agent:3
+      - arg: --node-name=worker-4
+        nodeFilters:
+          - agent:4
+    nodeLabels:
+      - label: "topology.kubernetes.io/region=${CLUSTER_REGION}"
+        nodeFilters:
+          - server:*
+          - agent:*
+      - label: vault_in_k8s=true
+        nodeFilters:
+          - agent:0
+          - agent:2
+          - agent:4
+      - label: "topology.kubernetes.io/zone=${CLUSTER_REGION}a"
+        nodeFilters:
+          - agent:0
+          - agent:1
+      - label: "topology.kubernetes.io/zone=${CLUSTER_REGION}b"
+        nodeFilters:
+          - agent:2
+      - label: "topology.kubernetes.io/zone=${CLUSTER_REGION}c"
+        nodeFilters:
+          - agent:3
+          - agent:4
+  kubeconfig:
+    updateDefaultKubeconfig: true
+    switchCurrentContext: true
