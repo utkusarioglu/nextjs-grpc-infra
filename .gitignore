@@ -56,3 +56,4 @@ terraform.rc
 .terragrunt-cache
 *.generated.tf
 /vars
+/secrets

@@ -18,7 +18,8 @@ terraform {
 
   before_hook "start_k3d_cluster" {
     commands = [
-      "apply"
+      "apply",
+      "plan"
     ]
     working_dir = "/utkusarioglu-com/projects/nextjs-grpc/infra/assets"
     execute     = ["k3d", "cluster", "start", "nextjs-grpc-infra-target-local"]
@@ -26,6 +27,7 @@ terraform {
 
   after_hook "stop_k3d_cluster" {
     commands = [
+      "plan",
       "destroy"
     ]
     working_dir = "/utkusarioglu-com/projects/nextjs-grpc/infra/assets"

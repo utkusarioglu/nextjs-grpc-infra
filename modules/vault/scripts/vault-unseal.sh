@@ -3,7 +3,7 @@
 artifacts_folder=artifacts
 artifact_file="$artifacts_folder/init.json"
 root_token_file="$artifacts_folder/root.token.json"
-vault_token_file="$artifacts_folder/.vault-token"
+vault_token_file="~/.vault-token"
 
 unseal() {
   sealed_pods=$@

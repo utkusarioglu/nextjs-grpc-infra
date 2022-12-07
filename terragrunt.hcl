@@ -26,8 +26,8 @@ locals {
   cluster_name = "nextjs-grpc-infra-target-local"
 }
 
-generate "providers" {
-  path      = "providers.generated.tf"
+generate "helm_provider" {
+  path      = "provider.helm.generated.tf"
   if_exists = "overwrite"
   contents  = <<-EOF
     provider "helm" {
@@ -39,7 +39,13 @@ generate "providers" {
         manifest = true
       }
     }
+  EOF
+}
 
+generate "kubernetes_provider" {
+  path      = "provider.kubernetes.generated.tf"
+  if_exists = "overwrite"
+  contents  = <<-EOF
     provider "kubernetes" {
       config_path    = "~/.kube/config"
       config_context = "k3d-${local.cluster_name}"
