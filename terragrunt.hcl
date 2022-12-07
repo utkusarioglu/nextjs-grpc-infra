@@ -13,12 +13,11 @@ inputs = {
   assets_path  = "assets"
   secrets_path = "secrets"
 
-  intermediate_crt = file(".certs/intermediate/intermediate.crt")
-  intermediate_key = file(".certs/intermediate/intermediate.key")
-  ca_crt           = file(".certs/root/root.crt")
+  intermediate_crt_path = "${get_repo_root()}/.certs/intermediate/intermediate.crt"
+  intermediate_key_path = "${get_repo_root()}/.certs/intermediate/intermediate.key"
+  ca_crt_path           = "${get_repo_root()}/.certs/root/root.crt"
 
   vault_subdomain = "vault"
-
 }
 
 locals {
