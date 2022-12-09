@@ -10,17 +10,6 @@ include "root" {
 
 terraform {
   source = "${get_repo_root()}/modules/vault-config"
-
-  // extra_arguments "vault_vars" {
-  //   commands = [
-  //     "apply",
-  //     "plan",
-  //     "destroy",
-  //   ]
-  //   required_var_files = [
-  //     "${get_repo_root()}/vars/vault.common.tfvars"
-  //   ]
-  // }
 }
 
 generate "providers" {

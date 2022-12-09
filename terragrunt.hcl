@@ -6,7 +6,7 @@ inputs = {
   tld = "com"
 
   persistent_volumes_root = "/var/lib/rancher/k3s/storage"
-  project_root_path       = ".."
+  project_root_path       = "/utkusarioglu-com/projects/nextjs-grpc"
 
   deployment_mode = "all"
 

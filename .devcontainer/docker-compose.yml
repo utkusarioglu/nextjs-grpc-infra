@@ -17,6 +17,10 @@ services:
       - type: bind
         source: ~/.kube
         target: /home/terraform/.kube
+      - type: bind
+        source: ../.certs/root/root.crt
+        target: /etc/ssl/certs/root.crt
+        read_only: true
 
 volumes:
   vscode-server-extensions:
