@@ -20,6 +20,8 @@ inputs = {
   ca_crt_path           = "${get_repo_root()}/.certs/root/root.crt"
 
   vault_subdomain = "vault"
+
+  environment = "local"
 }
 
 locals {
