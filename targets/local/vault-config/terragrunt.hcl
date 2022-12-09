@@ -15,7 +15,5 @@ terraform {
 generate "providers" {
   path      = "provider.vault.generated.tf"
   if_exists = "overwrite"
-  contents  = <<-EOF
-    provider "vault" { }
-  EOF
+  contents  = templatefile("${get_repo_root()}/assets/templates/provider.vault.tftpl.hcl", {})
 }

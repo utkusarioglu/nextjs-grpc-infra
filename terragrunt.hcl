@@ -31,26 +31,15 @@ locals {
 generate "helm_provider" {
   path      = "provider.helm.generated.tf"
   if_exists = "overwrite"
-  contents  = <<-EOF
-    provider "helm" {
-      kubernetes {
-        config_path    = "~/.kube/config"
-        config_context = "k3d-${local.cluster_name}"
-      }
-      experiments {
-        manifest = true
-      }
-    }
-  EOF
+  contents = templatefile("${get_repo_root()}/assets/templates/provider.helm.tftpl.hcl", {
+    cluster_name = local.cluster_name
+  })
 }
 
 generate "kubernetes_provider" {
   path      = "provider.kubernetes.generated.tf"
   if_exists = "overwrite"
-  contents  = <<-EOF
-    provider "kubernetes" {
-      config_path    = "~/.kube/config"
-      config_context = "k3d-${local.cluster_name}"
-    }
-  EOF
+  contents = templatefile("${get_repo_root()}/assets/templates/provider.kubernetes.tftpl.hcl", {
+    cluster_name = local.cluster_name
+  })
 }
