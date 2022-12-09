@@ -22,7 +22,7 @@ resource "helm_release" "certificates" {
     value = base64encode(local.certs.vault.bundle)
   }
 
-  depends_on = [
-    helm_release.cert_manager[0]
-  ]
+  # depends_on = [
+  #   helm_release.cert_manager[0]
+  # ]
 }

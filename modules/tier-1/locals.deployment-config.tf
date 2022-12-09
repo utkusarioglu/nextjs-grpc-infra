@@ -8,7 +8,7 @@ locals {
         count = 1
       }
       namespaces = {
-        for_each = ["api", "ms", "observability", "cert-manager"]
+        for_each = ["api", "ms", "observability"]
       }
       networking = {
         count = 0

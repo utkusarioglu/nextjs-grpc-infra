@@ -20,7 +20,7 @@ resource "helm_release" "otel_operator" {
     })
   ]
 
-  depends_on = [
-    helm_release.cert_manager[0],
-  ]
+  # depends_on = [
+  #   helm_release.cert_manager[0],
+  # ]
 }
