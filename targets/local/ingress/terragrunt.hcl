@@ -34,3 +34,9 @@ terraform {
     execute     = ["k3d", "cluster", "stop", "nextjs-grpc-infra-target-local"]
   }
 }
+
+generate "vars_helm" {
+  path      = "vars.helm.generated.tf"
+  if_exists = "overwrite"
+  contents  = templatefile("${get_repo_root()}/assets/templates/vars.helm.tftpl.hcl", {})
+}

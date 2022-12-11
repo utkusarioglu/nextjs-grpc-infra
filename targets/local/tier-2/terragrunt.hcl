@@ -15,3 +15,9 @@ terraform {
 inputs = {
   ingress_sg = "<DOES_NOT_APPLY_IN_LOCAL>"
 }
+
+generate "vars_helm" {
+  path      = "vars.helm.generated.tf"
+  if_exists = "overwrite"
+  contents  = templatefile("${get_repo_root()}/assets/templates/vars.helm.tftpl.hcl", {})
+}

@@ -31,9 +31,9 @@ resource "helm_release" "jaeger_operator" {
   chart      = "jaeger-operator"
   repository = "https://jaegertracing.github.io/helm-charts"
   version    = "2.38.0"
-  namespace  = "observability"
-  timeout    = var.helm_timeout_unit
-  atomic     = var.helm_atomic
+  # namespace  = "observability"
+  timeout = var.helm_timeout_unit
+  atomic  = var.helm_atomic
 }
 
 # resource "helm_release" "jaeger" {

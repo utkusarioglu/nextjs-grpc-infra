@@ -26,3 +26,9 @@ terraform {
 include "root" {
   path = find_in_parent_folders()
 }
+
+generate "vars_helm" {
+  path      = "vars.helm.generated.tf"
+  if_exists = "overwrite"
+  contents  = templatefile("${get_repo_root()}/assets/templates/vars.helm.tftpl.hcl", {})
+}
