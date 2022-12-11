@@ -1,6 +1,6 @@
 dependencies {
   paths = [
-    "../tier-1"
+    "../tier-2"
   ]
 }
 
@@ -9,7 +9,7 @@ include "root" {
 }
 
 terraform {
-  source = "${get_repo_root()}/modules//tier-2"
+  source = "${get_repo_root()}/modules//tier-3"
 }
 
 inputs = {

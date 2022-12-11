@@ -3,7 +3,7 @@ include {
 }
 
 terraform {
-  source = "${get_repo_root()}/modules/ingress"
+  source = "${get_repo_root()}/modules//ingress"
 
   extra_arguments "ingres_nginx_vars" {
     commands = [

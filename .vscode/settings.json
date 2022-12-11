@@ -28,5 +28,11 @@
     },
   ],
   // this is because terraform plan and apply output can be humonguous
-  "terminal.integrated.scrollback": 20000
+  "terminal.integrated.scrollback": 20000,
+  "search.exclude": {
+    "**/.git": true,
+    "**/node_modules": true,
+    "**/.terraform": true,
+    "**/.terragrunt-cache": true,
+},
 }

@@ -9,7 +9,7 @@ include {
 }
 
 terraform {
-  source = "${get_repo_root()}/modules/vault"
+  source = "${get_repo_root()}/modules//vault"
 
   extra_arguments "vault_vars" {
     commands = [

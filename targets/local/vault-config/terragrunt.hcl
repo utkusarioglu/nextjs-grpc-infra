@@ -9,7 +9,7 @@ include "root" {
 }
 
 terraform {
-  source = "${get_repo_root()}/modules/vault-config"
+  source = "${get_repo_root()}/modules//vault-config"
 }
 
 generate "providers" {

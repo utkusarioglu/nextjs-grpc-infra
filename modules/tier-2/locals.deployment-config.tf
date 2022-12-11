@@ -1,21 +1,4 @@
 locals {
-  ingress_class_mapping = {
-    "aws"   = "alb"
-    "local" = "public"
-  }
-
-  ingress_paths = {
-    api = {
-      aws   = "/*"
-      local = "/"
-    }
-  }
-
-  ingress_service_types = {
-    aws   = "NodePort"
-    local = "ClusterIP"
-  }
-
   deployment_config_presets = {
     all = {
       api = {
@@ -24,7 +7,7 @@ locals {
       grafana = {
         count = 1
       }
-      jaeger = {
+      jaeger_operator = {
         count = 1
       }
       loki = {
@@ -57,7 +40,7 @@ locals {
       grafana = {
         count = 0
       }
-      jaeger = {
+      jaeger_operator = {
         count = 0
       }
       loki = {
@@ -90,7 +73,7 @@ locals {
       grafana = {
         count = 1
       }
-      jaeger = {
+      jaeger_operator = {
         count = 1
       }
       loki = {

@@ -14,7 +14,7 @@ include "root" {
 }
 
 terraform {
-  source = "${get_repo_root()}/modules/tier-1"
+  source = "${get_repo_root()}/modules//tier-1"
 }
 
 inputs = {

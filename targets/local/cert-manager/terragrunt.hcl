@@ -13,7 +13,7 @@ include "root" {
 }
 
 terraform {
-  source = "${get_repo_root()}/modules/cert-manager"
+  source = "${get_repo_root()}/modules//cert-manager"
 }
 
 // inputs = {
