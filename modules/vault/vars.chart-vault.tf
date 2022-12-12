@@ -1,8 +1,3 @@
-variable "vault_subdomain" {
-  type        = string # url subdomain
-  description = "The subdomain from which the vault will be publicly exposed"
-}
-
 variable "vault_resource_name" {
   type        = string
   description = "Name chosen for the vault instance in the cluster"

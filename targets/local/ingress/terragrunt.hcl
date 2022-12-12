@@ -2,6 +2,10 @@ include {
   path = find_in_parent_folders()
 }
 
+include "vars" {
+  path = "./vars.hcl"
+}
+
 terraform {
   source = "${get_repo_root()}/modules//ingress"
 
@@ -33,10 +37,4 @@ terraform {
     working_dir = "/utkusarioglu-com/projects/nextjs-grpc/infra/assets"
     execute     = ["k3d", "cluster", "stop", "nextjs-grpc-infra-target-local"]
   }
-}
-
-generate "vars_helm" {
-  path      = "vars.helm.generated.tf"
-  if_exists = "overwrite"
-  contents  = templatefile("${get_repo_root()}/assets/templates/vars.helm.tftpl.hcl", {})
 }
