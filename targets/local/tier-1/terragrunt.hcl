@@ -1,5 +1,6 @@
 dependencies {
   paths = [
+    "../cert-manager",
     "../vault-config"
   ]
 }
