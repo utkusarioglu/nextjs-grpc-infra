@@ -1,3 +1,7 @@
+terraform {
+  source = "${get_repo_root()}/modules//vault-config"
+}
+
 generate "providers" {
   path      = "provider.vault.generated.tf"
   if_exists = "overwrite"

@@ -8,10 +8,6 @@ include "root" {
   path = find_in_parent_folders()
 }
 
-include "vars" {
-  path = "./vars.hcl"
-}
-
-terraform {
-  source = "${get_repo_root()}/modules//vault-config"
+include "config" {
+  path = "${get_repo_root()}/configs//${basename(get_terragrunt_dir())}/vars.hcl"
 }

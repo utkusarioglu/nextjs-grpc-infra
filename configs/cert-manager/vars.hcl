@@ -9,3 +9,7 @@ generate "vars_deployment_config" {
   if_exists = "overwrite"
   contents  = templatefile("${get_repo_root()}/assets/templates/vars.deployment-config.tftpl.hcl", {})
 }
+
+terraform {
+  source = "${get_repo_root()}/modules//cert-manager"
+}

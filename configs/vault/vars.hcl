@@ -1,3 +1,18 @@
+terraform {
+  source = "${get_repo_root()}/modules//vault"
+
+  extra_arguments "vault_vars" {
+    commands = [
+      "apply",
+      "plan",
+      "destroy",
+    ]
+    required_var_files = [
+      "${get_repo_root()}/vars/vault.common.tfvars"
+    ]
+  }
+}
+
 generate "vars_helm" {
   path      = "vars.helm.generated.tf"
   if_exists = "overwrite"
@@ -22,10 +37,10 @@ generate "vars_tls_intermediate_cert" {
   contents  = templatefile("${get_repo_root()}/assets/templates/vars.tls-intermediate-cert.tftpl.hcl", {})
 }
 
-generate "vars_project" {
-  path      = "vars.project.generated.tf"
+generate "vars_tls_intermediate_key" {
+  path      = "vars.tls-intermediate-key.generated.tf"
   if_exists = "overwrite"
-  contents  = templatefile("${get_repo_root()}/assets/templates/vars.project.tftpl.hcl", {})
+  contents  = templatefile("${get_repo_root()}/assets/templates/vars.tls-intermediate-key.tftpl.hcl", {})
 }
 
 generate "vars_url" {
@@ -34,8 +49,8 @@ generate "vars_url" {
   contents  = templatefile("${get_repo_root()}/assets/templates/vars.url.tftpl.hcl", {})
 }
 
-generate "vars_volumes" {
-  path      = "vars.volumes.generated.tf"
+generate "vars_paths" {
+  path      = "vars.paths.generated.tf"
   if_exists = "overwrite"
-  contents  = templatefile("${get_repo_root()}/assets/templates/vars.volumes.tftpl.hcl", {})
+  contents  = templatefile("${get_repo_root()}/assets/templates/vars.paths.tftpl.hcl", {})
 }

@@ -1,3 +1,7 @@
+terraform {
+  source = "${get_repo_root()}/modules//tier-2"
+}
+
 generate "vars_helm" {
   path      = "vars.helm.generated.tf"
   if_exists = "overwrite"
