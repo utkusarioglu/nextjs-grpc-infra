@@ -7,7 +7,7 @@ include "vars" {
 }
 
 terraform {
-  source = "${get_repo_root()}/modules//ingress"
+  source = "${get_repo_root()}/modules//${basename(get_terragrunt_dir())}"
 
   extra_arguments "ingres_nginx_vars" {
     commands = [
@@ -16,7 +16,7 @@ terraform {
       "destroy",
     ]
     required_var_files = [
-      "${get_repo_root()}/vars/ingress-nginx.local.tfvars"
+      "${get_repo_root()}/vars/${basename(get_terragrunt_dir())}.local.tfvars"
     ]
   }
 

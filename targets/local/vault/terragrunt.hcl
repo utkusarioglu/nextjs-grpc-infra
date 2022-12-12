@@ -1,6 +1,6 @@
 dependencies {
   paths = [
-    "../ingress"
+    "../ingress-nginx"
   ]
 }
 
@@ -9,5 +9,5 @@ include "root" {
 }
 
 include "config" {
-  path = "${get_repo_root()}/configs//${basename(get_terragrunt_dir())}/vars.hcl"
+  path = "${get_repo_root()}/configs//${basename(get_terragrunt_dir())}/config.hcl"
 }

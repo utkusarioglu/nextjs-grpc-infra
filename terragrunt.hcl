@@ -10,7 +10,7 @@ inputs = {
 
   deployment_mode = "all"
 
-  helm_timeout_unit = 400
+  helm_timeout_unit = 600
   helm_atomic       = true
 
   assets_path           = "${get_repo_root()}/assets"

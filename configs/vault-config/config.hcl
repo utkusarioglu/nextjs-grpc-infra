@@ -1,5 +1,5 @@
 terraform {
-  source = "${get_repo_root()}/modules//vault-config"
+  source = "${get_repo_root()}/modules//${basename(get_terragrunt_dir())}"
 }
 
 generate "providers" {

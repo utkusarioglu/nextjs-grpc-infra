@@ -1,5 +1,5 @@
 terraform {
-  source = "${get_repo_root()}/modules//tier-3"
+  source = "${get_repo_root()}/modules//${basename(get_terragrunt_dir())}"
 }
 
 generate "vars_helm" {
@@ -14,16 +14,16 @@ generate "vars_deployment_config" {
   contents  = templatefile("${get_repo_root()}/assets/templates/vars.deployment-config.tftpl.hcl", {})
 }
 
-generate "vars_ingress_sg" {
-  path      = "vars.ingress-sg.generated.tf"
+generate "vars_tls_ca_cert" {
+  path      = "vars.tls-ca-cert.generated.tf"
   if_exists = "overwrite"
-  contents  = templatefile("${get_repo_root()}/assets/templates/vars.ingress-sg.tftpl.hcl", {})
+  contents  = templatefile("${get_repo_root()}/assets/templates/vars.tls-ca-cert.tftpl.hcl", {})
 }
 
-generate "vars_environment" {
-  path      = "vars.environment.generated.tf"
+generate "vars_tls_intermediate_cert" {
+  path      = "vars.tls-intermediate-cert.generated.tf"
   if_exists = "overwrite"
-  contents  = templatefile("${get_repo_root()}/assets/templates/vars.environment.tftpl.hcl", {})
+  contents  = templatefile("${get_repo_root()}/assets/templates/vars.tls-intermediate-cert.tftpl.hcl", {})
 }
 
 generate "vars_project" {
@@ -36,4 +36,10 @@ generate "vars_url" {
   path      = "vars.url.generated.tf"
   if_exists = "overwrite"
   contents  = templatefile("${get_repo_root()}/assets/templates/vars.url.tftpl.hcl", {})
+}
+
+generate "vars_volumes" {
+  path      = "vars.volumes.generated.tf"
+  if_exists = "overwrite"
+  contents  = templatefile("${get_repo_root()}/assets/templates/vars.volumes.tftpl.hcl", {})
 }
