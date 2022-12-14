@@ -28,7 +28,7 @@ locals {
   cluster_name = "nextjs-grpc-infra-target-local"
 }
 
-generate "helm_provider" {
+generate "provider_helm" {
   path      = "provider.helm.generated.tf"
   if_exists = "overwrite"
   contents = templatefile("${get_repo_root()}/assets/templates/provider.helm.tftpl.hcl", {
@@ -36,7 +36,7 @@ generate "helm_provider" {
   })
 }
 
-generate "kubernetes_provider" {
+generate "provider_kubernetes" {
   path      = "provider.kubernetes.generated.tf"
   if_exists = "overwrite"
   contents = templatefile("${get_repo_root()}/assets/templates/provider.kubernetes.tftpl.hcl", {
