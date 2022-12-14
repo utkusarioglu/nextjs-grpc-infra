@@ -21,6 +21,10 @@ services:
         source: ../.certs/root/root.crt
         target: /etc/ssl/certs/root.crt
         read_only: true
+      - type: bind
+        source: ~/.aws/credentials
+        target: /home/terraform/.aws/credentials
+        read_only: true
 
 volumes:
   vscode-server-extensions:

@@ -28,18 +28,23 @@ locals {
   cluster_name = "nextjs-grpc-infra-target-local"
 }
 
-generate "provider_helm" {
-  path      = "provider.helm.generated.tf"
+generate "provider_aws_aws" {
+  path      = "provider.aws.aws.generated.tf"
   if_exists = "overwrite"
-  contents = templatefile("${get_repo_root()}/assets/templates/provider.helm.tftpl.hcl", {
-    cluster_name = local.cluster_name
-  })
-}
+  contents = templatefile("${get_repo_root()}/assets/templates/provider/aws.aws.tftpl.hcl", {
+    // cluster_region = var.cluster_region,
+    // profile        = var.aws_profile,
+    // tags           = var.aws_provider_default_tags
+    cluster_region = "eu-central-1"
+    aws_profile    = "utkusarioglu"
+    // aws_provider_default_tags = {
+    //   Environment     = "dev"
+    //   ProjectName     = "nextjs-grpc"
+    //   MetaRepo        = "nextjs-grpc"
+    //   Repo            = "infra/aws"
+    //   Region          = "Cluster region"
+    //   DefaultProvider = "true"
+    // }
 
-generate "provider_kubernetes" {
-  path      = "provider.kubernetes.generated.tf"
-  if_exists = "overwrite"
-  contents = templatefile("${get_repo_root()}/assets/templates/provider.kubernetes.tftpl.hcl", {
-    cluster_name = local.cluster_name
   })
 }
