@@ -52,3 +52,8 @@ terraform.rc
 /.ignore
 /.secrets
 /artifacts
+
+.terragrunt-cache
+*.generated.tf
+/vars
+/secrets

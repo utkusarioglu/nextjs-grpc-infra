@@ -4,9 +4,11 @@ services:
   nextjs-grpc-infra:
     environment:
       PERSISTENT_VOLUMES_ROOT: ${HOME}/dev/volumes/nextjs-grpc
+      VAULT_ADDR: https://vault.nextjs-grpc.utkusarioglu.com:8200
     extra_hosts:
       local.targets.infra.nextjs-grpc.projects.utkusarioglu.com: host-gateway
       nextjs-grpc.utkusarioglu.com: host-gateway
       grafana.nextjs-grpc.utkusarioglu.com: host-gateway
       jaeger.nextjs-grpc.utkusarioglu.com: host-gateway
       prometheus.nextjs-grpc.utkusarioglu.com: host-gateway
+      vault.nextjs-grpc.utkusarioglu.com: host-gateway
