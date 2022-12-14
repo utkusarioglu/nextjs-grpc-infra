@@ -57,3 +57,4 @@ terraform.rc
 *.generated.tf
 /vars
 /secrets
+modules/vault/artifacts
