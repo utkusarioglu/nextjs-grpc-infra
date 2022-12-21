@@ -29,7 +29,7 @@ locals {
 }
 
 generate "provider_helm_local" {
-  path      = "provider/helm.local.generated.tf"
+  path      = "provider.helm.local.generated.tf"
   if_exists = "overwrite"
   contents = templatefile("${get_repo_root()}/assets/templates/provider/helm.local.tftpl.hcl", {
     cluster_name = local.cluster_name
@@ -37,9 +37,9 @@ generate "provider_helm_local" {
 }
 
 generate "provider_kubernetes_local" {
-  path      = "provider/kubernetes.local.generated.tf"
+  path      = "provider.kubernetes.local.generated.tf"
   if_exists = "overwrite"
-  contents = templatefile("${get_repo_root()}/assets/templates/provider/kubernetes.loal.tftpl.hcl", {
+  contents = templatefile("${get_repo_root()}/assets/templates/provider/kubernetes.local.tftpl.hcl", {
     cluster_name = local.cluster_name
   })
 }
