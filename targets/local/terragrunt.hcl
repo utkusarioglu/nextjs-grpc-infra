@@ -1,6 +1,6 @@
 
 inputs = {
-  cluster_name = "nextjs-grpc"
+  // cluster_name = "nextjs-grpc" # common.tfvars
 
   sld = "nextjs-grpc.utkusarioglu"
   tld = "com"

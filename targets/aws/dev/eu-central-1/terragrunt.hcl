@@ -48,3 +48,26 @@ generate "provider_aws_aws" {
 
   })
 }
+
+generate "provider_aws_aws_dns_region" {
+  path      = "provider.aws.aws-dns-region.generated.tf"
+  if_exists = "overwrite"
+  contents  = <<-EOF
+    provider "aws" {
+      region  = "us-east-1"
+      alias   = "dns_region"
+      profile = "utkusarioglu"
+
+      default_tags {
+        tags = {
+          Environment     = "dev"
+          ProjectName     = "nextjs-grpc"
+          MetaRepo        = "nextjs-grpc"
+          Repo            = "infra/aws"
+          Region          = "Cluster region"
+          DefaultProvider = "true"
+        }
+      }
+    }
+  EOF
+}

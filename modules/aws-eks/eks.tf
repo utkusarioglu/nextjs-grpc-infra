@@ -1,17 +1,3 @@
-# create some variables
-variable "eks_managed_node_groups" {
-  type        = map(any)
-  description = "Map of EKS managed node group definitions to create"
-}
-variable "autoscaling_average_cpu" {
-  type        = number
-  description = "Average CPU threshold to autoscale EKS EC2 instances."
-}
-
-variable "cluster_version" {
-  type = string
-}
-
 # create EKS cluster
 module "cluster" {
   source  = "terraform-aws-modules/eks/aws"
@@ -21,9 +7,11 @@ module "cluster" {
   cluster_version                 = var.cluster_version
   cluster_endpoint_private_access = true
   cluster_endpoint_public_access  = true
-  subnet_ids                      = module.vpc.private_subnets
-  vpc_id                          = module.vpc.vpc_id
-  eks_managed_node_groups         = var.eks_managed_node_groups
+  subnet_ids                      = var.aws_vpc_private_subnets
+  vpc_id                          = var.aws_vpc_vpc_id
+  # subnet_ids                      = module.vpc.private_subnets
+  # vpc_id                          = module.vpc.vpc_id
+  eks_managed_node_groups = var.eks_managed_node_groups
 
   node_security_group_additional_rules = {
     # https://github.com/kubernetes-sigs/aws-load-balancer-controller/issues/2039#issuecomment-1099032289
@@ -40,7 +28,8 @@ module "cluster" {
       protocol                 = "-1"
       from_port                = 0
       to_port                  = 0
-      source_security_group_id = aws_security_group.alb.id
+      source_security_group_id = var.aws_alb_security_group_id
+      # source_security_group_id = aws_security_group.alb.id
     }
     # allow connections from EKS to the internet
     egress_all = {
@@ -60,18 +49,6 @@ module "cluster" {
       self      = true
     }
   }
-}
-output "cluster_id" {
-  value = module.cluster.cluster_id
-}
-
-output "cluster_endpoint" {
-  value = module.cluster.cluster_endpoint
-}
-
-output "cluster_ca_certificate" {
-  value = base64decode(module.cluster.cluster_certificate_authority_data)
-  # value = base64decode(module.cluster.)
 }
 
 # create IAM role for AWS Load Balancer Controller, and attach to EKS OIDC

@@ -11,8 +11,11 @@ resource "kubernetes_certificate_signing_request_v1" "vault_raft_csr" {
       "key encipherment",
       "server auth"
     ]
-    request     = tls_cert_request.vault_raft_csr[0].cert_request_pem
-    signer_name = "kubernetes.io/kubelet-serving"
+    request = tls_cert_request.vault_raft_csr[0].cert_request_pem
+
+    # TODO these need to be environment dependent, like ingress
+    # signer_name = "kubernetes.io/kubelet-serving" # works locally
+    signer_name = "beta.eks.amazonaws.com/app-serving" # works on aws 
   }
 
   auto_approve = true

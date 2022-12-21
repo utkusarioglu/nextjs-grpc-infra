@@ -1,11 +1,11 @@
 dependencies {
   paths = [
-    "../aws-base"
+    "../aws-eks"
   ]
 }
 
 dependency "aws_base" {
-  config_path = "../aws-base"
+  config_path = "../aws-eks"
 }
 
 include "root" {
@@ -13,9 +13,9 @@ include "root" {
 }
 
 include "config" {
-  path = "${get_repo_root()}/configs//${basename(get_terragrunt_dir())}/config.hcl"
+  path = "${get_repo_root()}/modules//${basename(get_terragrunt_dir())}/terragrunt.hcl"
 }
 
-inputs {
+inputs = {
   cluster_name = dependency.aws_base.outputs.cluster_id
 }
