@@ -5,7 +5,7 @@ dependencies {
 }
 
 dependency "aws_base" {
-  config_path = "../aws-base"
+  config_path = "../aws-eks"
 }
 
 include "root" {

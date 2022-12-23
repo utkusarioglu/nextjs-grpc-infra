@@ -29,3 +29,8 @@ variable "cluster_name" {
   type        = string
   description = "EKS cluster name."
 }
+
+variable "aws_vault_kms_unseal_policy_arn" {
+  type        = string # arn
+  description = "ARN for the policy that vault nodes need for unsealing through KMS"
+}

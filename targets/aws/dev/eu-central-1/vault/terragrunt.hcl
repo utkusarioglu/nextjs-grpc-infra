@@ -7,6 +7,13 @@ dependencies {
 // dependency "aws_base" {
 //   config_path = "../aws-base"
 // }
+dependency "aws_kms" {
+  config_path = "../aws-kms"
+}
+
+dependency "aws_eks" {
+  config_path = "../aws-eks"
+}
 
 include "root" {
   path = find_in_parent_folders()
@@ -14,6 +21,12 @@ include "root" {
 
 include "config" {
   path = "${get_repo_root()}/configs//${basename(get_terragrunt_dir())}/config.hcl"
+}
+
+inputs = {
+  platform_specific_vault_config = templatefile("${get_repo_root()}/assets/vault/vault.aws-kms-stanza.tftpl.hcl", {
+    aws_kms_key_id_for_vault = dependency.aws_kms.outputs.aws_kms_key_id_for_vault
+  })
 }
 
 generate "cluster_data" {

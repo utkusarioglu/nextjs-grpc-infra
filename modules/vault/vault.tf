@@ -126,7 +126,7 @@ resource "helm_release" "vault" {
           raft = {
             enabled   = true
             setNodeId = true
-            config = templatefile("${var.assets_path}/vault/vault.ha.config.tftpl.hcl", {
+            config = join("\n", [templatefile("${var.assets_path}/vault/vault.ha.config.tftpl.hcl", {
               sld = var.sld
               tld = var.tld
               # leader_ca_cert_file     = "/vault/ssl/api/ca.crt"
@@ -136,7 +136,9 @@ resource "helm_release" "vault" {
               tls_client_ca_file      = "/vault/ssl/api/ca.crt"
               tls_cert_file           = "/vault/ssl/api/tls.crt"
               tls_key_file            = "/vault/ssl/api/tls.key"
-            })
+              }),
+              var.platform_specific_vault_config
+            ])
           }
         }
       }

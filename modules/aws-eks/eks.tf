@@ -9,9 +9,15 @@ module "cluster" {
   cluster_endpoint_public_access  = true
   subnet_ids                      = var.aws_vpc_private_subnets
   vpc_id                          = var.aws_vpc_vpc_id
-  # subnet_ids                      = module.vpc.private_subnets
-  # vpc_id                          = module.vpc.vpc_id
-  eks_managed_node_groups = var.eks_managed_node_groups
+  # eks_managed_node_groups         = var.eks_managed_node_groups
+  eks_managed_node_groups = {
+    regular_nodes = var.eks_managed_node_groups.regular_nodes,
+    vault_nodes = merge(var.eks_managed_node_groups.vault_nodes, {
+      iam_role_additional_policies = [
+        var.aws_vault_kms_unseal_policy_arn
+      ]
+    })
+  }
 
   node_security_group_additional_rules = {
     # https://github.com/kubernetes-sigs/aws-load-balancer-controller/issues/2039#issuecomment-1099032289

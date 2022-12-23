@@ -2,10 +2,6 @@ include {
   path = find_in_parent_folders()
 }
 
-include "vars" {
-  path = "./vars.hcl"
-}
-
 terraform {
   source = "${get_repo_root()}/modules//${basename(get_terragrunt_dir())}"
 
@@ -37,4 +33,23 @@ terraform {
     working_dir = "/utkusarioglu-com/projects/nextjs-grpc/infra/assets"
     execute     = ["k3d", "cluster", "stop", "nextjs-grpc-infra-target-local"]
   }
+}
+
+locals {
+  var_file_templates = [
+    "helm",
+    "deployment-config",
+    "tls-intermediate-cert",
+    "tls-intermediate-key",
+    "url"
+  ]
+}
+
+generate "vars" {
+  path      = "vars.generated.tf"
+  if_exists = "overwrite"
+  contents = join("\n", ([
+    for i, identifier in local.var_file_templates :
+    templatefile("${get_repo_root()}/assets/templates/vars.${identifier}.tftpl.hcl", {})
+  ]))
 }

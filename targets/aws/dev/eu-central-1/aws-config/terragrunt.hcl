@@ -12,6 +12,10 @@ include "root" {
   path = find_in_parent_folders()
 }
 
+include "eu_central_1" {
+  path = "../terragrunt.hcl"
+}
+
 include "config" {
   path = "${get_repo_root()}/modules//${basename(get_terragrunt_dir())}/terragrunt.hcl"
 }
