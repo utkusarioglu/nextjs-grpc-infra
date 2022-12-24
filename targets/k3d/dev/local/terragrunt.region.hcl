@@ -26,14 +26,17 @@ locals {
   }
 }
 
-generate "providers_region" {
-  path      = "providers-region.generated.tf"
+generate "generated_config_region" {
+  path      = "generated-config.region.tf"
   if_exists = "overwrite"
   contents = join("\n", ([
-    for i, identifier in local.config_templates.providers :
-    (templatefile(
-      "${get_repo_root()}/assets/templates/providers/${identifier.name}.tftpl.hcl",
-      identifier.args
-    ))
+    for key, items in local.config_templates :
+    (join("\n", [
+      for j, template in items :
+      templatefile(
+        "${get_repo_root()}/assets/templates/${key}/${template.name}.tftpl.hcl",
+        try(template.args, {})
+      )
+    ]))
   ]))
 }

@@ -5,29 +5,32 @@ terraform {
 locals {
   config_templates = {
     vars = [
-      "deployment-config",
-      "paths"
+      {
+        name = "deployment-config"
+      },
+      {
+        name = "paths"
+      }
     ],
     providers = [
-      "vault"
+      {
+        name = "vault"
+      }
     ]
   }
 }
 
-generate "vars_target" {
-  path      = "vars-target.generated.tf"
+generate "generated_config_module" {
+  path      = "generated-config.module.tf"
   if_exists = "overwrite"
   contents = join("\n", ([
-    for i, identifier in local.config_templates.vars :
-    templatefile("${get_repo_root()}/assets/templates/vars/${identifier}.tftpl.hcl", {})
-  ]))
-}
-
-generate "providers_target" {
-  path      = "providers-target.generated.tf"
-  if_exists = "overwrite"
-  contents = join("\n", ([
-    for i, identifier in local.config_templates.providers :
-    templatefile("${get_repo_root()}/assets/templates/providers/${identifier}.tftpl.hcl", {})
+    for key, items in local.config_templates :
+    (join("\n", [
+      for j, template in items :
+      templatefile(
+        "${get_repo_root()}/assets/templates/${key}/${template.name}.tftpl.hcl",
+        try(template.args, {})
+      )
+    ]))
   ]))
 }
