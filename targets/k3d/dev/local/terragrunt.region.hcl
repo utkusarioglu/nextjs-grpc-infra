@@ -1,7 +1,8 @@
 
 inputs = {
+  region            = "local"
   deployment_mode   = "all"
-  helm_timeout_unit = 60
+  helm_timeout_unit = 180
   helm_atomic       = true
   vault_subdomain   = "vault"
 }

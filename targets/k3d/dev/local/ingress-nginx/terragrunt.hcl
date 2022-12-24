@@ -38,7 +38,7 @@ terraform {
   // Needed by Vault 
   after_hook "retrieve_ca_crt_file" {
     commands = ["plan", "apply"]
-    execute  = ["scripts/kubectl-get-ca.sh", "${get_repo_root()}/artifacts"]
+    execute  = ["scripts/kubectl-get-ca.sh", "${get_repo_root()}/artifacts/ca"]
   }
 
   after_hook "stop_k3d_cluster" {

@@ -10,6 +10,7 @@ retryable_errors = [
   "(?s).*Error installing provider.*tcp.*connection reset by peer.*",
   "(?s).*ssh_exchange_identification.*Connection closed by remote host.*",
   "(?s).*timed out waiting for the condition.*",
+  "(?s).*no such host.*",
 ]
 retry_max_attempts       = 10
 retry_sleep_interval_sec = 5

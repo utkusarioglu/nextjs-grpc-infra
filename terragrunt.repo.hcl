@@ -1,4 +1,5 @@
 inputs = {
+  project_name = "nextjs-grpc" # common.tfvars
   cluster_name = "nextjs-grpc" # common.tfvars
 
   sld = "nextjs-grpc.utkusarioglu"

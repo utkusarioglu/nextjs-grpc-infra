@@ -25,7 +25,7 @@ inputs = {
   platform_specific_vault_config = ""
 
   // created by after_hook of nginx-ingress
-  cluster_ca_crt_b64 = file("${get_repo_root()}/artifacts/ca.b64.crt")
+  cluster_ca_crt_b64 = file("${get_repo_root()}/artifacts/ca/ca.b64.crt")
 }
 
 terraform {
@@ -33,7 +33,7 @@ terraform {
     commands = ["apply"]
     execute = [
       "scripts/vault-unseal.sh",
-      "${get_repo_root()}/artifacts"
+      "${get_repo_root()}/artifacts/vault"
     ]
   }
 }
