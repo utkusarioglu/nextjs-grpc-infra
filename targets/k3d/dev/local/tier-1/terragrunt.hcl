@@ -1,3 +1,15 @@
+include "repo" {
+  path = "${get_repo_root()}/terragrunt.repo.hcl"
+}
+
+include "region" {
+  path = "../terragrunt.region.hcl"
+}
+
+include "module" {
+  path = "${get_repo_root()}/modules//${basename(get_terragrunt_dir())}/terragrunt.hcl"
+}
+
 dependencies {
   paths = [
     "../cert-manager",
@@ -7,14 +19,6 @@ dependencies {
 
 dependency "vault_config" {
   config_path = "../vault-config"
-}
-
-include "root" {
-  path = find_in_parent_folders()
-}
-
-include "config" {
-  path = "${get_repo_root()}/configs//${basename(get_terragrunt_dir())}/config.hcl"
 }
 
 inputs = {

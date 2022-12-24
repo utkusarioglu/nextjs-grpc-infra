@@ -21,12 +21,13 @@ inputs = {
 
   vault_subdomain = "vault"
 
-  environment = "local"
+  // different
+  environment = "aws"
 }
 
-locals {
-  cluster_name = "nextjs-grpc-infra-target-local"
-}
+// locals {
+//   cluster_name = "nextjs-grpc-infra-target-local"
+// }
 
 generate "provider_aws_aws" {
   path      = "provider.aws.aws.generated.tf"

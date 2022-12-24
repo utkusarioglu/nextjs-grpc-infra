@@ -1,9 +1,17 @@
-include {
-  path = find_in_parent_folders()
+include "repo" {
+  path = "${get_repo_root()}/terragrunt.repo.hcl"
+}
+
+include "region" {
+  path = "../terragrunt.region.hcl"
+}
+
+include "module" {
+  path = "${local.module_path}/terragrunt.module.hcl"
 }
 
 terraform {
-  source = "${get_repo_root()}/modules//${basename(get_terragrunt_dir())}"
+  // path = "${local.module_path}/terragrunt.module.hcl"
 
   extra_arguments "ingres_nginx_vars" {
     commands = [
@@ -25,6 +33,14 @@ terraform {
     execute     = ["k3d", "cluster", "start", "nextjs-grpc-infra-target-local"]
   }
 
+  // Needed by Vault 
+  after_hook "ca_crt" {
+    commands = ["plan", "apply"]
+    execute = [
+      "scripts/kubectl-get-ca.sh"
+    ]
+  }
+
   after_hook "stop_k3d_cluster" {
     commands = [
       "plan",
@@ -36,20 +52,23 @@ terraform {
 }
 
 locals {
-  var_file_templates = [
-    "helm",
-    "deployment-config",
-    "tls-intermediate-cert",
-    "tls-intermediate-key",
-    "url"
-  ]
+  module_path = "${get_repo_root()}/modules//${basename(get_terragrunt_dir())}"
+  config_templates = {
+    vars = [
+      "helm",
+      "deployment-config",
+      "tls-intermediate-cert",
+      "tls-intermediate-key",
+      "url"
+    ]
+  }
 }
 
-generate "vars" {
-  path      = "vars.generated.tf"
+generate "vars_target" {
+  path      = "vars-target.generated.tf"
   if_exists = "overwrite"
   contents = join("\n", ([
-    for i, identifier in local.var_file_templates :
+    for i, identifier in local.config_templates.vars :
     templatefile("${get_repo_root()}/assets/templates/vars.${identifier}.tftpl.hcl", {})
   ]))
 }

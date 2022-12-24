@@ -1,6 +1,6 @@
 #!/bin/bash
 
-artifacts_folder=artifacts
+artifacts_folder=/tmp/nextjs-grpc
 artifact_file="$artifacts_folder/init.json"
 root_token_file="$artifacts_folder/root.token.json"
 vault_token_file="$HOME/.vault-token"
@@ -121,4 +121,4 @@ track
 sleep 5
 print_status
 
-echo $(cat artifacts/root.token.json | jq -r .auth.client_token) > ~/.vault-token
+echo $(cat $artifacts_folder/root.token.json | jq -r .auth.client_token) > ~/.vault-token
