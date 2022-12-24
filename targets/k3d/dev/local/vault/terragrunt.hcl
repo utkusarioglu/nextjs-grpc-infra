@@ -33,6 +33,7 @@ terraform {
     commands = ["apply"]
     execute = [
       "scripts/vault-unseal.sh",
+      "${get_repo_root()}/artifacts"
     ]
   }
 }

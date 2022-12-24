@@ -1,8 +1,14 @@
 #!/bin/bash
 
-ARTIFACTS_FOLDER=/tmp/nextjs-grpc
-artifact_file="$ARTIFACTS_FOLDER/init.json"
-root_token_file="$ARTIFACTS_FOLDER/root.token.json"
+artifacts_folder=$1
+
+if [ -z "$artifacts_folder" ]; then
+  echo "Error: This script needs artifacts folder path to be the first param"
+  exit 1
+fi
+
+artifact_file="$artifacts_folder/init.json"
+root_token_file="$artifacts_folder/root.token.json"
 vault_token_file="$HOME/.vault-token"
 
 unseal() {
@@ -19,8 +25,8 @@ unseal() {
 
     if [ $pod == "vault-0" ] && [[ "$sealed_pods" == *"vault-0"* ]]; then
       echo "Cleaning artifacts folder"
-      rm -rf "$ARTIFACTS_FOLDER"
-      mkdir -p "$ARTIFACTS_FOLDER"
+      rm -rf "$artifacts_folder"
+      mkdir -p "$artifacts_folder"
     fi
 
     sleep 3;
@@ -121,4 +127,4 @@ track
 sleep 5
 print_status
 
-echo $(cat $ARTIFACTS_FOLDER/root.token.json | jq -r .auth.client_token) > ~/.vault-token
+echo $(cat $artifacts_folder/root.token.json | jq -r .auth.client_token) > ~/.vault-token

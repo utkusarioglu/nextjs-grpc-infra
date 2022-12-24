@@ -10,7 +10,4 @@ inputs = {
   assets_path    = "${get_repo_root()}/assets"
   secrets_path   = "${get_repo_root()}/secrets"
   artifacts_path = "${get_repo_root()}/artifacts"
-  // intermediate_crt_path = "${get_repo_root()}/.certs/intermediate/intermediate.crt"
-  // intermediate_key_path = "${get_repo_root()}/.certs/intermediate/intermediate.key"
-  // ca_crt_path           = "${get_repo_root()}/.certs/root/root.crt"
 }
