@@ -8,7 +8,7 @@ inputs = {
   persistent_volumes_root = "/var/lib/rancher/k3s/storage"
   project_root_path       = "/utkusarioglu-com/projects/nextjs-grpc"
 
-  assets_path    = "${get_repo_root()}/assets"
+  assets_path    = "${get_repo_root()}/src/configs"
   secrets_path   = "${get_repo_root()}/secrets"
   artifacts_path = "${get_repo_root()}/artifacts"
 }
