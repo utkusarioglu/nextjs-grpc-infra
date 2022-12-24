@@ -22,7 +22,7 @@ inputs = {
   vault_subdomain = "vault"
 
   // different
-  environment = "aws"
+  platform = "aws"
 }
 
 // locals {
@@ -61,10 +61,11 @@ generate "provider_aws_aws_dns_region" {
 
       default_tags {
         tags = {
+          Platform        = "aws"
           Environment     = "dev"
           ProjectName     = "nextjs-grpc"
           MetaRepo        = "nextjs-grpc"
-          Repo            = "infra/aws"
+          Repo            = "infra"
           Region          = "Cluster region"
           DefaultProvider = "true"
         }

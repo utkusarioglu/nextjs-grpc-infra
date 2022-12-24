@@ -14,7 +14,7 @@ resource "helm_release" "prometheus" {
 
   set {
     name  = "prometheus.server.ingress.annotations.${replace("kubernetes.io/ingress.class", ".", "\\.")}"
-    value = local.ingress_class_mapping[var.environment]
+    value = local.ingress_class_mapping[var.platform]
   }
 
   set {

@@ -37,7 +37,7 @@ resource "helm_release" "api" {
 
   set {
     name  = "ingress.annotations.${replace("kubernetes.io/ingress.class", ".", "\\.")}"
-    value = local.ingress_class_mapping[var.environment]
+    value = local.ingress_class_mapping[var.platform]
   }
 
   set {
@@ -47,7 +47,7 @@ resource "helm_release" "api" {
 
   set {
     name  = "ingress.hosts[0].paths[0].path"
-    value = local.ingress_paths.api[var.environment]
+    value = local.ingress_paths.api[var.platform]
   }
 
   set {
@@ -67,6 +67,6 @@ resource "helm_release" "api" {
 
   set {
     name  = "service.type"
-    value = local.ingress_service_types[var.environment]
+    value = local.ingress_service_types[var.platform]
   }
 }

@@ -2,14 +2,20 @@ terraform {
   source = "${get_repo_root()}/modules//${basename(get_terragrunt_dir())}"
 }
 
-generate "vars_helm" {
-  path      = "vars.helm.generated.tf"
-  if_exists = "overwrite"
-  contents  = templatefile("${get_repo_root()}/assets/templates/vars.helm.tftpl.hcl", {})
+locals {
+  config_templates = {
+    vars = [
+      "helm",
+      "deployment-config",
+    ]
+  }
 }
 
-generate "vars_deployment_config" {
-  path      = "vars.deployment-config.generated.tf"
+generate "vars_target" {
+  path      = "vars-target.generated.tf"
   if_exists = "overwrite"
-  contents  = templatefile("${get_repo_root()}/assets/templates/vars.deployment-config.tftpl.hcl", {})
+  contents = join("\n", ([
+    for i, identifier in local.config_templates.vars :
+    templatefile("${get_repo_root()}/assets/templates/vars/${identifier}.tftpl.hcl", {})
+  ]))
 }

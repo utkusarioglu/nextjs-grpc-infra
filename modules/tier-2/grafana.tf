@@ -16,7 +16,7 @@ resource "helm_release" "grafana" {
 
   set {
     name  = "grafana.ingress.annotations.${replace("kubernetes.io/ingress.class", ".", "\\.")}"
-    value = local.ingress_class_mapping[var.environment]
+    value = local.ingress_class_mapping[var.platform]
   }
 
   set {
@@ -31,6 +31,6 @@ resource "helm_release" "grafana" {
 
   set {
     name  = "grafana.service.type"
-    value = local.ingress_service_types[var.environment]
+    value = local.ingress_service_types[var.platform]
   }
 }

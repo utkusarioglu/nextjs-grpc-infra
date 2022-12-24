@@ -7,7 +7,7 @@ include "region" {
 }
 
 include "module" {
-  path = "${get_repo_root()}/modules//${basename(get_terragrunt_dir())}/terragrunt.hcl"
+  path = "${get_repo_root()}/modules//${basename(get_terragrunt_dir())}/terragrunt.module.hcl"
 }
 
 dependencies {

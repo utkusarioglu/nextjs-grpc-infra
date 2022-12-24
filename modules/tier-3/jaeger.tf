@@ -16,7 +16,7 @@
 #         hosts = [
 #           "jaeger.${var.sld}.${var.tld}"
 #         ]
-#         ingressClass        = local.ingress_class_mapping[var.environment]
+#         ingressClass        = local.ingress_class_mapping[var.platform]
 #         awsSecurityGroups   = var.ingress_sg
 #         externalDnsHostname = "jaeger.${var.sld}.${var.tld}"
 #       }
@@ -54,7 +54,7 @@ resource "helm_release" "jaeger" {
         hosts = [
           "jaeger.${var.sld}.${var.tld}"
         ]
-        ingressClass        = local.ingress_class_mapping[var.environment]
+        ingressClass        = local.ingress_class_mapping[var.platform]
         awsSecurityGroups   = var.ingress_sg
         externalDnsHostname = "jaeger.${var.sld}.${var.tld}"
       }
