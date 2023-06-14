@@ -3,30 +3,33 @@ version: "3.9"
 services:
   nextjs-grpc-infra:
     container_name: nextjs-grpc-infra
-    image: utkusarioglu/tf-k8s-devcontainer:1.2.18
+    # image: utkusarioglu/tf-k8s-devcontainer:1.4.experiment-feat-devcontainer-features-10
+    image: utkusarioglu/tf-k8s-devcontainer:1.4.experiment-feat-devcontainer-features-14
     environment:
       TZ: Etc/UTC0
-      TARGET_VOLUMES_ROOT: /var/lib/rancher/k3s/storage
+      NODES_VOLUMES_ROOT: /dev/xvdf
+      NODES_SOURCE_CODE_ROOT: /dev/xvdg
       CLUSTER_REGION: eu-central-1
     volumes:
       - type: bind
-        source: ".."
-        target: /utkusarioglu-com/projects/nextjs-grpc/infra
-      - type: bind
         source: /var/run/docker.sock
         target: /var/run/docker.sock
-      # - type: bind
-      #   source: ../../../configs/app/services
-      #   target: /utkusarioglu-com/projects/nextjs-grpc/infra/configs/app/services
-      - type: bind
-        source: ../../api
-        target: /utkusarioglu-com/projects/nextjs-grpc/api
+
       - type: bind
         source: ../../certificates
         target: /utkusarioglu-com/projects/nextjs-grpc/certificates
       - type: bind
+        source: ../../e2e
+        target: /utkusarioglu-com/projects/nextjs-grpc/e2e
+      - type: bind
+        source: ../../frontend
+        target: /utkusarioglu-com/projects/nextjs-grpc/frontend
+      - type: bind
         source: ../../grafana
         target: /utkusarioglu-com/projects/nextjs-grpc/grafana
+      - type: bind
+        source: ../../infra
+        target: /utkusarioglu-com/projects/nextjs-grpc/infra
       - type: bind
         source: ../../jaeger
         target: /utkusarioglu-com/projects/nextjs-grpc/jaeger
@@ -37,17 +40,19 @@ services:
         source: ../../ms
         target: /utkusarioglu-com/projects/nextjs-grpc/ms
       - type: bind
+        source: ../../notebooks
+        target: /utkusarioglu-com/projects/nextjs-grpc/notebooks
+      - type: bind
         source: ../../otel-collectors
         target: /utkusarioglu-com/projects/nextjs-grpc/otel-collectors
       - type: bind
         source: ../../prometheus
         target: /utkusarioglu-com/projects/nextjs-grpc/prometheus
+        # This one is not actually used by this repo
+      - type: bind
+        source: ../../proto
+        target: /utkusarioglu-com/projects/nextjs-grpc/proto
+
       - type: bind
         source: ../../rbac
         target: /utkusarioglu-com/projects/nextjs-grpc/rbac
-      - type: bind
-        source: ../../secrets
-        target: /utkusarioglu-com/projects/nextjs-grpc/secrets
-      - type: bind
-        source: ../../e2e
-        target: /utkusarioglu-com/projects/nextjs-grpc/e2e

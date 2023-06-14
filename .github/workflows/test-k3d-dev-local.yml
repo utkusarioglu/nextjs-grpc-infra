@@ -1,0 +1,222 @@
+name: Test K3d Dev Local
+on:
+  push:
+    tags:
+      - "**.**.**"
+      - "experiment/**/**/**"
+    paths:
+      - src/**
+      - .github/workflows/test-k3d-dev-local.yml
+  workflow_dispatch:
+    
+env:
+  PROJECT_ROOT_ABSPATH: /utkusarioglu-com/projects/nextjs-grpc
+  REPO_RELPATH: infra
+  ARTIFACTS_RELPATH: artifacts
+  LOGS_RELPATH: logs
+
+jobs:
+  test-k3d-dev-local:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: 
+        mode: [test] # or `run`
+
+        certificates: [main]
+        e2e: [main]
+        frontend: [main]
+        grafana: [main]
+        # infra: [main]
+        jaeger: [main]
+        loki: [main]
+        ms: [main]
+        notebooks: [main]
+        otel_collectors: [main]
+        prometheus: [main]
+        proto: [main]
+        rbac: [main]
+
+        include:
+          # - certificates: chore/remove-api-certs
+            # frontend: experiment/feat/next-api-endpoints
+          - infra: experiment/feat/aws
+            # ms: experiment/feat/vault
+
+          # - certificates: experiment/feat/vault-integration
+          #   frontend: experiment/feat/url-convergence
+          #   grafana: experiment/feat/grafana-operator
+          #   infra: experiment/feat/aws
+
+    env:
+      NODE_ENV: production
+    container:
+      image: utkusarioglu/tf-k8s-devcontainer:1.4.experiment-feat-devcontainer-features-14
+      options: --user=0:0 --add-host=host-gateway:host-gateway --tty
+      env: 
+        # From `docker.compose.common.yml`
+        TZ: Etc/UTC0
+        NODES_VOLUMES_ROOT: /dev/xvdf
+        NODES_SOURCE_CODE_ROOT: /dev/xvdg
+        CLUSTER_REGION: eu-central-1
+        # From `docker.compose.dev`
+        HOST_VOLUMES_ROOT: ${{ github.workspace }}/volumes/nextjs-grpc
+        HOST_SOURCE_CODE_ROOT: ${{ github.workspace }}
+        VAULT_ADDR: https://vault.nextjs-grpc.utkusarioglu.com:8200
+        CLUSTER_HOST: local.dev.k3d.nextjs-grpc.projects.utkusarioglu.com
+        PROJECT_ROOT_ABSPATH: ${{ github.workspace }}
+        HOME: ${{ github.workspace }}
+
+    steps:
+      - name: Checkout `certificates`
+        uses: actions/checkout@v3
+        with:
+          repository: utkusarioglu/nextjs-grpc-certificates
+          ref: ${{ matrix.certificates }}
+          fetch-depth: 0
+          path: certificates
+
+      - name: Checkout `e2e`
+        uses: actions/checkout@v3
+        with:
+          repository: utkusarioglu/nextjs-grpc-e2e
+          ref: ${{ matrix.e2e }}
+          fetch-depth: 0
+          path: e2e
+
+      - name: Checkout `frontend`
+        uses: actions/checkout@v3
+        with:
+          repository: utkusarioglu/nextjs-grpc-frontend
+          ref: ${{ matrix.frontend }}
+          fetch-depth: 0
+          path: frontend
+      
+      - name: Checkout `grafana`
+        uses: actions/checkout@v3
+        with:
+          repository: utkusarioglu/nextjs-grpc-grafana
+          ref: ${{ matrix.grafana }}
+          fetch-depth: 0
+          path: grafana
+
+      - name: Checkout `infra`
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ matrix.infra }}
+          fetch-depth: 0
+          path: ${{ env.REPO_RELPATH }}
+
+      - name: Checkout `jaeger`
+        uses: actions/checkout@v3
+        with:
+          repository: utkusarioglu/nextjs-grpc-jaeger
+          ref: ${{ matrix.jaeger }}
+          fetch-depth: 0
+          path: jaeger
+      
+      - name: Checkout `loki`
+        uses: actions/checkout@v3
+        with:
+          repository: utkusarioglu/nextjs-grpc-loki
+          ref: ${{ matrix.loki }}
+          fetch-depth: 0
+          path: loki
+      
+      - name: Checkout `ms`
+        uses: actions/checkout@v3
+        with:
+          repository: utkusarioglu/nextjs-grpc-ms
+          ref: ${{ matrix.ms }}
+          fetch-depth: 0
+          path: ms
+      
+      - name: Checkout `notebooks`
+        uses: actions/checkout@v3
+        with:
+          repository: utkusarioglu/nextjs-grpc-notebooks
+          ref: ${{ matrix.notebooks }}
+          fetch-depth: 0
+          path: notebooks
+      
+      - name: Checkout `otel-collectors`
+        uses: actions/checkout@v3
+        with:
+          repository: utkusarioglu/nextjs-grpc-otel-collectors
+          ref: ${{ matrix.otel_collectors }}
+          fetch-depth: 0
+          path: otel-collectors
+      
+      - name: Checkout `prometheus`
+        uses: actions/checkout@v3
+        with:
+          repository: utkusarioglu/nextjs-grpc-prometheus
+          ref: ${{ matrix.prometheus }}
+          fetch-depth: 0
+          path: prometheus
+
+      - name: Checkout `proto`
+        uses: actions/checkout@v3
+        with:
+          repository: utkusarioglu/nextjs-grpc-proto
+          ref: ${{ matrix.proto }}
+          fetch-depth: 0
+          path: proto
+
+      - name: Checkout `rbac`
+        uses: actions/checkout@v3
+        with:
+          repository: utkusarioglu/nextjs-grpc-rbac
+          ref: ${{ matrix.rbac }}
+          fetch-depth: 0
+          path: rbac
+      
+      - name: Migrate vars and secrets files 
+        working-directory: ${{ env.REPO_RELPATH }}
+        shell: bash
+        run: |
+          TEMP_B64_SECRETS_ABSPATH=/tmp/secrets.b64
+          TEMP_ZIP_SECRETS_ABSPATH=/tmp/secrets.zip
+          echo '${{ secrets.SECRET_FILES }}' > $TEMP_B64_SECRETS_ABSPATH
+          cat $TEMP_B64_SECRETS_ABSPATH | base64 --decode \
+            > $TEMP_ZIP_SECRETS_ABSPATH
+          unzip -o $TEMP_ZIP_SECRETS_ABSPATH
+          rm $TEMP_B64_SECRETS_ABSPATH $TEMP_ZIP_SECRETS_ABSPATH
+        
+      - name: Register Root CA
+        working-directory: ${{ env.REPO_RELPATH }}
+        run: |
+          cp .certs/root/root.crt /usr/local/share/ca-certificates/
+          update-ca-certificates
+
+      - name: Alter hosts
+        working-directory: ${{ env.REPO_RELPATH }}
+        run: scripts/hosts-entries/add.sh host-gateway
+
+      - name: Run Test
+        if: ${{ matrix.mode }} == test
+        working-directory: ${{ env.REPO_RELPATH }}
+        run: scripts/run-tests.sh
+
+      # - name: Run Terragrunt
+      #   if: ${{ matrix.mode }} == run
+      #   working-directory: ${{ env.REPO_RELPATH }}/src/targets/k3d/dev/local
+      #   shell: bash
+      #   run: |
+      #     mkdir logs
+      #     terragrunt run-all apply \
+      #       --terragrunt-non-interactive \
+      #       --auto-approve \
+      #       --terragrunt-log-level info | \
+      #       tee -a logs/terragrunt.log
+
+      - name: Save artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: utkusarioglu-nextjs-grpc-infra-artifacts
+          path: ${{ env.REPO_RELPATH }}/${{ env.ARTIFACTS_RELPATH }}
+
+      - name: Save logs
+        uses: actions/upload-artifact@v3
+        with:
+          name: utkusarioglu-nextjs-grpc-infra-logs
+          path: ${{ env.REPO_RELPATH }}/${{ env.LOGS_RELPATH }}
