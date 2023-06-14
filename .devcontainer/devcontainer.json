@@ -14,11 +14,13 @@
         "golang.go",
         "hashicorp.terraform",
         "hashicorp.hcl",
-        "ms-kubernetes-tools.vscode-kubernetes-tools"
+        "ms-kubernetes-tools.vscode-kubernetes-tools",
+        "amazonwebservices.aws-toolkit-vscode"
       ],
       "settings": {
         "workbench.colorCustomizations": {
-          "activityBar.background": "#171244"
+          "activityBar.background": "#171244",
+          "activityBar.foreground": "#ffffff"
         }
       }
     }

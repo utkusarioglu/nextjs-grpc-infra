@@ -1,0 +1,148 @@
+apiVersion: k3d.io/v1alpha4
+kind: Simple
+metadata:
+  name: nextjs-grpc-k3d-dev-local
+servers: 1
+agents: 5
+image: rancher/k3s:v1.24.10-k3s1
+kubeAPI:
+  host: ${CLUSTER_HOST}
+  # hostIP: "127.0.0.1" # This may be breaking it
+  hostPort: "6443"
+ports:
+  - port: 80:80
+    nodeFilters:
+      - loadbalancer
+  - port: 443:443
+    nodeFilters:
+      - loadbalancer
+    # This is used by vault UI
+  - port: 8200:8200
+    nodeFilters:
+      - agent:0
+      - agent:2
+      - agent:4
+
+  #   # Required by Gefyra
+  # - port: 31820:31820/UDP
+  #   nodeFilters:
+  #     - agent:*
+volumes:
+  - volume: ${HOST_VOLUMES_ROOT}/worker-0:${NODES_VOLUMES_ROOT}
+    nodeFilters:
+      - agent:0
+  - volume: ${HOST_VOLUMES_ROOT}/worker-1:${NODES_VOLUMES_ROOT}
+    nodeFilters:
+      - agent:1
+  - volume: ${HOST_VOLUMES_ROOT}/worker-2:${NODES_VOLUMES_ROOT}
+    nodeFilters:
+      - agent:2
+  - volume: ${HOST_VOLUMES_ROOT}/worker-3:${NODES_VOLUMES_ROOT}
+    nodeFilters:
+      - agent:3
+  - volume: ${HOST_VOLUMES_ROOT}/worker-4:${NODES_VOLUMES_ROOT}
+    nodeFilters:
+      - agent:4
+
+    # for postgresql dumps
+  - volume: ${HOST_SOURCE_CODE_ROOT}/infra/src/configs/postgres-storage/dumps:${NODES_VOLUMES_ROOT}/dumps
+    nodeFilters:
+      - agent:2
+    
+    # project source codes
+  - volume: ${HOST_SOURCE_CODE_ROOT}:${NODES_SOURCE_CODE_ROOT}
+    nodeFilters:
+      - agent:*
+options:
+  k3d:
+    wait: true
+    timeout: "60s"
+    disableLoadbalancer: false
+    disableImageVolume: false
+    disableRollback: false
+  k3s:
+    extraArgs:
+      - arg: --tls-san=${CLUSTER_HOST}
+        nodeFilters:
+          - server:*
+      - arg: --disable=local-storage
+        nodeFilters:
+          - server:*
+      - arg: --node-taint=node-role.kubernetes.io/control-plane=true:NoExecute
+        nodeFilters:
+          - server:*
+      - arg: --disable=traefik
+        nodeFilters:
+          - server:*
+
+      - arg: --node-name=server-0
+        nodeFilters:
+          - server:0
+
+      - arg: --node-name=worker-0
+        nodeFilters:
+          - agent:0
+      - arg: --node-name=worker-1
+        nodeFilters:
+          - agent:1
+      - arg: --node-name=worker-2
+        nodeFilters:
+          - agent:2
+      - arg: --node-name=worker-3
+        nodeFilters:
+          - agent:3
+      - arg: --node-name=worker-4
+        nodeFilters:
+          - agent:4
+    nodeLabels:
+      - label: "topology.kubernetes.io/region=${CLUSTER_REGION}"
+        nodeFilters:
+          - server:*
+          - agent:*
+      - label: vault_in_k8s=true
+        nodeFilters:
+          - agent:0
+          - agent:2
+          - agent:4
+      - label: "topology.kubernetes.io/zone=${CLUSTER_REGION}a"
+        nodeFilters:
+          - agent:0
+          - agent:1
+      - label: "topology.kubernetes.io/zone=${CLUSTER_REGION}b"
+        nodeFilters:
+          - agent:2
+      - label: "topology.kubernetes.io/zone=${CLUSTER_REGION}c"
+        nodeFilters:
+          - agent:3
+          - agent:4
+      - label: "postgres-storage.ms/dumps-mounted=true"
+        nodeFilters:
+          - agent:2
+  kubeconfig:
+    updateDefaultKubeconfig: true
+    switchCurrentContext: true
+
+registries:
+  create:
+    name: registry.nextjs-grpc.utkusarioglu.com
+    proxy:
+      remoteURL: https://registry-1.docker.io 
+    volumes:
+      - ${HOST_VOLUMES_ROOT}/registry:/var/lib/registry 
+  config: | 
+    mirrors:
+      "docker.io":
+        endpoint:
+          - http://registry.nextjs-grpc.utkusarioglu.com:5000
+      "quay.io":
+        endpoint:
+          - http://registry.nextjs-grpc.utkusarioglu.com:5000
+      "gcr.io":
+        endpoint:
+          - http://registry.nextjs-grpc.utkusarioglu.com:5000
+      "github.com":
+        endpoint:
+          - http://registry.nextjs-grpc.utkusarioglu.com:5000
+      "cloudflare.com":
+        endpoint:
+          - http://registry.nextjs-grpc.utkusarioglu.com:5000
