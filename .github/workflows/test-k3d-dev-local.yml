@@ -26,7 +26,7 @@ jobs:
         e2e: [main]
         frontend: [main]
         grafana: [main]
-        # infra: [main]
+        infra: [main]
         jaeger: [main]
         loki: [main]
         ms: [main]
@@ -36,16 +36,7 @@ jobs:
         proto: [main]
         rbac: [main]
 
-        include:
-          # - certificates: chore/remove-api-certs
-            # frontend: experiment/feat/next-api-endpoints
-          - infra: experiment/feat/aws
-            # ms: experiment/feat/vault
-
-          # - certificates: experiment/feat/vault-integration
-          #   frontend: experiment/feat/url-convergence
-          #   grafana: experiment/feat/grafana-operator
-          #   infra: experiment/feat/aws
+        # include:
 
     env:
       NODE_ENV: production
