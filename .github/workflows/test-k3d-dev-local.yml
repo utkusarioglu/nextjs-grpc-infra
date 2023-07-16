@@ -32,7 +32,7 @@ jobs:
         e2e: [main]
         frontend: [main]
         grafana: [main]
-        infra: [main]
+        # infra: [main]
         jaeger: [main]
         loki: [main]
         ms: [main]
@@ -42,8 +42,8 @@ jobs:
         proto: [main]
         rbac: [main]
 
-        # include:
-        #   - infra: experiment/chore/implement-buf
+        include:
+          - infra: ${{ github.head_ref }}
         #     ms: experiment/chore/implement-buf
         #     frontend: experiment/chore/implement-buf
         #     proto: experiment/chore/implement-buf
