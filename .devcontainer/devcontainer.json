@@ -15,7 +15,8 @@
         "hashicorp.terraform",
         "hashicorp.hcl",
         "ms-kubernetes-tools.vscode-kubernetes-tools",
-        "amazonwebservices.aws-toolkit-vscode"
+        "amazonwebservices.aws-toolkit-vscode",
+        "cschleiden.vscode-github-actions"
       ],
       "settings": {
         "workbench.colorCustomizations": {

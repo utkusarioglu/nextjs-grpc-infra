@@ -14,49 +14,41 @@ type Endpoint struct {
 }
 
 var endpoints = []Endpoint{
-	// {
-	// 	// This one implies that server-side guest redirection works as expected
-	// 	// Because the expected strings are from the login page
-	// 	url: "https://nextjs-grpc.utkusarioglu.com",
-	// 	expectedStrings: []string{
-	// 		"Login",
-	// 		"Remember",
-	// 		"me",
-	// 	},
-	// },
-	// {
-	// 	url: "https://nextjs-grpc.utkusarioglu.com/login",
-	// 	expectedStrings: []string{
-	// 		"Login",
-	// 		"Remember",
-	// 		"me",
-	// 	},
-	// },
-	// {
-	// 	url: "https://nextjs-grpc.utkusarioglu.com/decade-stats",
-	// 	expectedStrings: []string{
-	// 		"Login",
-	// 		"Remember",
-	// 		"me",
-	// 	},
-	// },
 	{
-		url: "https://nextjs-grpc.utkusarioglu.com/api/v1/decade-stats?codes=TUR",
+		url: "https://nextjs-grpc.utkusarioglu.com/api/v1/data/inflation/decade-stats?codes=TUR,USA",
 		expectedStrings: []string{
-			"decadeStats",
-			// These two mean that there is the chain reaching
-			// `postgres-storage` works
-			"Turkiye",
-		},
-	},
-	{
-		url: "https://nextjs-grpc.utkusarioglu.com/api/v1/decade-stats?codes=TUR,USA",
-		expectedStrings: []string{
-			"decadeStats",
+			"payload",
 			// These two mean that there is the chain reaching
 			// `postgres-storage` works
 			"Turkiye",
 			"United States",
+			"creator",
+			"profileImage",
+			"utku",
+		},
+	},
+	{
+		url: "https://nextjs-grpc.utkusarioglu.com/api/v1/data/inflation/decade-stats?codes=TUR",
+		expectedStrings: []string{
+			"payload",
+			// This means that there is the chain reaching
+			// `postgres-storage` works
+			"Turkiye",
+			"creator",
+			"profileImage",
+			"utku",
+		},
+	},
+	{
+		url: "https://nextjs-grpc.utkusarioglu.com/api/v1/data/inflation/decade-stats?codes=USA",
+		expectedStrings: []string{
+			"payload",
+			// This means that there is the chain reaching
+			// `postgres-storage` works
+			"United States",
+			"creator",
+			"profileImage",
+			"utku",
 		},
 	},
 	{

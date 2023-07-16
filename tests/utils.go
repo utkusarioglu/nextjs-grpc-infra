@@ -28,16 +28,16 @@ func createTimestamp() string {
 
 func SetupCluster(t *testing.T, targetSubpath string) string {
 	timestamp := createTimestamp()
-	infraPath, err := filepath.Abs("..")
+	infraAbsPath, err := filepath.Abs("..")
 	if err != nil {
 		fmt.Print(err.Error())
 	}
-	targetPath := fmt.Sprintf("%s/%s/%s", infraPath, "src/targets", targetSubpath)
+	targetPath := fmt.Sprintf("%s/%s/%s", infraAbsPath, "src/targets", targetSubpath)
 	stepName := fmt.Sprintf("setup_%s", strings.Replace(targetSubpath, "/", "_", -1))
 	logName := strings.Replace(targetSubpath, "/", "-", -1)
 	tfLogPath := fmt.Sprintf(
 		"%s/logs/%s-%s.terratest.log",
-		infraPath,
+		infraAbsPath,
 		logName,
 		timestamp,
 	)
