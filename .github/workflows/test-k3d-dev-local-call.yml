@@ -252,11 +252,11 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: utkusarioglu-nextjs-grpc-infra-artifacts
-          path: ${{ matrix.vars.repoRelPath }}/${{ matrix.vars.artifactsRelPath }}
+          path: infra/${{ matrix.vars.artifactsRelPath }}
 
       - name: Save logs
         if: ${{ always() }}
         uses: actions/upload-artifact@v3
         with:
           name: utkusarioglu-nextjs-grpc-infra-logs
-          path: ${{ matrix.vars.repoRelPath }}/${{ matrix.vars.logsRelPath }}
+          path: infra/${{ matrix.vars.logsRelPath }}
