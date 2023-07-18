@@ -23,5 +23,5 @@ jobs:
     uses: ./.github/workflows/test-k3d-dev-local-call.yml
     secrets: inherit
     with:
-      infra: experiment/test/integration-testing
-      frontend: experiment/test/integration-testing
+      infra: main
+      frontend: main
