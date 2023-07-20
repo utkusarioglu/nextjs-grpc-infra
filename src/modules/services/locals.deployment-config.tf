@@ -1,9 +1,6 @@
 locals {
   deployment_config_templates = {
     all = {
-      api = {
-        count = 0
-      }
       web_server = {
         count = 1
       }
@@ -12,9 +9,6 @@ locals {
       }
     }
     none = {
-      api = {
-        count = 0
-      }
       web_server = {
         count = 0
       }

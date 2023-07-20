@@ -1,0 +1,21 @@
+name: Push
+
+on:
+  push:
+    tags:
+      - "**.**.**"
+      - "experiment/**/**/**"
+    paths:
+      - src/**
+      - .github/workflows/push.yml
+      - .github/workflows/k3d-dev-local.test.wfc.yml
+  workflow_dispatch:
+
+jobs:
+  infra-test-web:
+    uses: ./.github/workflows/k3d-dev-local.test.wfc.yml
+    secrets: inherit
+    with:
+      infraRef: ${{ github.ref_name }}
+      frontendRef: experiment/test/workflow-calls
+      msRef: experiment/chore/workflow-call

@@ -10,6 +10,9 @@ resource "helm_release" "ms" {
 
   values = [
     yamlencode({
+      image = {
+        tag = "${var.ms_image_tag}"
+      }
       env = {
         RUN_MODE = "production"
         # FEATURE_INSTRUMENTATION = "false"

@@ -1,58 +1,66 @@
-name: Test K3d Dev Local Reuse
+name: Test K3d Dev Local
+
 on:
   workflow_call:
     inputs:
-      certificates:
+      certificatesRef:
         required: false
         default: main
         type: string
-      e2e:
+      e2eRef:
         required: false
         default: main
         type: string
-      frontend:
+      frontendRef:
         required: false
         default: main
         type: string
-      grafana:
+      grafanaRef:
         required: false
         default: main
         type: string
-      infra:
+      infraRef:
         required: false
         default: main
         type: string
-      jaeger:
+      jaegerRef:
         required: false
         default: main
         type: string
-      loki:
+      lokiRef:
         required: false
         default: main
         type: string
-      ms:
+      msRef:
         required: false
         default: main
         type: string
-      notebooks:
+      notebooksRef:
         required: false
         default: main
         type: string
-      otel_collectors:
+      otelCollectorsRef:
         required: false
         default: main
         type: string
-      prometheus:
+      prometheusRef:
         required: false
         default: main
         type: string
-      proto:
+      protoRef:
         required: false
         default: main
         type: string
-      rbac:
+      rbacRef:
         required: false
         default: main
+        type: string
+
+      webServerImageTag: 
+        required: false
+        type: string
+      msImageTag: 
+        required: false
         type: string
 
 jobs:
@@ -60,35 +68,32 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix: 
-        mode: 
-          - test # or `run`
-
         certificates: 
-          - "${{ inputs.certificates }}"
+          - "${{ inputs.certificatesRef }}"
         e2e: 
-          - "${{ inputs.e2e }}"
+          - "${{ inputs.e2eRef }}"
         frontend: 
-          - "${{ inputs.frontend }}"
+          - "${{ inputs.frontendRef }}"
         grafana: 
-          - "${{ inputs.grafana }}"
+          - "${{ inputs.grafanaRef }}"
         infra: 
-          - "${{ inputs.infra }}"
+          - "${{ inputs.infraRef }}"
         jaeger: 
-          - "${{ inputs.jaeger }}"
+          - "${{ inputs.jaegerRef }}"
         loki: 
-          - "${{ inputs.loki }}"
+          - "${{ inputs.lokiRef }}"
         ms: 
-          - "${{ inputs.ms }}"
+          - "${{ inputs.msRef }}"
         notebooks: 
-          - "${{ inputs.notebooks }}"
+          - "${{ inputs.notebooksRef }}"
         otel_collectors: 
-          - "${{ inputs.otel_collectors }}"
+          - "${{ inputs.otelCollectorsRef }}"
         prometheus: 
-          - "${{ inputs.prometheus }}"
+          - "${{ inputs.prometheusRef }}"
         proto: 
-          - "${{ inputs.proto }}"
+          - "${{ inputs.protoRef }}"
         rbac: 
-          - "${{ inputs.rbac }}"
+          - "${{ inputs.rbacRef }}"
 
         vars: 
           - infraRepoRelPath: infra
@@ -119,7 +124,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: utkusarioglu/nextjs-grpc-certificates
-          ref: ${{ matrix.certificates }}
+          ref: ${{ matrix.certificatesRef }}
           fetch-depth: 0
           path: certificates
 
@@ -127,7 +132,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: utkusarioglu/nextjs-grpc-e2e
-          ref: ${{ matrix.e2e }}
+          ref: ${{ matrix.e2eRef }}
           fetch-depth: 0
           path: e2e
 
@@ -135,7 +140,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: utkusarioglu/nextjs-grpc-frontend
-          ref: ${{ matrix.frontend }}
+          ref: ${{ matrix.frontendRef }}
           fetch-depth: 0
           path: frontend
       
@@ -143,7 +148,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: utkusarioglu/nextjs-grpc-grafana
-          ref: ${{ matrix.grafana }}
+          ref: ${{ matrix.grafanaRef }}
           fetch-depth: 0
           path: grafana
 
@@ -151,7 +156,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: utkusarioglu/nextjs-grpc-infra
-          ref: ${{ matrix.infra }}
+          ref: ${{ matrix.infraRef }}
           fetch-depth: 0
           path: infra
 
@@ -159,7 +164,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: utkusarioglu/nextjs-grpc-jaeger
-          ref: ${{ matrix.jaeger }}
+          ref: ${{ matrix.jaegerRef }}
           fetch-depth: 0
           path: jaeger
       
@@ -167,7 +172,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: utkusarioglu/nextjs-grpc-loki
-          ref: ${{ matrix.loki }}
+          ref: ${{ matrix.lokiRef }}
           fetch-depth: 0
           path: loki
       
@@ -175,7 +180,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: utkusarioglu/nextjs-grpc-ms
-          ref: ${{ matrix.ms }}
+          ref: ${{ matrix.msRef }}
           fetch-depth: 0
           path: ms
       
@@ -183,7 +188,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: utkusarioglu/nextjs-grpc-notebooks
-          ref: ${{ matrix.notebooks }}
+          ref: ${{ matrix.notebooksRef }}
           fetch-depth: 0
           path: notebooks
       
@@ -191,7 +196,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: utkusarioglu/nextjs-grpc-otel-collectors
-          ref: ${{ matrix.otel_collectors }}
+          ref: ${{ matrix.otelCollectorsRef }}
           fetch-depth: 0
           path: otel-collectors
       
@@ -199,7 +204,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: utkusarioglu/nextjs-grpc-prometheus
-          ref: ${{ matrix.prometheus }}
+          ref: ${{ matrix.prometheusRef }}
           fetch-depth: 0
           path: prometheus
 
@@ -207,7 +212,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: utkusarioglu/nextjs-grpc-proto
-          ref: ${{ matrix.proto }}
+          ref: ${{ matrix.protoRef }}
           fetch-depth: 0
           path: proto
 
@@ -215,7 +220,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: utkusarioglu/nextjs-grpc-rbac
-          ref: ${{ matrix.rbac }}
+          ref: ${{ matrix.rbacRef }}
           fetch-depth: 0
           path: rbac
       
@@ -242,10 +247,11 @@ jobs:
         run: scripts/hosts-entries/add.sh host-gateway
 
       - name: Run Test
-        if: ${{ matrix.mode }} == test
         working-directory: infra
-        run: |
-          scripts/run-tests.sh
+        env: 
+          WEB_SERVER_IMAGE_TAG: ${{ inputs.webServerImageTag }}
+          MS_IMAGE_TAG: ${{ inputs.msImageTag }}
+        run: scripts/run-tests.sh
 
       - name: Save artifacts
         if: ${{ always() }}
