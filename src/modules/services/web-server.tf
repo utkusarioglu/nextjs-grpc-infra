@@ -10,6 +10,9 @@ resource "helm_release" "web_server" {
 
   values = [
     yamlencode({
+      image = {
+        tag = "${var.web_server_image_tag}"
+      }
       env = {
         RUN_MODE                = "production",
         NEXT_PUBLIC_DOMAIN_NAME = "${var.sld}.${var.tld}"

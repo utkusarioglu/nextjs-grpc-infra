@@ -49,7 +49,7 @@ func SetupCluster(t *testing.T, targetSubpath string) string {
 		"No Such Host":          "(?s).*no such host.*",
 	}
 	test_structure.RunTestStage(t, stepName, func() {
-		terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
+		terragruntOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 			TerraformDir:    targetPath,
 			TerraformBinary: "terragrunt",
 			EnvVars: map[string]string{
@@ -59,8 +59,8 @@ func SetupCluster(t *testing.T, targetSubpath string) string {
 			Logger:                   logger.Default,
 			RetryableTerraformErrors: retryableErrors,
 		})
-		test_structure.SaveTerraformOptions(t, ".", terraformOptions)
-		terraform.TgApplyAll(t, terraformOptions)
+		test_structure.SaveTerraformOptions(t, ".", terragruntOptions)
+		terraform.TgApplyAll(t, terragruntOptions)
 	})
 	return timestamp
 }

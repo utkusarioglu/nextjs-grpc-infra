@@ -1,0 +1,19 @@
+name: PR
+
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - edited
+      - synchronize
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  infra-test-web:
+    uses: ./.github/workflows/k3d-dev-local.test.wfc.yml
+    secrets: inherit
+    with:
+      infraRef: ${{ github.head_ref }}

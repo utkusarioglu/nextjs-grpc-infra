@@ -46,5 +46,9 @@
     "**/.project": true,
     "**/.settings": true,
     "**/.factorypath": true
+  },
+  "yaml.schemas": {
+    "https://json.schemastore.org/helmfile.json": "**/*.helm",
+    "https://json.schemastore.org/github-workflow.json": "file:///utkusarioglu-com/projects/nextjs-grpc/infra/.github/workflows/k3d-dev-local.test.yml"
   }
 }
