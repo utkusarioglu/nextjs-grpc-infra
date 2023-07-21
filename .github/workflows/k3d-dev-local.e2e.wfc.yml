@@ -244,8 +244,8 @@ jobs:
       #       --auto-approve \
       #       --terragrunt-log-level info | \
       #       tee -a $logs_abspath/terragrunt-apply.log
-
-      - name: Create Infrastructure
+          
+      - name: Create Infra .env
         working-directory: infra
         env: 
           # From `docker.compose.common.yml`
@@ -260,6 +260,25 @@ jobs:
           CLUSTER_HOST: local.dev.k3d.nextjs-grpc.projects.utkusarioglu.com
           PROJECT_ROOT_ABSPATH: ${{ github.workspace }}
           HOME: ${{ github.workspace }}
+        run: |
+          touch .env
+          for v in \
+            NODES_VOLUMES_ROOT \
+            NODES_SOURCE_CODE_ROOT \
+            CLUSTER_REGION \
+            HOST_VOLUMES_ROOT \
+            HOST_SOURCE_CODE_ROOT \
+            VAULT_ADDR \
+            CLUSTER_HOST \
+            PROJECT_ROOT_ABSPATH \
+            HOME;
+          do
+            echo "$v=${!v}" >> .env
+          done
+          cat .env
+
+      - name: Create Infrastructure
+        working-directory: infra
         run: scripts/docker-run-terragrunt.sh
 
       - name: Create E2E .env

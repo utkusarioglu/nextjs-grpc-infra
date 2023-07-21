@@ -5,6 +5,7 @@ workspace=$(pwd)/..
 docker run \
   --user=0:0 \
   -w $PROJECT_ROOT_ABSPATH/infra \
+  --env-file .env \
   --add-host=host-gateway:host-gateway \
   --add-host=local.dev.k3d.nextjs-grpc.projects.utkusarioglu.com:host-gateway \
   --add-host=nextjs-grpc.utkusarioglu.com:host-gateway \
