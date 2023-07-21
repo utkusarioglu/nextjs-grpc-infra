@@ -279,6 +279,19 @@ jobs:
 
       - name: Create Infrastructure
         working-directory: infra
+        env: 
+          # From `docker.compose.common.yml`
+          TZ: Etc/UTC0
+          NODES_VOLUMES_ROOT: /dev/xvdf
+          NODES_SOURCE_CODE_ROOT: /dev/xvdg
+          CLUSTER_REGION: eu-central-1
+          # From `docker.compose.dev`
+          HOST_VOLUMES_ROOT: ${{ github.workspace }}/volumes/nextjs-grpc
+          HOST_SOURCE_CODE_ROOT: ${{ github.workspace }}
+          VAULT_ADDR: https://vault.nextjs-grpc.utkusarioglu.com:8200
+          CLUSTER_HOST: local.dev.k3d.nextjs-grpc.projects.utkusarioglu.com
+          PROJECT_ROOT_ABSPATH: ${{ github.workspace }}
+          HOME: ${{ github.workspace }}
         run: scripts/docker-run-terragrunt.sh
 
       - name: Create E2E .env
