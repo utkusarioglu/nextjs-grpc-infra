@@ -124,6 +124,10 @@ jobs:
     steps:
       - name: mod
         run: chmod 666 /var/run/docker.sock
+      - name: install docker.io
+        run: |
+          apt-get update
+          apt-get install -y docker.io
       # - name: install
       #   run: apt update && apt install -y docker
       # - name: install docker
