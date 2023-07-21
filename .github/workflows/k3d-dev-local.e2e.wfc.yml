@@ -273,7 +273,7 @@ jobs:
         working-directory: ${{ env.REPO_RELPATH }}/src/targets/k3d/dev/local
         shell: bash
         run: |
-          logs_abspath="${{ env.REPO_RELPATH }}/logs"
+          logs_abspath="${{ matrix.vars.infraRepoRelPath }}/logs"
           mkdir $logs_abspath
           terragrunt run-all destroy \
             --terragrunt-non-interactive \
