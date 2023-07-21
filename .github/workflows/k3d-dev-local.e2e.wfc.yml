@@ -250,7 +250,7 @@ jobs:
         working-directory: ${{ matrix.vars.infraRepoRelPath }}/src/targets/k3d/dev/local
         shell: bash
         run: |
-          logs_abspath="${{ matrix.vars.infraRepoRelPath }}/logs"
+          logs_abspath="${GITHUB_WORKSPACE}/${{ matrix.vars.infraRepoRelPath }}/logs"
           mkdir $logs_abspath
           terragrunt run-all apply \
             --terragrunt-non-interactive \
@@ -273,7 +273,7 @@ jobs:
         working-directory: ${{ matrix.vars.infraRepoRelPath }}/src/targets/k3d/dev/local
         shell: bash
         run: |
-          logs_abspath="${{ matrix.vars.infraRepoRelPath }}/logs"
+          logs_abspath="${GITHUB_WORKSPACE}/${{ matrix.vars.infraRepoRelPath }}/logs"
           terragrunt run-all destroy \
             --terragrunt-non-interactive \
             --auto-approve \
