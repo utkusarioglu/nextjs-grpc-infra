@@ -9,6 +9,7 @@ on:
       - src/**
       - .github/workflows/push.yml
       - .github/workflows/k3d-dev-local.test.wfc.yml
+      - .github/workflows/k3d-dev-local.e2e.wfc.yml
   workflow_dispatch:
 
 jobs:
