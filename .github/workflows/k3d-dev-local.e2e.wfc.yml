@@ -271,10 +271,6 @@ jobs:
       #       --terragrunt-log-level info | \
       #       tee -a $logs_abspath/terragrunt-apply.log
 
-           | 
-
-
-
       - name: Create Infrastructure
         env: 
           # From `docker.compose.common.yml`
