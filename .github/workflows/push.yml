@@ -12,10 +12,18 @@ on:
   workflow_dispatch:
 
 jobs:
+  # infra-test-web:
+  #   uses: ./.github/workflows/k3d-dev-local.test.wfc.yml
+  #   secrets: inherit
+  #   with:
+  #     infraRef: ${{ github.ref_name }}
+  #     frontendRef: experiment/test/workflow-calls
+  #     msRef: experiment/chore/workflow-call
+
   infra-test-web:
-    uses: ./.github/workflows/k3d-dev-local.test.wfc.yml
+    uses: ./.github/workflows/k3d-dev-local.e2e.wfc.yml
     secrets: inherit
     with:
       infraRef: ${{ github.ref_name }}
-      frontendRef: experiment/test/workflow-calls
-      msRef: experiment/chore/workflow-call
+      # frontendRef: experiment/test/workflow-calls
+      # msRef: experiment/chore/workflow-call
