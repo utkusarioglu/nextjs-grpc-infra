@@ -270,7 +270,7 @@ jobs:
           path: e2e/.cypress/artifacts
 
       - name: Destroy infrastructure
-        working-directory: ${{ env.REPO_RELPATH }}/src/targets/k3d/dev/local
+        working-directory: ${{ matrix.vars.infraRepoRelPath }}/src/targets/k3d/dev/local
         shell: bash
         run: |
           logs_abspath="${{ matrix.vars.infraRepoRelPath }}/logs"
