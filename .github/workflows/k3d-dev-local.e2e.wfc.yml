@@ -130,13 +130,13 @@ jobs:
       #     apt-get update
       #     apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
-      # - name: Checkout `certificates`
-      #   uses: actions/checkout@v3
-      #   with:
-      #     repository: utkusarioglu/nextjs-grpc-certificates
-      #     ref: ${{ matrix.certificatesRef }}
-      #     fetch-depth: 0
-      #     path: certificates
+      - name: Checkout `certificates`
+        uses: actions/checkout@v3
+        with:
+          repository: utkusarioglu/nextjs-grpc-certificates
+          ref: ${{ matrix.certificatesRef }}
+          fetch-depth: 0
+          path: certificates
 
       - name: Checkout `e2e`
         uses: actions/checkout@v3
@@ -146,115 +146,115 @@ jobs:
           fetch-depth: 0
           path: e2e
 
-      # - name: Checkout `frontend`
-      #   uses: actions/checkout@v3
-      #   with:
-      #     repository: utkusarioglu/nextjs-grpc-frontend
-      #     ref: ${{ matrix.frontendRef }}
-      #     fetch-depth: 0
-      #     path: frontend
+      - name: Checkout `frontend`
+        uses: actions/checkout@v3
+        with:
+          repository: utkusarioglu/nextjs-grpc-frontend
+          ref: ${{ matrix.frontendRef }}
+          fetch-depth: 0
+          path: frontend
       
-      # - name: Checkout `grafana`
-      #   uses: actions/checkout@v3
-      #   with:
-      #     repository: utkusarioglu/nextjs-grpc-grafana
-      #     ref: ${{ matrix.grafanaRef }}
-      #     fetch-depth: 0
-      #     path: grafana
+      - name: Checkout `grafana`
+        uses: actions/checkout@v3
+        with:
+          repository: utkusarioglu/nextjs-grpc-grafana
+          ref: ${{ matrix.grafanaRef }}
+          fetch-depth: 0
+          path: grafana
 
-      # - name: Checkout `infra`
-      #   uses: actions/checkout@v3
-      #   with:
-      #     repository: utkusarioglu/nextjs-grpc-infra
-      #     ref: ${{ matrix.infraRef }}
-      #     fetch-depth: 0
-      #     path: infra
+      - name: Checkout `infra`
+        uses: actions/checkout@v3
+        with:
+          repository: utkusarioglu/nextjs-grpc-infra
+          ref: ${{ matrix.infraRef }}
+          fetch-depth: 0
+          path: infra
 
-      # - name: Checkout `jaeger`
-      #   uses: actions/checkout@v3
-      #   with:
-      #     repository: utkusarioglu/nextjs-grpc-jaeger
-      #     ref: ${{ matrix.jaegerRef }}
-      #     fetch-depth: 0
-      #     path: jaeger
+      - name: Checkout `jaeger`
+        uses: actions/checkout@v3
+        with:
+          repository: utkusarioglu/nextjs-grpc-jaeger
+          ref: ${{ matrix.jaegerRef }}
+          fetch-depth: 0
+          path: jaeger
       
-      # - name: Checkout `loki`
-      #   uses: actions/checkout@v3
-      #   with:
-      #     repository: utkusarioglu/nextjs-grpc-loki
-      #     ref: ${{ matrix.lokiRef }}
-      #     fetch-depth: 0
-      #     path: loki
+      - name: Checkout `loki`
+        uses: actions/checkout@v3
+        with:
+          repository: utkusarioglu/nextjs-grpc-loki
+          ref: ${{ matrix.lokiRef }}
+          fetch-depth: 0
+          path: loki
       
-      # - name: Checkout `ms`
-      #   uses: actions/checkout@v3
-      #   with:
-      #     repository: utkusarioglu/nextjs-grpc-ms
-      #     ref: ${{ matrix.msRef }}
-      #     fetch-depth: 0
-      #     path: ms
+      - name: Checkout `ms`
+        uses: actions/checkout@v3
+        with:
+          repository: utkusarioglu/nextjs-grpc-ms
+          ref: ${{ matrix.msRef }}
+          fetch-depth: 0
+          path: ms
       
-      # - name: Checkout `notebooks`
-      #   uses: actions/checkout@v3
-      #   with:
-      #     repository: utkusarioglu/nextjs-grpc-notebooks
-      #     ref: ${{ matrix.notebooksRef }}
-      #     fetch-depth: 0
-      #     path: notebooks
+      - name: Checkout `notebooks`
+        uses: actions/checkout@v3
+        with:
+          repository: utkusarioglu/nextjs-grpc-notebooks
+          ref: ${{ matrix.notebooksRef }}
+          fetch-depth: 0
+          path: notebooks
       
-      # - name: Checkout `otel-collectors`
-      #   uses: actions/checkout@v3
-      #   with:
-      #     repository: utkusarioglu/nextjs-grpc-otel-collectors
-      #     ref: ${{ matrix.otelCollectorsRef }}
-      #     fetch-depth: 0
-      #     path: otel-collectors
+      - name: Checkout `otel-collectors`
+        uses: actions/checkout@v3
+        with:
+          repository: utkusarioglu/nextjs-grpc-otel-collectors
+          ref: ${{ matrix.otelCollectorsRef }}
+          fetch-depth: 0
+          path: otel-collectors
       
-      # - name: Checkout `prometheus`
-      #   uses: actions/checkout@v3
-      #   with:
-      #     repository: utkusarioglu/nextjs-grpc-prometheus
-      #     ref: ${{ matrix.prometheusRef }}
-      #     fetch-depth: 0
-      #     path: prometheus
+      - name: Checkout `prometheus`
+        uses: actions/checkout@v3
+        with:
+          repository: utkusarioglu/nextjs-grpc-prometheus
+          ref: ${{ matrix.prometheusRef }}
+          fetch-depth: 0
+          path: prometheus
 
-      # - name: Checkout `proto`
-      #   uses: actions/checkout@v3
-      #   with:
-      #     repository: utkusarioglu/nextjs-grpc-proto
-      #     ref: ${{ matrix.protoRef }}
-      #     fetch-depth: 0
-      #     path: proto
+      - name: Checkout `proto`
+        uses: actions/checkout@v3
+        with:
+          repository: utkusarioglu/nextjs-grpc-proto
+          ref: ${{ matrix.protoRef }}
+          fetch-depth: 0
+          path: proto
 
-      # - name: Checkout `rbac`
-      #   uses: actions/checkout@v3
-      #   with:
-      #     repository: utkusarioglu/nextjs-grpc-rbac
-      #     ref: ${{ matrix.rbacRef }}
-      #     fetch-depth: 0
-      #     path: rbac
+      - name: Checkout `rbac`
+        uses: actions/checkout@v3
+        with:
+          repository: utkusarioglu/nextjs-grpc-rbac
+          ref: ${{ matrix.rbacRef }}
+          fetch-depth: 0
+          path: rbac
       
-      # - name: Migrate vars and secrets files 
-      #   working-directory: infra
-      #   shell: bash
-      #   run: |
-      #     TEMP_B64_SECRETS_ABSPATH=/tmp/secrets.b64
-      #     TEMP_ZIP_SECRETS_ABSPATH=/tmp/secrets.zip
-      #     echo '${{ secrets.SECRET_FILES }}' > $TEMP_B64_SECRETS_ABSPATH
-      #     cat $TEMP_B64_SECRETS_ABSPATH | base64 --decode \
-      #       > $TEMP_ZIP_SECRETS_ABSPATH
-      #     unzip -o $TEMP_ZIP_SECRETS_ABSPATH
-      #     rm $TEMP_B64_SECRETS_ABSPATH $TEMP_ZIP_SECRETS_ABSPATH
+      - name: Migrate vars and secrets files 
+        working-directory: infra
+        shell: bash
+        run: |
+          TEMP_B64_SECRETS_ABSPATH=/tmp/secrets.b64
+          TEMP_ZIP_SECRETS_ABSPATH=/tmp/secrets.zip
+          echo '${{ secrets.SECRET_FILES }}' > $TEMP_B64_SECRETS_ABSPATH
+          cat $TEMP_B64_SECRETS_ABSPATH | base64 --decode \
+            > $TEMP_ZIP_SECRETS_ABSPATH
+          unzip -o $TEMP_ZIP_SECRETS_ABSPATH
+          rm $TEMP_B64_SECRETS_ABSPATH $TEMP_ZIP_SECRETS_ABSPATH
         
-      # - name: Register Root CA
-      #   working-directory: infra
-      #   run: |
-      #     cp .certs/root/root.crt /usr/local/share/ca-certificates/
-      #     update-ca-certificates
+      - name: Register Root CA
+        working-directory: infra
+        run: |
+          cp .certs/root/root.crt /usr/local/share/ca-certificates/
+          update-ca-certificates
 
-      # - name: Alter hosts
-      #   working-directory: infra
-      #   run: scripts/hosts-entries/add.sh host-gateway
+      - name: Alter hosts
+        working-directory: infra
+        run: scripts/hosts-entries/add.sh host-gateway
 
       # - name: Create infrastructure
       #   working-directory: ${{ matrix.vars.infraRepoRelPath }}/src/targets/k3d/dev/local
@@ -271,42 +271,60 @@ jobs:
       #       --terragrunt-log-level info | \
       #       tee -a $logs_abspath/terragrunt-apply.log
 
+           | 
 
 
 
-      # - name: Create Infrastructure
-      #   env: 
-      #     # From `docker.compose.common.yml`
-      #     TZ: Etc/UTC0
-      #     NODES_VOLUMES_ROOT: /dev/xvdf
-      #     NODES_SOURCE_CODE_ROOT: /dev/xvdg
-      #     CLUSTER_REGION: eu-central-1
-      #     # From `docker.compose.dev`
-      #     HOST_VOLUMES_ROOT: ${{ github.workspace }}/volumes/nextjs-grpc
-      #     HOST_SOURCE_CODE_ROOT: ${{ github.workspace }}
-      #     VAULT_ADDR: https://vault.nextjs-grpc.utkusarioglu.com:8200
-      #     CLUSTER_HOST: local.dev.k3d.nextjs-grpc.projects.utkusarioglu.com
-      #     PROJECT_ROOT_ABSPATH: ${{ github.workspace }}
-      #     HOME: ${{ github.workspace }}
-      #   run: |
-      #     docker run \
-      #       --user=0:0 \
-      #       --add-host=host-gateway:host-gateway \
-      #       --tty \
-      #       -v /var/run/docker.sock:/var/run/docker.sock \
-      #       --privileged
-      #       utkusarioglu/tf-k8s-devcontainer:1.4.experiment-feat-devcontainer-features-15
+      - name: Create Infrastructure
+        env: 
+          # From `docker.compose.common.yml`
+          TZ: Etc/UTC0
+          NODES_VOLUMES_ROOT: /dev/xvdf
+          NODES_SOURCE_CODE_ROOT: /dev/xvdg
+          CLUSTER_REGION: eu-central-1
+          # From `docker.compose.dev`
+          HOST_VOLUMES_ROOT: ${{ github.workspace }}/volumes/nextjs-grpc
+          HOST_SOURCE_CODE_ROOT: ${{ github.workspace }}
+          VAULT_ADDR: https://vault.nextjs-grpc.utkusarioglu.com:8200
+          CLUSTER_HOST: local.dev.k3d.nextjs-grpc.projects.utkusarioglu.com
+          PROJECT_ROOT_ABSPATH: ${{ github.workspace }}
+          HOME: ${{ github.workspace }}
+        run: |
+          docker run \
+            --user=0:0 \
+            --add-host=host-gateway:host-gateway \
+            --tty \
+            -v /var/run/docker.sock:/var/run/docker.sock \
+            -v $(pwd)/certificates/:/$PROJECT_ROOT_ABSPATH/certificates \
+            -v $(pwd)/e2e/:/$PROJECT_ROOT_ABSPATH/e2e \
+            -v $(pwd)/frontend/:/$PROJECT_ROOT_ABSPATH/frontend \
+            -v $(pwd)/grafana/:/$PROJECT_ROOT_ABSPATH/grafana \
+            -v $(pwd)/infra/:/$PROJECT_ROOT_ABSPATH/infra \
+            -v $(pwd)/loki/:/$PROJECT_ROOT_ABSPATH/loki \
+            -v $(pwd)/ms/:/$PROJECT_ROOT_ABSPATH/ms \
+            -v $(pwd)/notebooks/:/$PROJECT_ROOT_ABSPATH/notebooks \
+            -v $(pwd)/otel-collectors/:/$PROJECT_ROOT_ABSPATH/otel-collectors \
+            -v $(pwd)/prometheus/:/$PROJECT_ROOT_ABSPATH/prometheus \
+            -v $(pwd)/proto/:/$PROJECT_ROOT_ABSPATH/proto \
+            -v $(pwd)/rbac/:/$PROJECT_ROOT_ABSPATH/rbac \
+            -w $PROJECT_ROOT_ABSPATH \
+            --privileged \
+            --entrypoint 'bash -c "cd src/targets/k3d/dev/local && terragrunt run-all apply --terragrunt-non-interactive --auto-approve --terragrunt-log-level info"' \
+            utkusarioglu/tf-k8s-devcontainer:1.4.experiment-feat-devcontainer-features-15
 
-
-
-
-            
       - name: Create E2E .env
         working-directory: e2e
         env:
           BASE_URL: nextjs-grpc.utkusarioglu.com
-          E2E_VIEWPORT_SIZES: 1920x1080,540x1200,480x850,480x720
-          E2E_BROWSERS: chrome,firefox,edge
+          # E2E_VIEWPORT_SIZES: 1920x1080,480x720
+          E2E_VIEWPORT_SIZES: 480x720
+          # E2E_BROWSERS: chrome,firefox,edge
+          E2E_BROWSERS: chrome
+          E2E_VIDEO_PADDING: 500,150
+          BASE_URL: nextjs-grpc.utkusarioglu.com
+          # E2E_VIEWPORT_SIZES: 1920x1080,540x1200,480x850,480x720
+          E2E_VIEWPORT_SIZES: 480x720
+          E2E_BROWSERS: chrome
         run: |
           touch .env
           echo "BASE_URL=$BASE_URL" >> .env
