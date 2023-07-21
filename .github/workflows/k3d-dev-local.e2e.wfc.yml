@@ -121,7 +121,7 @@ jobs:
 
     steps:
       - name: which docker
-        run: docker --help
+        run: $DOCKERHOST --help
 
       # - name: Checkout `certificates`
       #   uses: actions/checkout@v3
