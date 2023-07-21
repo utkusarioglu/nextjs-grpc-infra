@@ -17,5 +17,7 @@ docker run \
   -v /var/run/docker.sock:/var/run/docker.sock \
   -v $workspace/infra/.certs/root/root.crt:/usr/local/share/ca-certificates/infra.crt \
   -v $workspace:$PROJECT_ROOT_ABSPATH \
-  --entrypoint scripts/terragrunt-apply.sh \
+  --entrypoint ls \
   utkusarioglu/tf-k8s-devcontainer:1.4.experiment-feat-devcontainer-features-15
+
+  # --entrypoint scripts/terragrunt-apply.sh \
