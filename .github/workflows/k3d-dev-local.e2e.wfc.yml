@@ -249,6 +249,9 @@ jobs:
       - name: Create infrastructure
         working-directory: ${{ matrix.vars.infraRepoRelPath }}/src/targets/k3d/dev/local
         shell: bash
+        env:
+          WEB_SERVER_IMAGE_TAG: ${{ inputs.webServerImageTag }}
+          MS_IMAGE_TAG: ${{ inputs.msImageTag }}
         run: |
           logs_abspath="${GITHUB_WORKSPACE}/${{ matrix.vars.infraRepoRelPath }}/logs"
           mkdir $logs_abspath
@@ -272,6 +275,9 @@ jobs:
       - name: Destroy infrastructure
         working-directory: ${{ matrix.vars.infraRepoRelPath }}/src/targets/k3d/dev/local
         shell: bash
+        env:
+          WEB_SERVER_IMAGE_TAG: ${{ inputs.webServerImageTag }}
+          MS_IMAGE_TAG: ${{ inputs.msImageTag }}
         run: |
           logs_abspath="${GITHUB_WORKSPACE}/${{ matrix.vars.infraRepoRelPath }}/logs"
           terragrunt run-all destroy \
