@@ -122,7 +122,7 @@ jobs:
 
     steps:
       - name: chmod
-        run: chmod 666 /var/run/docker.sock
+        run: chmod 777 /var/run/docker.sock
 
       - name: install docker.io
         run: |
