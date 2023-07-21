@@ -312,15 +312,11 @@ jobs:
         working-directory: e2e
         env:
           BASE_URL: nextjs-grpc.utkusarioglu.com
-          # E2E_VIEWPORT_SIZES: 1920x1080,480x720
-          E2E_VIEWPORT_SIZES: 480x720
           # E2E_BROWSERS: chrome,firefox,edge
           E2E_BROWSERS: chrome
           E2E_VIDEO_PADDING: 500,150
-          BASE_URL: nextjs-grpc.utkusarioglu.com
           # E2E_VIEWPORT_SIZES: 1920x1080,540x1200,480x850,480x720
           E2E_VIEWPORT_SIZES: 480x720
-          E2E_BROWSERS: chrome
         run: |
           touch .env
           echo "BASE_URL=$BASE_URL" >> .env
