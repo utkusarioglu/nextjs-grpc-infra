@@ -120,8 +120,8 @@ jobs:
         HOME: ${{ github.workspace }}
 
     steps:
-      - name: which docker
-        run: $DOCKERHOST --help
+      - name: docker
+        run: docker --help
 
       # - name: Checkout `certificates`
       #   uses: actions/checkout@v3
