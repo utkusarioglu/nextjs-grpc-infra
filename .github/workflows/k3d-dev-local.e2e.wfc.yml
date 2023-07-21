@@ -103,8 +103,7 @@ jobs:
     env:
       NODE_ENV: production
     container:
-      # image: utkusarioglu/tf-k8s-devcontainer:1.4.experiment-feat-devcontainer-features-15
-      image: node
+      image: utkusarioglu/tf-k8s-devcontainer:1.4.experiment-feat-devcontainer-features-15
       # options: --user=0:0 --add-host=host-gateway:host-gateway --tty -v /var/run/docker.sock:/var/run/docker.sock -v /usr/bin/docker:/usr/bin/docker --privileged
       options: --user=0:0 --add-host=host-gateway:host-gateway --tty -v /var/run/docker.sock:/var/run/docker.sock --privileged
       env: 
@@ -148,183 +147,183 @@ jobs:
       - name: docker
         run: docker --help
 
-      # - name: Checkout `certificates`
-      #   uses: actions/checkout@v3
-      #   with:
-      #     repository: utkusarioglu/nextjs-grpc-certificates
-      #     ref: ${{ matrix.certificatesRef }}
-      #     fetch-depth: 0
-      #     path: certificates
+      - name: Checkout `certificates`
+        uses: actions/checkout@v3
+        with:
+          repository: utkusarioglu/nextjs-grpc-certificates
+          ref: ${{ matrix.certificatesRef }}
+          fetch-depth: 0
+          path: certificates
 
-      # - name: Checkout `e2e`
-      #   uses: actions/checkout@v3
-      #   with:
-      #     repository: utkusarioglu/nextjs-grpc-e2e
-      #     ref: ${{ matrix.e2eRef }}
-      #     fetch-depth: 0
-      #     path: e2e
+      - name: Checkout `e2e`
+        uses: actions/checkout@v3
+        with:
+          repository: utkusarioglu/nextjs-grpc-e2e
+          ref: ${{ matrix.e2eRef }}
+          fetch-depth: 0
+          path: e2e
 
-      # - name: Checkout `frontend`
-      #   uses: actions/checkout@v3
-      #   with:
-      #     repository: utkusarioglu/nextjs-grpc-frontend
-      #     ref: ${{ matrix.frontendRef }}
-      #     fetch-depth: 0
-      #     path: frontend
+      - name: Checkout `frontend`
+        uses: actions/checkout@v3
+        with:
+          repository: utkusarioglu/nextjs-grpc-frontend
+          ref: ${{ matrix.frontendRef }}
+          fetch-depth: 0
+          path: frontend
       
-      # - name: Checkout `grafana`
-      #   uses: actions/checkout@v3
-      #   with:
-      #     repository: utkusarioglu/nextjs-grpc-grafana
-      #     ref: ${{ matrix.grafanaRef }}
-      #     fetch-depth: 0
-      #     path: grafana
+      - name: Checkout `grafana`
+        uses: actions/checkout@v3
+        with:
+          repository: utkusarioglu/nextjs-grpc-grafana
+          ref: ${{ matrix.grafanaRef }}
+          fetch-depth: 0
+          path: grafana
 
-      # - name: Checkout `infra`
-      #   uses: actions/checkout@v3
-      #   with:
-      #     repository: utkusarioglu/nextjs-grpc-infra
-      #     ref: ${{ matrix.infraRef }}
-      #     fetch-depth: 0
-      #     path: infra
+      - name: Checkout `infra`
+        uses: actions/checkout@v3
+        with:
+          repository: utkusarioglu/nextjs-grpc-infra
+          ref: ${{ matrix.infraRef }}
+          fetch-depth: 0
+          path: infra
 
-      # - name: Checkout `jaeger`
-      #   uses: actions/checkout@v3
-      #   with:
-      #     repository: utkusarioglu/nextjs-grpc-jaeger
-      #     ref: ${{ matrix.jaegerRef }}
-      #     fetch-depth: 0
-      #     path: jaeger
+      - name: Checkout `jaeger`
+        uses: actions/checkout@v3
+        with:
+          repository: utkusarioglu/nextjs-grpc-jaeger
+          ref: ${{ matrix.jaegerRef }}
+          fetch-depth: 0
+          path: jaeger
       
-      # - name: Checkout `loki`
-      #   uses: actions/checkout@v3
-      #   with:
-      #     repository: utkusarioglu/nextjs-grpc-loki
-      #     ref: ${{ matrix.lokiRef }}
-      #     fetch-depth: 0
-      #     path: loki
+      - name: Checkout `loki`
+        uses: actions/checkout@v3
+        with:
+          repository: utkusarioglu/nextjs-grpc-loki
+          ref: ${{ matrix.lokiRef }}
+          fetch-depth: 0
+          path: loki
       
-      # - name: Checkout `ms`
-      #   uses: actions/checkout@v3
-      #   with:
-      #     repository: utkusarioglu/nextjs-grpc-ms
-      #     ref: ${{ matrix.msRef }}
-      #     fetch-depth: 0
-      #     path: ms
+      - name: Checkout `ms`
+        uses: actions/checkout@v3
+        with:
+          repository: utkusarioglu/nextjs-grpc-ms
+          ref: ${{ matrix.msRef }}
+          fetch-depth: 0
+          path: ms
       
-      # - name: Checkout `notebooks`
-      #   uses: actions/checkout@v3
-      #   with:
-      #     repository: utkusarioglu/nextjs-grpc-notebooks
-      #     ref: ${{ matrix.notebooksRef }}
-      #     fetch-depth: 0
-      #     path: notebooks
+      - name: Checkout `notebooks`
+        uses: actions/checkout@v3
+        with:
+          repository: utkusarioglu/nextjs-grpc-notebooks
+          ref: ${{ matrix.notebooksRef }}
+          fetch-depth: 0
+          path: notebooks
       
-      # - name: Checkout `otel-collectors`
-      #   uses: actions/checkout@v3
-      #   with:
-      #     repository: utkusarioglu/nextjs-grpc-otel-collectors
-      #     ref: ${{ matrix.otelCollectorsRef }}
-      #     fetch-depth: 0
-      #     path: otel-collectors
+      - name: Checkout `otel-collectors`
+        uses: actions/checkout@v3
+        with:
+          repository: utkusarioglu/nextjs-grpc-otel-collectors
+          ref: ${{ matrix.otelCollectorsRef }}
+          fetch-depth: 0
+          path: otel-collectors
       
-      # - name: Checkout `prometheus`
-      #   uses: actions/checkout@v3
-      #   with:
-      #     repository: utkusarioglu/nextjs-grpc-prometheus
-      #     ref: ${{ matrix.prometheusRef }}
-      #     fetch-depth: 0
-      #     path: prometheus
+      - name: Checkout `prometheus`
+        uses: actions/checkout@v3
+        with:
+          repository: utkusarioglu/nextjs-grpc-prometheus
+          ref: ${{ matrix.prometheusRef }}
+          fetch-depth: 0
+          path: prometheus
 
-      # - name: Checkout `proto`
-      #   uses: actions/checkout@v3
-      #   with:
-      #     repository: utkusarioglu/nextjs-grpc-proto
-      #     ref: ${{ matrix.protoRef }}
-      #     fetch-depth: 0
-      #     path: proto
+      - name: Checkout `proto`
+        uses: actions/checkout@v3
+        with:
+          repository: utkusarioglu/nextjs-grpc-proto
+          ref: ${{ matrix.protoRef }}
+          fetch-depth: 0
+          path: proto
 
-      # - name: Checkout `rbac`
-      #   uses: actions/checkout@v3
-      #   with:
-      #     repository: utkusarioglu/nextjs-grpc-rbac
-      #     ref: ${{ matrix.rbacRef }}
-      #     fetch-depth: 0
-      #     path: rbac
+      - name: Checkout `rbac`
+        uses: actions/checkout@v3
+        with:
+          repository: utkusarioglu/nextjs-grpc-rbac
+          ref: ${{ matrix.rbacRef }}
+          fetch-depth: 0
+          path: rbac
       
-      # - name: Migrate vars and secrets files 
-      #   working-directory: infra
-      #   shell: bash
-      #   run: |
-      #     TEMP_B64_SECRETS_ABSPATH=/tmp/secrets.b64
-      #     TEMP_ZIP_SECRETS_ABSPATH=/tmp/secrets.zip
-      #     echo '${{ secrets.SECRET_FILES }}' > $TEMP_B64_SECRETS_ABSPATH
-      #     cat $TEMP_B64_SECRETS_ABSPATH | base64 --decode \
-      #       > $TEMP_ZIP_SECRETS_ABSPATH
-      #     unzip -o $TEMP_ZIP_SECRETS_ABSPATH
-      #     rm $TEMP_B64_SECRETS_ABSPATH $TEMP_ZIP_SECRETS_ABSPATH
+      - name: Migrate vars and secrets files 
+        working-directory: infra
+        shell: bash
+        run: |
+          TEMP_B64_SECRETS_ABSPATH=/tmp/secrets.b64
+          TEMP_ZIP_SECRETS_ABSPATH=/tmp/secrets.zip
+          echo '${{ secrets.SECRET_FILES }}' > $TEMP_B64_SECRETS_ABSPATH
+          cat $TEMP_B64_SECRETS_ABSPATH | base64 --decode \
+            > $TEMP_ZIP_SECRETS_ABSPATH
+          unzip -o $TEMP_ZIP_SECRETS_ABSPATH
+          rm $TEMP_B64_SECRETS_ABSPATH $TEMP_ZIP_SECRETS_ABSPATH
         
-      # - name: Register Root CA
-      #   working-directory: infra
-      #   run: |
-      #     cp .certs/root/root.crt /usr/local/share/ca-certificates/
-      #     update-ca-certificates
+      - name: Register Root CA
+        working-directory: infra
+        run: |
+          cp .certs/root/root.crt /usr/local/share/ca-certificates/
+          update-ca-certificates
 
-      # - name: Alter hosts
-      #   working-directory: infra
-      #   run: scripts/hosts-entries/add.sh host-gateway
+      - name: Alter hosts
+        working-directory: infra
+        run: scripts/hosts-entries/add.sh host-gateway
 
-      # - name: Create infrastructure
-      #   working-directory: ${{ matrix.vars.infraRepoRelPath }}/src/targets/k3d/dev/local
-      #   shell: bash
-      #   env:
-      #     WEB_SERVER_IMAGE_TAG: ${{ inputs.webServerImageTag }}
-      #     MS_IMAGE_TAG: ${{ inputs.msImageTag }}
-      #   run: |
-      #     logs_abspath="${GITHUB_WORKSPACE}/${{ matrix.vars.infraRepoRelPath }}/logs"
-      #     mkdir $logs_abspath
-      #     terragrunt run-all apply \
-      #       --terragrunt-non-interactive \
-      #       --auto-approve \
-      #       --terragrunt-log-level info | \
-      #       tee -a $logs_abspath/terragrunt-apply.log
+      - name: Create infrastructure
+        working-directory: ${{ matrix.vars.infraRepoRelPath }}/src/targets/k3d/dev/local
+        shell: bash
+        env:
+          WEB_SERVER_IMAGE_TAG: ${{ inputs.webServerImageTag }}
+          MS_IMAGE_TAG: ${{ inputs.msImageTag }}
+        run: |
+          logs_abspath="${GITHUB_WORKSPACE}/${{ matrix.vars.infraRepoRelPath }}/logs"
+          mkdir $logs_abspath
+          terragrunt run-all apply \
+            --terragrunt-non-interactive \
+            --auto-approve \
+            --terragrunt-log-level info | \
+            tee -a $logs_abspath/terragrunt-apply.log
 
-      # - name: Run e2e tests
-      #   working-directory: e2e
-      #   run: scripts/docker-run-cypress.sh
+      - name: Run e2e tests
+        working-directory: e2e
+        run: scripts/docker-run-cypress.sh
 
-      # - name: Save e2e artifacts
-      #   if: ${{ always() }}
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: utkusarioglu-nextjs-grpc-e2e-artifacts
-      #     path: e2e/.cypress/artifacts
+      - name: Save e2e artifacts
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: utkusarioglu-nextjs-grpc-e2e-artifacts
+          path: e2e/.cypress/artifacts
 
-      # - name: Destroy infrastructure
-      #   working-directory: ${{ matrix.vars.infraRepoRelPath }}/src/targets/k3d/dev/local
-      #   shell: bash
-      #   env:
-      #     WEB_SERVER_IMAGE_TAG: ${{ inputs.webServerImageTag }}
-      #     MS_IMAGE_TAG: ${{ inputs.msImageTag }}
-      #   run: |
-      #     logs_abspath="${GITHUB_WORKSPACE}/${{ matrix.vars.infraRepoRelPath }}/logs"
-      #     terragrunt run-all destroy \
-      #       --terragrunt-non-interactive \
-      #       --auto-approve \
-      #       --terragrunt-log-level info | \
-      #       tee -a $logs_abspath/terragrunt-destroy.log
+      - name: Destroy infrastructure
+        working-directory: ${{ matrix.vars.infraRepoRelPath }}/src/targets/k3d/dev/local
+        shell: bash
+        env:
+          WEB_SERVER_IMAGE_TAG: ${{ inputs.webServerImageTag }}
+          MS_IMAGE_TAG: ${{ inputs.msImageTag }}
+        run: |
+          logs_abspath="${GITHUB_WORKSPACE}/${{ matrix.vars.infraRepoRelPath }}/logs"
+          terragrunt run-all destroy \
+            --terragrunt-non-interactive \
+            --auto-approve \
+            --terragrunt-log-level info | \
+            tee -a $logs_abspath/terragrunt-destroy.log
 
 
-      # - name: Save artifacts
-      #   if: ${{ always() }}
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: utkusarioglu-nextjs-grpc-infra-artifacts
-      #     path: infra/${{ matrix.vars.artifactsRelPath }}
+      - name: Save artifacts
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: utkusarioglu-nextjs-grpc-infra-artifacts
+          path: infra/${{ matrix.vars.artifactsRelPath }}
 
-      # - name: Save logs
-      #   if: ${{ always() }}
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: utkusarioglu-nextjs-grpc-infra-logs
-      #     path: infra/${{ matrix.vars.logsRelPath }}
+      - name: Save logs
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: utkusarioglu-nextjs-grpc-infra-logs
+          path: infra/${{ matrix.vars.logsRelPath }}
