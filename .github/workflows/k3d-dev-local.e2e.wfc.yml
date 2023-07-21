@@ -246,6 +246,7 @@ jobs:
       #       tee -a $logs_abspath/terragrunt-apply.log
 
       - name: Create Infrastructure
+        working-directory: infra
         env: 
           # From `docker.compose.common.yml`
           TZ: Etc/UTC0

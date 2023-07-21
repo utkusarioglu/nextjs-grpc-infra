@@ -1,5 +1,7 @@
 #!/bin/bash
 
+workspace=$(pwd)/..
+
 docker run \
   --user=0:0 \
   -w $PROJECT_ROOT_ABSPATH \
@@ -13,7 +15,7 @@ docker run \
   --add-host=kubernetes-dashboard.nextjs-grpc.utkusarioglu.com:host-gateway \
   --add-host=registry.nextjs-grpc.utkusarioglu.com:host-gateway \
   -v /var/run/docker.sock:/var/run/docker.sock \
-  -v $(pwd)/.certs/root/root.crt:/usr/local/share/ca-certificates \
-  -v $(pwd):$PROJECT_ROOT_ABSPATH \
-  --entrypoint 'scripts/terragrunt-apply.sh' \
+  -v $workspace/infra/.certs/root/root.crt:/usr/local/share/ca-certificates \
+  -v $workspace:$PROJECT_ROOT_ABSPATH \
+  --entrypoint scripts/terragrunt-apply.sh \
   utkusarioglu/tf-k8s-devcontainer:1.4.experiment-feat-devcontainer-features-15
