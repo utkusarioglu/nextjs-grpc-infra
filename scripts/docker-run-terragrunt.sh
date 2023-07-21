@@ -4,7 +4,7 @@ workspace=$(pwd)/..
 
 docker run \
   --user=0:0 \
-  -w $PROJECT_ROOT_ABSPATH \
+  -w $PROJECT_ROOT_ABSPATH/infra \
   --add-host=host-gateway:host-gateway \
   --add-host=local.dev.k3d.nextjs-grpc.projects.utkusarioglu.com:host-gateway \
   --add-host=nextjs-grpc.utkusarioglu.com:host-gateway \
@@ -17,7 +17,5 @@ docker run \
   -v /var/run/docker.sock:/var/run/docker.sock \
   -v $workspace/infra/.certs/root/root.crt:/usr/local/share/ca-certificates/infra.crt \
   -v $workspace:$PROJECT_ROOT_ABSPATH \
-  --entrypoint ls \
+  --entrypoint scripts/terragrunt-apply.sh \
   utkusarioglu/tf-k8s-devcontainer:1.4.experiment-feat-devcontainer-features-15
-
-  # --entrypoint scripts/terragrunt-apply.sh \
