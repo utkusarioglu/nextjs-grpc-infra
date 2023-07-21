@@ -295,6 +295,10 @@ jobs:
       - name: Save e2e artifacts
         if: ${{ always() }}
         uses: actions/upload-artifact@v3
+        env:
+          BASE_URL: nextjs-grpc.utkusarioglu.com
+          E2E_VIEWPORT_SIZES: 1920x1080,540x1200,480x850,480x720
+          E2E_BROWSERS: chrome,firefox,edge
         with:
           name: utkusarioglu-nextjs-grpc-e2e-artifacts
           path: e2e/.cypress/artifacts
