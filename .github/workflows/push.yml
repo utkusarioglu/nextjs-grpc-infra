@@ -26,5 +26,6 @@ jobs:
     secrets: inherit
     with:
       infraRef: ${{ github.ref_name }}
+      e2eRef: experiment/chore/infra-integration
       # frontendRef: experiment/test/workflow-calls
       # msRef: experiment/chore/workflow-call
