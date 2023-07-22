@@ -30,34 +30,34 @@ services:
     # entrypoint: scripts/run-cypress-tests.sh
     volumes:
       - type: bind
-        source: e2e/.env
+        source: ../../e2e/.env
         target: $WORKDIR/.env
       - type: bind
-        source: e2e/package.json
+        source: ../../e2e/package.json
         target: $WORKDIR/package.json
       - type: bind
-        source: e2e/scripts
+        source: ../../e2e/scripts
         target: $WORKDIR/scripts
       - type: bind
-        source: e2e/.cypress
+        source: ../../e2e/.cypress
         target: $WORKDIR/cypress
       - type: bind 
-        source: e2e/cypress.config.js
+        source: ../../e2e/cypress.config.js
         target: $WORKDIR/cypress.config.js
       - type: bind
-        source: e2e/.cypress/cache/node_modules
+        source: ../../e2e/.cypress/cache/node_modules
         target: $WORKDIR/node_modules
       - type: bind
-        source: e2e/.cypress/cache/cypress
+        source: ../../e2e/.cypress/cache/cypress
         target: /root/.cache/Cypress
       - type: bind
-        source: e2e/.yarnrc.yml
+        source: ../../e2e/.yarnrc.yml
         target: $WORKDIR/.yarnrc.yml
       - type: bind
-        source: e2e/.yarn
+        source: ../../e2e/.yarn
         target: $WORKDIR/.yarn
       - type: bind 
-        source: e2e/yarn.lock
+        source: ../../e2e/yarn.lock
         target: $WORKDIR/yarn.lock
 
   
