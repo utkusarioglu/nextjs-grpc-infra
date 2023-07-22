@@ -6,6 +6,7 @@ cat $PROJECT_ROOT_ABSPATH/infra/.env
 
 docker run \
   --user=0:0 \
+  --privileged \
   -w $PROJECT_ROOT_ABSPATH/infra \
   --env-file $PROJECT_ROOT_ABSPATH/infra/.env \
   --add-host=host-gateway:host-gateway \
