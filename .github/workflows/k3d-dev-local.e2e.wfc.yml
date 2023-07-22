@@ -306,9 +306,14 @@ jobs:
           E2E_VIEWPORT_SIZES: 480x720
         run: |
           touch .env
-          echo "BASE_URL=$BASE_URL" >> .env
-          echo "E2E_VIEWPORT_SIZES=$E2E_VIEWPORT_SIZES" >> .env
-          echo "E2E_BROWSERS=$E2E_BROWSERS" >> .env
+          for v in \
+            BASE_URL \
+            E2E_VIEWPORT_SIZES \
+            E2E_BROWSERS;
+          do
+            echo "$v=${!v}" >> .env
+          done
+          cat .env
 
       - name: Run e2e tests
         working-directory: e2e
