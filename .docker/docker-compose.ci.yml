@@ -6,8 +6,8 @@ services:
     name: nextjs-grpc-infra
     tty: true
     user: 0:0
-    networks:
     working_dir: infra
+    networks:
       - host
     environment:
       HOST_VOLUMES_ROOT: ${HOME}/volumes/nextjs-grpc
