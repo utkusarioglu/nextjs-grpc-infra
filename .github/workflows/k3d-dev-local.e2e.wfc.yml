@@ -312,6 +312,9 @@ jobs:
         env: 
           HOME: ${{ github.workspace }}
           BASE_URL: nextjs-grpc.utkusarioglu.com
+          WORKDIR: /cypress-workspace
+          CYPRESS_VERSION: 12.17.2
+          # GITHUB_WORKSPACE: $GITHUB_WORKSPACE
         run: |
           docker compose \
             -f infra/.docker/docker-compose.common.yml \
