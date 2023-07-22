@@ -9,7 +9,7 @@ source $repo_root_abspath/.repo.config
 
 function check_docker_sock_ownership {
   docker_sock_path=/var/run/docker.sock
-  if [[ ! -O "$docker_sock_path" ]] && [ "$(id -u)" == "0" ]; then
+  if [[ ! -O "$docker_sock_path" ]] && [ "$(id -u)" != "0" ]; then
     echo "Error: Docker permissions have not been adjusted."
     return 1
   fi
