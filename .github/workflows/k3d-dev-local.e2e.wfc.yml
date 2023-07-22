@@ -292,6 +292,7 @@ jobs:
           CLUSTER_HOST: local.dev.k3d.nextjs-grpc.projects.utkusarioglu.com
           PROJECT_ROOT_ABSPATH: ${{ github.workspace }}
           HOME: ${{ github.workspace }}
+
         run: scripts/docker-run-terragrunt.sh
 
       - name: Create E2E .env
