@@ -294,6 +294,7 @@ jobs:
         working-directory: e2e
         run: |
           mkdir -p .cypress/cache/cypress
+          mkdir -p .cypress/cache/node_modules
 
       # - name: Run e2e tests
       #   working-directory: e2e
