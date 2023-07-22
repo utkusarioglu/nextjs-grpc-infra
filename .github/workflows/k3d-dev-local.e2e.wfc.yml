@@ -220,31 +220,6 @@ jobs:
           unzip -o $TEMP_ZIP_SECRETS_ABSPATH
           rm $TEMP_B64_SECRETS_ABSPATH $TEMP_ZIP_SECRETS_ABSPATH
         
-      # - name: Register Root CA
-      #   working-directory: infra
-      #   run: |
-      #     cp .certs/root/root.crt /usr/local/share/ca-certificates/
-      #     update-ca-certificates
-
-      # - name: Alter hosts
-      #   working-directory: infra
-      #   run: scripts/hosts-entries/add.sh host-gateway
-
-      # - name: Create infrastructure
-      #   working-directory: ${{ matrix.vars.infraRepoRelPath }}/src/targets/k3d/dev/local
-      #   shell: bash
-      #   env:
-      #     WEB_SERVER_IMAGE_TAG: ${{ inputs.webServerImageTag }}
-      #     MS_IMAGE_TAG: ${{ inputs.msImageTag }}
-      #   run: |
-      #     logs_abspath="${GITHUB_WORKSPACE}/${{ matrix.vars.infraRepoRelPath }}/logs"
-      #     mkdir $logs_abspath
-      #     terragrunt run-all apply \
-      #       --terragrunt-non-interactive \
-      #       --auto-approve \
-      #       --terragrunt-log-level info | \
-      #       tee -a $logs_abspath/terragrunt-apply.log
-          
       - name: Create Infra .env
         working-directory: infra
         env: 
@@ -277,22 +252,22 @@ jobs:
           done
           cat .env
 
-      # - name: Create Infrastructure
-      #   working-directory: infra
-      #   env: 
-      #     # From `docker.compose.common.yml`
-      #     TZ: Etc/UTC0
-      #     NODES_VOLUMES_ROOT: /dev/xvdf
-      #     NODES_SOURCE_CODE_ROOT: /dev/xvdg
-      #     CLUSTER_REGION: eu-central-1
-      #     # From `docker.compose.dev`
-      #     HOST_VOLUMES_ROOT: ${{ github.workspace }}/volumes/nextjs-grpc
-      #     HOST_SOURCE_CODE_ROOT: ${{ github.workspace }}
-      #     VAULT_ADDR: https://vault.nextjs-grpc.utkusarioglu.com:8200
-      #     CLUSTER_HOST: local.dev.k3d.nextjs-grpc.projects.utkusarioglu.com
-      #     PROJECT_ROOT_ABSPATH: ${{ github.workspace }}
-      #     HOME: ${{ github.workspace }}
-      #   run: scripts/docker-run-terragrunt.sh
+      - name: Create Infrastructure
+        working-directory: infra
+        env: 
+          # From `docker.compose.common.yml`
+          TZ: Etc/UTC0
+          NODES_VOLUMES_ROOT: /dev/xvdf
+          NODES_SOURCE_CODE_ROOT: /dev/xvdg
+          CLUSTER_REGION: eu-central-1
+          # From `docker.compose.dev`
+          HOST_VOLUMES_ROOT: ${{ github.workspace }}/volumes/nextjs-grpc
+          HOST_SOURCE_CODE_ROOT: ${{ github.workspace }}
+          VAULT_ADDR: https://vault.nextjs-grpc.utkusarioglu.com:8200
+          CLUSTER_HOST: local.dev.k3d.nextjs-grpc.projects.utkusarioglu.com
+          PROJECT_ROOT_ABSPATH: ${{ github.workspace }}
+          HOME: ${{ github.workspace }}
+        run: scripts/docker-run-terragrunt.sh
 
       - name: Create E2E .env
         working-directory: e2e
@@ -326,30 +301,16 @@ jobs:
           name: utkusarioglu-nextjs-grpc-e2e-artifacts
           path: e2e/.cypress/artifacts
 
-      # - name: Destroy infrastructure
-      #   working-directory: ${{ matrix.vars.infraRepoRelPath }}/src/targets/k3d/dev/local
-      #   shell: bash
-      #   env:
-      #     WEB_SERVER_IMAGE_TAG: ${{ inputs.webServerImageTag }}
-      #     MS_IMAGE_TAG: ${{ inputs.msImageTag }}
-      #   run: |
-      #     logs_abspath="${GITHUB_WORKSPACE}/${{ matrix.vars.infraRepoRelPath }}/logs"
-      #     terragrunt run-all destroy \
-      #       --terragrunt-non-interactive \
-      #       --auto-approve \
-      #       --terragrunt-log-level info | \
-      #       tee -a $logs_abspath/terragrunt-destroy.log
+      - name: Save infra artifacts
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: utkusarioglu-nextjs-grpc-infra-artifacts
+          path: infra/${{ matrix.vars.artifactsRelPath }}
 
-      # - name: Save artifacts
-      #   if: ${{ always() }}
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: utkusarioglu-nextjs-grpc-infra-artifacts
-      #     path: infra/${{ matrix.vars.artifactsRelPath }}
-
-      # - name: Save logs
-      #   if: ${{ always() }}
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: utkusarioglu-nextjs-grpc-infra-logs
-      #     path: infra/${{ matrix.vars.logsRelPath }}
+      - name: Save infra logs
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: utkusarioglu-nextjs-grpc-infra-logs
+          path: infra/${{ matrix.vars.logsRelPath }}
