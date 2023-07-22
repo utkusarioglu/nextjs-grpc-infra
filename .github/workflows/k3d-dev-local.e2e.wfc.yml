@@ -327,6 +327,19 @@ jobs:
             -f infra/.docker/docker-compose.ci.yml \
             up
 
+      - name: Create infrastrucutre
+        run: |
+          docker exec \
+              -t \
+              nextjs-grpc-infra \
+              scripts/terragrunt-apply.sh
+      - name: Run e2e tests
+        run: |
+          docker exec \
+            -t \
+            nextjs-grpc-e2e \
+            scripts/run-cypress-tests.sh
+
       - name: Save infra logs
         if: ${{ always() }}
         uses: actions/upload-artifact@v3
