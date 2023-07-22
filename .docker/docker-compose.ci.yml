@@ -15,7 +15,7 @@ services:
       VAULT_ADDR: https://vault.nextjs-grpc.utkusarioglu.com:8200
       CLUSTER_HOST: local.dev.k3d.nextjs-grpc.projects.utkusarioglu.com
     extra_hosts:
-       host-gateway: host-gateway
+      host-gateway: host-gateway
 
   nextjs-grpc-e2e:
     container_name: nextjs-grpc-e2e
@@ -26,7 +26,7 @@ services:
     # networks:
     #   - host
     extra_hosts:
-      - "$BASE_URL=127.0.0.1"
+      - nextjs-grpc.utkusarioglu.com=127.0.0.1
     # entrypoint: scripts/run-cypress-tests.sh
     volumes:
       - type: bind
