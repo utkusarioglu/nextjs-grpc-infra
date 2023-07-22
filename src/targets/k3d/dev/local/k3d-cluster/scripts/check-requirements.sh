@@ -9,7 +9,7 @@ source $repo_root_abspath/.repo.config
 
 function check_docker_sock_ownership {
   docker_sock_path=/var/run/docker.sock
-  if [[ ! -O "$docker_sock_path" ]]; then
+  if [[ ! -O "$docker_sock_path" ]] && [ "$(id -u)" == "0" ]; then
     echo "Error: Docker permissions have not been adjusted."
     return 1
   fi
@@ -38,8 +38,8 @@ function check_hosts_entries {
 function check_all {
   echo "Starting checks…"
   err_state=0
-  # check_docker_sock_ownership
-  # err_state=$(( $err_state + $? ))
+  check_docker_sock_ownership
+  err_state=$(( $err_state + $? ))
   check_hosts_entries
   err_state=$((err_state + $?))
 

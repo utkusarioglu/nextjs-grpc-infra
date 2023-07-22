@@ -11,7 +11,8 @@ docker run \
   --env-file $PROJECT_ROOT_ABSPATH/infra/.env \
   --add-host=host-gateway:host-gateway \
   -v /var/run/docker.sock:/var/run/docker.sock \
-  -v $workspace/infra/.certs/root/root.crt:/usr/local/share/ca-certificates/infra.crt \
   -v $workspace:$PROJECT_ROOT_ABSPATH \
   --entrypoint scripts/terragrunt-apply.sh \
   utkusarioglu/tf-k8s-devcontainer:1.4.experiment-feat-devcontainer-features-15
+
+  # -v $workspace/infra/.certs/root/root.crt:/usr/local/share/ca-certificates/infra.crt \
