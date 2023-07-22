@@ -308,6 +308,7 @@ jobs:
           for v in \
             BASE_URL \
             E2E_VIEWPORT_SIZES \
+            E2E_VIDEO_PADDING \
             E2E_BROWSERS;
           do
             echo "$v=${!v}" >> .env
