@@ -7,6 +7,7 @@ services:
     tty: true
     user: 0:0
     networks:
+    working_dir: infra
       - host
     environment:
       HOST_VOLUMES_ROOT: ${HOME}/volumes/nextjs-grpc
@@ -20,7 +21,7 @@ services:
     name: nextjs-grpc-e2e
     user: 0:0
     tty: true
-    workdir: $WORKDIR
+    working_dir: $WORKDIR
     image: cypress/included:$CYPRESS_VERSION
     networks:
       - host
