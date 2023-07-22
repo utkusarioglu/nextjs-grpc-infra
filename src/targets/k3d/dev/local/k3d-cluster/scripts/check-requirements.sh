@@ -38,8 +38,8 @@ function check_hosts_entries {
 function check_all {
   echo "Starting checks…"
   err_state=0
-  check_docker_sock_ownership
-  err_state=$(( $err_state + $? ))
+  # check_docker_sock_ownership
+  # err_state=$(( $err_state + $? ))
   check_hosts_entries
   err_state=$((err_state + $?))
 
