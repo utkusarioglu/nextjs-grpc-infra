@@ -104,6 +104,10 @@ jobs:
       NODE_ENV: production
 
     steps:
+      - name: Docker permission thing
+        run: |
+          setfacl --modify user:$(id -u):rw /var/run/docker.sock
+
       - name: Checkout `certificates`
         uses: actions/checkout@v3
         with:
@@ -268,7 +272,7 @@ jobs:
           PROJECT_ROOT_ABSPATH: ${{ github.workspace }}
           HOME: ${{ github.workspace }}
         run: scripts/docker-run-terragrunt.sh
-
+      
       - name: Create E2E .env
         working-directory: e2e
         env:
