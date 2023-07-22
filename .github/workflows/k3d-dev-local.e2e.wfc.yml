@@ -323,10 +323,10 @@ jobs:
           # GITHUB_WORKSPACE: $GITHUB_WORKSPACE
         run: |
           docker compose \
-            -d \
             -f infra/.docker/docker-compose.common.yml \
             -f infra/.docker/docker-compose.ci.yml \
-            up
+            up \
+            -d
 
       - name: Create infrastrucutre
         run: |
