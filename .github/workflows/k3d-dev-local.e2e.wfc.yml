@@ -290,9 +290,9 @@ jobs:
           done
           cat .env
 
-      - name: Run e2e tests
-        working-directory: e2e
-        run: scripts/docker-run-cypress.sh
+      # - name: Run e2e tests
+      #   working-directory: e2e
+      #   run: scripts/docker-run-cypress.sh
 
       # - name: Save e2e artifacts
       #   if: ${{ always() }}

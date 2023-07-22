@@ -6,7 +6,7 @@ services:
     container_name: nextjs-grpc-infra
     tty: true
     user: 0:0
-    working_dir: infra
+    # working_dir: infra
     # networks:
     #   - host
     environment:
@@ -21,7 +21,7 @@ services:
     container_name: nextjs-grpc-e2e
     user: 0:0
     tty: true
-    working_dir: $WORKDIR
+    # working_dir: $WORKDIR
     image: cypress/included:$CYPRESS_VERSION
     # networks:
     #   - host
