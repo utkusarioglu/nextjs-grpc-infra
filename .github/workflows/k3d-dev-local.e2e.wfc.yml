@@ -332,12 +332,14 @@ jobs:
         run: |
           docker exec \
               -t \
+              -w /utkusarioglu-com/projects/nextjs-grpc/infra \
               nextjs-grpc-infra \
               scripts/terragrunt-apply.sh
       - name: Run e2e tests
         run: |
           docker exec \
             -t \
+            -w /utkusarioglu-com/projects/nextjs-grpc/e2e \
             nextjs-grpc-e2e \
             scripts/run-cypress-tests.sh
 
