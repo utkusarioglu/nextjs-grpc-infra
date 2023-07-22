@@ -337,6 +337,7 @@ jobs:
               scripts/terragrunt-apply.sh
 
       - name: Run e2e tests
+        if: ${{ always() }}
         run: |
           docker exec \
             -t \
