@@ -25,7 +25,7 @@ services:
     networks:
       - host
     extra_hosts:
-      - $BASE_URL: 127.0.0.1
+      $BASE_URL: 127.0.0.1
     # entrypoint: scripts/run-cypress-tests.sh
     volumes:
       - type: bind
