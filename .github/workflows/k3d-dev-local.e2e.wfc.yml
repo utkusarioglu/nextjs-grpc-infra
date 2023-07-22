@@ -104,9 +104,9 @@ jobs:
       NODE_ENV: production
 
     steps:
-      - name: Adjust docker permissions
-        run: |
-          chown 777 /var/run/docker.sock
+      # - name: Adjust docker permissions
+      #   run: |
+      #     chown 777 /var/run/docker.sock
 
       - name: Checkout `certificates`
         uses: actions/checkout@v3
