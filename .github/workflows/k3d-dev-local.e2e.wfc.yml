@@ -313,9 +313,10 @@ jobs:
           HOME: ${{ github.workspace }}
           BASE_URL: nextjs-grpc.utkusarioglu.com
         run: |
-          docker compose up \
+          docker compose \
             -f infra/.docker/docker-compose.common.yml \
             -f infra/.docker/docker-compose.ci.yml \
+            up
 
       - name: Save infra logs
         if: ${{ always() }}
