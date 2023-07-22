@@ -106,7 +106,7 @@ jobs:
     steps:
       - name: Docker permission thing
         run: |
-          setfacl --modify user:$(id -u):rw /var/run/docker.sock
+          chmod 666 /var/run/docker.sock
 
       - name: Checkout `certificates`
         uses: actions/checkout@v3
