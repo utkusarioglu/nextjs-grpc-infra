@@ -339,7 +339,7 @@ jobs:
         if: ${{ always() }}
         run: |
           docker exec \
-            -w /utkusarioglu-com/projects/nextjs-grpc/e2e \
+            -w /cypress-workspace \
             nextjs-grpc-e2e \
             scripts/run-cypress-tests.sh
 
