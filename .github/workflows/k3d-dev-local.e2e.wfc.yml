@@ -328,12 +328,12 @@ jobs:
             up \
             -d
 
-      - name: Create infrastrucutre
-        run: |
-          docker exec \
-              -w /utkusarioglu-com/projects/nextjs-grpc/infra \
-              nextjs-grpc-infra \
-              scripts/terragrunt-apply.sh
+      # - name: Create infrastrucutre
+      #   run: |
+      #     docker exec \
+      #         -w /utkusarioglu-com/projects/nextjs-grpc/infra \
+      #         nextjs-grpc-infra \
+      #         scripts/terragrunt-apply.sh
 
       - name: Run e2e tests
         if: ${{ always() }}
