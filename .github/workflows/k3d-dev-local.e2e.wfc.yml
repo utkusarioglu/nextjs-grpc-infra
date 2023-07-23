@@ -328,20 +328,21 @@ jobs:
             up \
             -d
 
-      - name: Create infrastrucutre
-        run: |
-          docker exec \
-              -w /utkusarioglu-com/projects/nextjs-grpc/infra \
-              nextjs-grpc-infra \
-              scripts/terragrunt-apply.sh
-
-      # - name: Run e2e tests
-      #   if: ${{ always() }}
+      # - name: Create infrastructure
       #   run: |
       #     docker exec \
-      #       -w /cypress-workspace \
-      #       nextjs-grpc-e2e \
-      #       scripts/run-cypress-tests.sh
+      #       -w /utkusarioglu-com/projects/nextjs-grpc/infra \
+      #       nextjs-grpc-infra \
+      #       scripts/terragrunt-apply.sh
+
+      - name: Run e2e tests
+        if: ${{ always() }}
+        run: |
+          docker exec \
+            -t \
+            -w /cypress-workspace \
+            nextjs-grpc-e2e \
+            scripts/run-cypress-tests.sh
 
       - name: Save infra logs
         if: ${{ always() }}
