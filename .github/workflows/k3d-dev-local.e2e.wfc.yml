@@ -10,7 +10,7 @@ on:
       e2eRef:
         required: false
         default: main
-        type: string
+        type:d string
       frontendRef:
         required: false
         default: main
@@ -106,11 +106,11 @@ jobs:
     steps:
       - name: one
         run: |
-          docker run --rm hello-world
+          docker run --rm --user=0:0 --privileged -v /var/run/docker.sock hello-world
 
       - name: two
         run: |
-          docker run --rm hello-world
+          docker run --rm --user=0:0 --privileged -v /var/run/docker.sock hello-world
 
       # - name: Checkout `certificates`
       #   uses: actions/checkout@v3
