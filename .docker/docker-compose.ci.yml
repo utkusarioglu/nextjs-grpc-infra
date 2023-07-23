@@ -4,7 +4,7 @@ version: "3.11"
 services:
   nextjs-grpc-infra:
     container_name: nextjs-grpc-infra
-    tty: true
+    # tty: true
     user: 0:0
     # working_dir: infra
     # networks:
@@ -20,13 +20,13 @@ services:
   nextjs-grpc-e2e:
     container_name: nextjs-grpc-e2e
     user: 0:0
-    tty: true
+    # tty: true
     # working_dir: $WORKDIR
     image: cypress/included:$CYPRESS_VERSION
     # networks:
     #   - host
     extra_hosts:
-      - nextjs-grpc.utkusarioglu.com:127.0.0.1
+      - nextjs-grpc.utkusarioglu.com:host-gateway
     # entrypoint: scripts/run-cypress-tests.sh
     volumes:
       - type: bind
