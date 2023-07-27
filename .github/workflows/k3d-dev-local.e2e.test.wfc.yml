@@ -1,0 +1,271 @@
+name: Test K3d Dev Local
+
+on:
+  workflow_call:
+    inputs:
+      certificatesRef:
+        required: false
+        default: main
+        type: string
+      e2eRef:
+        required: false
+        default: main
+        type: string
+      frontendRef:
+        required: false
+        default: main
+        type: string
+      grafanaRef:
+        required: false
+        default: main
+        type: string
+      infraRef:
+        required: false
+        default: main
+        type: string
+      jaegerRef:
+        required: false
+        default: main
+        type: string
+      lokiRef:
+        required: false
+        default: main
+        type: string
+      msRef:
+        required: false
+        default: main
+        type: string
+      notebooksRef:
+        required: false
+        default: main
+        type: string
+      otelCollectorsRef:
+        required: false
+        default: main
+        type: string
+      prometheusRef:
+        required: false
+        default: main
+        type: string
+      protoRef:
+        required: false
+        default: main
+        type: string
+      rbacRef:
+        required: false
+        default: main
+        type: string
+
+      webServerImageTag: 
+        required: false
+        type: string
+      msImageTag: 
+        required: false
+        type: string
+
+jobs:
+  test-k3d-dev-local:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: 
+        certificates: 
+          - "${{ inputs.certificatesRef }}"
+        e2e: 
+          - "${{ inputs.e2eRef }}"
+        frontend: 
+          - "${{ inputs.frontendRef }}"
+        grafana: 
+          - "${{ inputs.grafanaRef }}"
+        infra: 
+          - "${{ inputs.infraRef }}"
+        jaeger: 
+          - "${{ inputs.jaegerRef }}"
+        loki: 
+          - "${{ inputs.lokiRef }}"
+        ms: 
+          - "${{ inputs.msRef }}"
+        notebooks: 
+          - "${{ inputs.notebooksRef }}"
+        otel_collectors: 
+          - "${{ inputs.otelCollectorsRef }}"
+        prometheus: 
+          - "${{ inputs.prometheusRef }}"
+        proto: 
+          - "${{ inputs.protoRef }}"
+        rbac: 
+          - "${{ inputs.rbacRef }}"
+
+        vars: 
+          - infraRepoRelPath: infra
+            artifactsRelPath: artifacts
+            logsRelPath: logs
+
+    env:
+      NODE_ENV: production
+    # container:
+    #   image: utkusarioglu/tf-k8s-devcontainer:1.4.experiment-feat-devcontainer-features-15
+    #   options: --user=0:0 --add-host=host-gateway:host-gateway --tty
+    #   env: 
+    #     # From `docker.compose.common.yml`
+    #     TZ: Etc/UTC0
+    #     NODES_VOLUMES_ROOT: /dev/xvdf
+    #     NODES_SOURCE_CODE_ROOT: /dev/xvdg
+    #     CLUSTER_REGION: eu-central-1
+    #     # From `docker.compose.dev`
+    #     HOST_VOLUMES_ROOT: ${{ github.workspace }}/volumes/nextjs-grpc
+    #     HOST_SOURCE_CODE_ROOT: ${{ github.workspace }}
+    #     VAULT_ADDR: https://vault.nextjs-grpc.utkusarioglu.com:8200
+    #     CLUSTER_HOST: local.dev.k3d.nextjs-grpc.projects.utkusarioglu.com
+    #     PROJECT_ROOT_ABSPATH: ${{ github.workspace }}
+    #     HOME: ${{ github.workspace }}
+
+    steps:
+      - name: Checkout `certificates`
+        uses: actions/checkout@v3
+        with:
+          repository: utkusarioglu/nextjs-grpc-certificates
+          ref: ${{ matrix.certificatesRef }}
+          fetch-depth: 0
+          path: certificates
+
+      - name: Checkout `e2e`
+        uses: actions/checkout@v3
+        with:
+          repository: utkusarioglu/nextjs-grpc-e2e
+          ref: ${{ matrix.e2eRef }}
+          fetch-depth: 0
+          path: e2e
+
+      - name: Checkout `frontend`
+        uses: actions/checkout@v3
+        with:
+          repository: utkusarioglu/nextjs-grpc-frontend
+          ref: ${{ matrix.frontendRef }}
+          fetch-depth: 0
+          path: frontend
+      
+      - name: Checkout `grafana`
+        uses: actions/checkout@v3
+        with:
+          repository: utkusarioglu/nextjs-grpc-grafana
+          ref: ${{ matrix.grafanaRef }}
+          fetch-depth: 0
+          path: grafana
+
+      - name: Checkout `infra`
+        uses: actions/checkout@v3
+        with:
+          repository: utkusarioglu/nextjs-grpc-infra
+          ref: ${{ matrix.infraRef }}
+          fetch-depth: 0
+          path: infra
+
+      - name: Checkout `jaeger`
+        uses: actions/checkout@v3
+        with:
+          repository: utkusarioglu/nextjs-grpc-jaeger
+          ref: ${{ matrix.jaegerRef }}
+          fetch-depth: 0
+          path: jaeger
+      
+      - name: Checkout `loki`
+        uses: actions/checkout@v3
+        with:
+          repository: utkusarioglu/nextjs-grpc-loki
+          ref: ${{ matrix.lokiRef }}
+          fetch-depth: 0
+          path: loki
+      
+      - name: Checkout `ms`
+        uses: actions/checkout@v3
+        with:
+          repository: utkusarioglu/nextjs-grpc-ms
+          ref: ${{ matrix.msRef }}
+          fetch-depth: 0
+          path: ms
+      
+      - name: Checkout `notebooks`
+        uses: actions/checkout@v3
+        with:
+          repository: utkusarioglu/nextjs-grpc-notebooks
+          ref: ${{ matrix.notebooksRef }}
+          fetch-depth: 0
+          path: notebooks
+      
+      - name: Checkout `otel-collectors`
+        uses: actions/checkout@v3
+        with:
+          repository: utkusarioglu/nextjs-grpc-otel-collectors
+          ref: ${{ matrix.otelCollectorsRef }}
+          fetch-depth: 0
+          path: otel-collectors
+      
+      - name: Checkout `prometheus`
+        uses: actions/checkout@v3
+        with:
+          repository: utkusarioglu/nextjs-grpc-prometheus
+          ref: ${{ matrix.prometheusRef }}
+          fetch-depth: 0
+          path: prometheus
+
+      - name: Checkout `proto`
+        uses: actions/checkout@v3
+        with:
+          repository: utkusarioglu/nextjs-grpc-proto
+          ref: ${{ matrix.protoRef }}
+          fetch-depth: 0
+          path: proto
+
+      - name: Checkout `rbac`
+        uses: actions/checkout@v3
+        with:
+          repository: utkusarioglu/nextjs-grpc-rbac
+          ref: ${{ matrix.rbacRef }}
+          fetch-depth: 0
+          path: rbac
+      
+      - name: Migrate vars and secrets files 
+        working-directory: infra
+        shell: bash
+        run: |
+          TEMP_B64_SECRETS_ABSPATH=/tmp/secrets.b64
+          TEMP_ZIP_SECRETS_ABSPATH=/tmp/secrets.zip
+          echo '${{ secrets.SECRET_FILES }}' > $TEMP_B64_SECRETS_ABSPATH
+          cat $TEMP_B64_SECRETS_ABSPATH | base64 --decode \
+            > $TEMP_ZIP_SECRETS_ABSPATH
+          unzip -o $TEMP_ZIP_SECRETS_ABSPATH
+          rm $TEMP_B64_SECRETS_ABSPATH $TEMP_ZIP_SECRETS_ABSPATH
+        
+      - name: Register Root CA
+        working-directory: infra
+        run: |
+          cp .certs/root/root.crt /usr/local/share/ca-certificates/
+          update-ca-certificates
+
+      - name: Alter hosts
+        working-directory: infra
+        run: scripts/hosts-entries/add.sh host-gateway
+      
+      - name: Start devcontainer
+        run: scripts/start-devcontainer.sh
+
+      - name: Run Test
+        working-directory: infra
+        env: 
+          WEB_SERVER_IMAGE_TAG: ${{ inputs.webServerImageTag }}
+          MS_IMAGE_TAG: ${{ inputs.msImageTag }}
+        run: scripts/run-tests.sh
+
+      - name: Save artifacts
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: utkusarioglu-nextjs-grpc-infra-artifacts
+          path: infra/${{ matrix.vars.artifactsRelPath }}
+
+      - name: Save logs
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: utkusarioglu-nextjs-grpc-infra-logs
+          path: infra/${{ matrix.vars.logsRelPath }}

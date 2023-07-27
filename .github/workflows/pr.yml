@@ -13,7 +13,12 @@ on:
 
 jobs:
   infra-test-web:
-    uses: ./.github/workflows/k3d-dev-local.test.wfc.yml
+    uses: ./.github/workflows/k3d-dev-local.integration.test.wfc.yml
+    secrets: inherit
+    with:
+      infraRef: ${{ github.head_ref }}
+
+    uses: ./.github/workflows/k3d-dev-local.e2e.test.wfc.yml
     secrets: inherit
     with:
       infraRef: ${{ github.head_ref }}
