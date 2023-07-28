@@ -282,6 +282,12 @@ jobs:
       - name: Create infrastructure
         working-directory: infra
         run: scripts/ci/create-infrastructure.sh
+      
+      - name: Run e2e tests
+        working-directory: e2e
+        run: |
+          docker exec -t nextjs-grpc-e2e \
+            scripts/run-cypress-tests.sh
 
       - name: Save artifacts
         if: ${{ always() }}
@@ -296,3 +302,10 @@ jobs:
         with:
           name: utkusarioglu-nextjs-grpc-infra-logs
           path: infra/${{ matrix.vars.logsRelPath }}
+
+      - name: Save e2e Artifacts
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: utkusarioglu-nextjs-grpc-e2e-artifacts
+          path: e2e/.cypress/artifacts
