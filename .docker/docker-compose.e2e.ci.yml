@@ -29,6 +29,11 @@ services:
     working_dir: /utkusarioglu-com/projects/nextjs-grpc/e2e
     network_mode: host
     entrypoint: /bin/sh -c "while sleep 1000; do :; done"
+    environment:
+      E2E_BROWSERS: chrome
+      E2E_VIDEO_PADDING: 500,150
+      BASE_URL: nextjs-grpc.utkusarioglu.com
+      E2E_VIEWPORT_SIZES: 480x720
     volumes:
       - type: bind
         source: ../../e2e/.env

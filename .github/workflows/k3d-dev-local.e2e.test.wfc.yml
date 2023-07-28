@@ -286,6 +286,13 @@ jobs:
       - name: Run e2e tests
         if: ${{ always() }}
         working-directory: e2e
+        # env: 
+        #   # E2E_VIEWPORT_SIZES: 1920x1080,480x720
+        #   # E2E_BROWSERS: chrome,firefox,edge
+        #   E2E_BROWSERS: chrome
+        #   E2E_VIDEO_PADDING: 500,150
+        #   BASE_URL: nextjs-grpc.utkusarioglu.com
+        #   E2E_VIEWPORT_SIZES: 480x720
         run: |
           docker exec -t nextjs-grpc-e2e \
             scripts/run-cypress-tests.sh
