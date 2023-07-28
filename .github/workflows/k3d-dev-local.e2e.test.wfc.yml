@@ -241,6 +241,28 @@ jobs:
       #   run: |
       #     cp .certs/intermediate/ca.crt /usr/local/share/ca-certificates/
       #     update-ca-certificates
+      - name: e2e env vars
+        working-directory: e2e
+        env: 
+          # E2E_VIEWPORT_SIZES: 1920x1080,480x720
+          # E2E_BROWSERS: chrome,firefox,edge
+          E2E_BROWSERS: chrome
+          E2E_VIDEO_PADDING: 500,150
+          BASE_URL: nextjs-grpc.utkusarioglu.com
+          E2E_VIEWPORT_SIZES: 480x720
+        run: |
+          required_values='
+            E2E_BROWSERS 
+            E2E_VIDEO_PADDING 
+            BASE_URL 
+            E2E_VIEWPORT_SIZES
+          '
+
+          touch .env
+          for var in $required_values; do
+            echo "${var}=${!var}"
+          done
+          cat .env
       
       - name: Start devcontainer
         working-directory: infra

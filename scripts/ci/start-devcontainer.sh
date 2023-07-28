@@ -12,8 +12,9 @@ for var in $REQUIRED_VARS; do
   fi
 done
 
+echo "Using following values:"
 for var in $REQUIRED_VARS; do
-  echo "Using ${var}: ${!var}"
+  echo "  ${var}: ${!var}"
 done
 
 CYPRESS_VERSION=$CYPRESS_VERSION WORKSPACE_PATH=$WORKSPACE_PATH docker compose \
