@@ -1,8 +1,8 @@
 inputs = {
   platform = "k3d"
 
-  nodes_volumes_root     = get_env("NODES_VOLUMES_ROOT", "")
-  nodes_source_code_root = get_env("NODES_SOURCE_CODE_ROOT", "")
+  nodes_volumes_root     = get_env("NODES_VOLUMES_ROOT")
+  nodes_source_code_root = get_env("NODES_SOURCE_CODE_ROOT")
 
   // TODO this is pretty much invalid config that clashes with requirements of the cloud.
   // find a better way of handling these
