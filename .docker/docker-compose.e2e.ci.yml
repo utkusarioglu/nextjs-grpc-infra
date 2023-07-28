@@ -67,7 +67,9 @@ services:
       - type: bind
         source: ../../e2e/yarn.lock
         target: /utkusarioglu-com/projects/nextjs-grpc/e2e/yarn.lock
-        
+      - type: bind
+        source: ../../infra/.certs/intermediate/ca.crt
+        target: /utkusarioglu-com/projects/nextjs-grpc/e2e/.certs/ca.crt
 
 # docker run \
 #   --rm \
