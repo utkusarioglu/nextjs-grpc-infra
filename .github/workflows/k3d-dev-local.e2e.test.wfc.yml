@@ -236,11 +236,11 @@ jobs:
           unzip -o $TEMP_ZIP_SECRETS_ABSPATH
           rm $TEMP_B64_SECRETS_ABSPATH $TEMP_ZIP_SECRETS_ABSPATH
         
-      - name: Register Root CA
-        working-directory: infra
-        run: |
-          cp .certs/intermediate/ca.crt /usr/local/share/ca-certificates/
-          update-ca-certificates
+      # - name: Register Root CA
+      #   working-directory: infra
+      #   run: |
+      #     cp .certs/intermediate/ca.crt /usr/local/share/ca-certificates/
+      #     update-ca-certificates
       
       - name: Start devcontainer
         working-directory: infra

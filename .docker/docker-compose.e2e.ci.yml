@@ -16,6 +16,10 @@ services:
       PROJECT_ROOT_ABSPATH: ${{ github.workspace }}
     extra_hosts:
       host-gateway: host-gateway
+    volumes:
+      - type: bind
+        source: ../../infra/.certs/intermediate/ca.crt
+        target: /usr/local/share/ca-certificates/cluster-ca.crt
 
   nextjs-grpc-e2e:
     container_name: nextjs-grpc-e2e
