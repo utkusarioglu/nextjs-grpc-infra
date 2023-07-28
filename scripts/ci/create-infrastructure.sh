@@ -3,6 +3,8 @@
 cd src/targets/k3d/dev/local
 pwd
 
+terragrunt_command='terragrunt run-all apply --auto-approve --terragrunt-non-interactive'
+
 docker exec -t \
   nextjs-grpc-infra \
-  'terragrunt run-all apply --auto-approve --terragrunt-non-interactive'
+  bash -c "$terragrunt_command"
