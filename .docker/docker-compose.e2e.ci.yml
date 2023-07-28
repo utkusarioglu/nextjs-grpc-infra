@@ -23,6 +23,7 @@ services:
 
   nextjs-grpc-e2e:
     container_name: nextjs-grpc-e2e
+    image: cypress/included:$CYPRESS_VERSION
     user: 0:0
     tty: true
     working_dir: /utkusarioglu-com/projects/nextjs-grpc/e2e
