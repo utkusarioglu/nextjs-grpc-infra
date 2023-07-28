@@ -235,12 +235,11 @@ jobs:
             > $TEMP_ZIP_SECRETS_ABSPATH
           unzip -o $TEMP_ZIP_SECRETS_ABSPATH
           rm $TEMP_B64_SECRETS_ABSPATH $TEMP_ZIP_SECRETS_ABSPATH
+          
+      - name: Remove risky config
+        working-directory: infra/src/targets
+        run: rm -rf aws
         
-      # - name: Register Root CA
-      #   working-directory: infra
-      #   run: |
-      #     cp .certs/intermediate/ca.crt /usr/local/share/ca-certificates/
-      #     update-ca-certificates
       - name: e2e env vars
         working-directory: e2e
         env: 
@@ -284,7 +283,6 @@ jobs:
         run: scripts/ci/create-infrastructure.sh
       
       - name: Run e2e tests
-        if: ${{ always() }}
         working-directory: e2e
         # env: 
         #   # E2E_VIEWPORT_SIZES: 1920x1080,480x720
