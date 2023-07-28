@@ -51,13 +51,13 @@ services:
         source: ../../e2e/cache/cypress
         target: /root/.cache/cypress
       - type: bind
-        source: ../../e2c/.yarnrc.yml
+        source: ../../e2e/.yarnrc.yml
         target: /utkusarioglu-com/projects/nextjs-grpc/e2e/.yarnrc.yml
       - type: bind
-        source: ../../e2c/.yarn
+        source: ../../e2e/.yarn
         target: /utkusarioglu-com/projects/nextjs-grpc/e2e/.yarn
       - type: bind
-        source: ../../e2c/yarn.lock
+        source: ../../e2e/yarn.lock
         target: /utkusarioglu-com/projects/nextjs-grpc/e2e/yarn.lock
         
 
