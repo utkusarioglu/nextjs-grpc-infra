@@ -45,10 +45,10 @@ services:
         source: ../../e2e/cypress.config.js
         target: /utkusarioglu-com/projects/nextjs-grpc/e2e/cypress.config.js
       - type: bind
-        source: ../../e2e/cache/node_modules
+        source: ../../e2e/.cypress/cache/node_modules
         target: /utkusarioglu-com/projects/nextjs-grpc/e2e/node_modules
       - type: bind
-        source: ../../e2e/cache/cypress
+        source: ../../e2e/.cypress/cache/cypress
         target: /root/.cache/cypress
       - type: bind
         source: ../../e2e/.yarnrc.yml
