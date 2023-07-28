@@ -247,14 +247,12 @@ jobs:
         run: scripts/hosts-entries/add.sh host-gateway
       
       - name: Start devcontainer
-        run: scripts/start-devcontainer.sh
-
-      - name: Run Test
         working-directory: infra
-        env: 
-          WEB_SERVER_IMAGE_TAG: ${{ inputs.webServerImageTag }}
-          MS_IMAGE_TAG: ${{ inputs.msImageTag }}
-        run: scripts/run-tests.sh
+        run: scripts/ci/start-devcontainer.sh
+
+      - name: Create infrastructure
+        working-directory: infra
+        run: scripts/ci/create-infrastructure.sh
 
       - name: Save artifacts
         if: ${{ always() }}
