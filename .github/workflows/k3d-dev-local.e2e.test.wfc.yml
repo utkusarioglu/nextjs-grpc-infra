@@ -241,14 +241,16 @@ jobs:
         run: |
           cp .certs/intermediate/ca.crt /usr/local/share/ca-certificates/
           update-ca-certificates
-
-      - name: Alter hosts
-        working-directory: infra
-        run: scripts/hosts-entries/add.sh host-gateway
       
       - name: Start devcontainer
         working-directory: infra
         run: scripts/ci/start-devcontainer.sh
+
+      - name: Alter Infra Hosts
+        working-directory: infra
+        run: |
+          docker run -t nextjs-grpc-infra \
+            scripts/hosts-entries/add.sh host-gateway
 
       - name: Create infrastructure
         working-directory: infra
