@@ -127,9 +127,9 @@ inputs = {
   ingress_sg = dependency.aws_vpc.outputs.aws_alb_security_group_id
 
   // TODO get rid of these
-  intermediate_crt_b64 = base64encode(file("${get_repo_root()}/.certs/intermediate/intermediate.crt"))
-  intermediate_key_b64 = base64encode(file("${get_repo_root()}/.certs/intermediate/intermediate.key"))
-  ca_crt_b64           = base64encode(file("${get_repo_root()}/.certs/root/root.crt"))
+  intermediate_crt_b64 = base64encode(file("${get_repo_root()}/.certs/intermediate/tls.crt"))
+  intermediate_key_b64 = base64encode(file("${get_repo_root()}/.certs/intermediate/tls.key"))
+  ca_crt_b64           = base64encode(file("${get_repo_root()}/.certs/intermediate/ca.crt"))
 }
 
 terraform {

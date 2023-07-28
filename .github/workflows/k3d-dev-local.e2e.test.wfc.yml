@@ -239,7 +239,7 @@ jobs:
       - name: Register Root CA
         working-directory: infra
         run: |
-          cp .certs/root/root.crt /usr/local/share/ca-certificates/
+          cp .certs/intermediate/ca.crt /usr/local/share/ca-certificates/
           update-ca-certificates
 
       - name: Alter hosts
