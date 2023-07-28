@@ -10,7 +10,7 @@ fi
 cd src/targets/k3d/dev/local
 pwd
 
-docker compose \
+WORKSPACE_PATH=$workspace_path docker compose \
   -f .docker/docker-compose.common.yml \
   -f .docker/docker-compose.e2e.ci.yml \
   up \
