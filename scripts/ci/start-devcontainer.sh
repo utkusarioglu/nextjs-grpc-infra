@@ -17,8 +17,10 @@ for var in $REQUIRED_VARS; do
   echo "  ${var}: ${!var}"
 done
 
-CYPRESS_VERSION=$CYPRESS_VERSION WORKSPACE_PATH=$WORKSPACE_PATH docker compose \
-  -f .docker/docker-compose.common.yml \
-  -f .docker/docker-compose.e2e.ci.yml \
-  up \
-  -d
+CYPRESS_VERSION=$CYPRESS_VERSION \
+WORKSPACE_PATH=$WORKSPACE_PATH \
+  docker compose \
+    -f .docker/docker-compose.common.yml \
+    -f .docker/docker-compose.e2e.ci.yml \
+    up \
+    -d

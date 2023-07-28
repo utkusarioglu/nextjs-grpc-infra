@@ -276,7 +276,7 @@ jobs:
       - name: Alter Infra Hosts
         working-directory: infra
         run: |
-          docker run -t nextjs-grpc-infra \
+          docker exec -t nextjs-grpc-infra \
             scripts/hosts-entries/add.sh host-gateway
 
       - name: Create infrastructure
