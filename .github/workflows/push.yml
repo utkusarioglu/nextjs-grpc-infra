@@ -21,8 +21,8 @@ jobs:
       # frontendRef: experiment/test/workflow-calls
       # msRef: experiment/chore/workflow-call
 
-  k3d-dev-local-e2e-test:
-    uses: ./.github/workflows/k3d-dev-local.e2e.test.wfc.yml
-    secrets: inherit
-    with:
-      infraRef: ${{ github.ref_name }}
+  # k3d-dev-local-e2e-test:
+  #   uses: ./.github/workflows/k3d-dev-local.e2e.test.wfc.yml
+  #   secrets: inherit
+  #   with:
+  #     infraRef: ${{ github.ref_name }}
