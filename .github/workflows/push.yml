@@ -5,14 +5,15 @@ on:
     tags:
       - "**.**.**"
       - "experiment/**/**/**"
-    paths:
-      - src/**
-      - .github/workflows/push.yml
-      - .github/workflows/k3d-dev-local.integration.test.wfc.yml
+    # paths:
+    #   - src/**
+    #   - .github/workflows/push.yml
+    #   - .github/workflows/k3d-dev-local.integration.test.wfc.yml
+    #   - .github/workflows/k3d-dev-local.e2e.test.wfc.yml
   workflow_dispatch:
 
 jobs:
-  infra-test-web:
+  k3d-dev-local-integration-test:
     uses: ./.github/workflows/k3d-dev-local.integration.test.wfc.yml
     secrets: inherit
     with:
@@ -20,6 +21,7 @@ jobs:
       # frontendRef: experiment/test/workflow-calls
       # msRef: experiment/chore/workflow-call
 
+  k3d-dev-local-e2e-test:
     uses: ./.github/workflows/k3d-dev-local.e2e.test.wfc.yml
     secrets: inherit
     with:
