@@ -13,7 +13,7 @@ services:
       HOST_SOURCE_CODE_ROOT: ${WORKSPACE_PATH}
       VAULT_ADDR: https://vault.nextjs-grpc.utkusarioglu.com:8200
       CLUSTER_HOST: local.dev.k3d.nextjs-grpc.projects.utkusarioglu.com
-      PROJECT_ROOT_ABSPATH: ${{ github.workspace }}
+      PROJECT_ROOT_ABSPATH: ${WORKSPACE_PATH}
     extra_hosts:
       host-gateway: host-gateway
     volumes:
