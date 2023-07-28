@@ -279,9 +279,9 @@ jobs:
           docker exec -t nextjs-grpc-infra \
             scripts/hosts-entries/add.sh host-gateway
 
-      - name: Create infrastructure
-        working-directory: infra
-        run: scripts/ci/create-infrastructure.sh
+      # - name: Create infrastructure
+      #   working-directory: infra
+      #   run: scripts/ci/create-infrastructure.sh
       
       - name: Run e2e tests
         if: ${{ always() }}

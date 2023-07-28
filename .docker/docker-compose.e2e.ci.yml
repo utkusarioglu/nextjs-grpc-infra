@@ -28,7 +28,7 @@ services:
     tty: true
     working_dir: /utkusarioglu-com/projects/nextjs-grpc/e2e
     network_mode: host
-    command: /bin/sh -c "while sleep 1000; do :; done"
+    entrypoint: /bin/sh -c "while sleep 1000; do :; done"
     volumes:
       - type: bind
         source: ../../e2e/.env
