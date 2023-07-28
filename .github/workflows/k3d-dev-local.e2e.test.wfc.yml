@@ -281,6 +281,11 @@ jobs:
       - name: Create infrastructure
         working-directory: infra
         run: scripts/ci/create-infrastructure.sh
+          
+      - name: Sleep
+        run: |
+          echo 'Sleeping while cluster settles'
+          sleep 60
       
       - name: Run e2e tests
         working-directory: e2e
