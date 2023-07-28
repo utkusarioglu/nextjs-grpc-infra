@@ -284,6 +284,7 @@ jobs:
         run: scripts/ci/create-infrastructure.sh
       
       - name: Run e2e tests
+        if: ${{ always() }}
         working-directory: e2e
         run: |
           docker exec -t nextjs-grpc-e2e \
