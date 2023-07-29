@@ -245,14 +245,6 @@ jobs:
             e2e/.certs/intermediate/ca.crt
           cat e2e/.certs/intermediate/ca.crt
 
-      - name: Update ca certs in containers
-        run: |
-          for container in infra e2e; do
-            docker exec -t nextjs-grpc-$container bash -c '
-              update-ca-certificates --fresh
-            '
-          done
-
       - name: Remove risky config
         working-directory: infra/src/targets
         run: rm -rf aws
@@ -294,6 +286,14 @@ jobs:
         run: |
           docker exec -t nextjs-grpc-infra \
             scripts/hosts-entries/add.sh host-gateway
+
+      - name: Update ca certs in containers
+        run: |
+          for container in infra e2e; do
+            docker exec -t nextjs-grpc-$container bash -c '
+              update-ca-certificates --fresh
+            '
+          done
 
       - name: Create infrastructure
         working-directory: infra
