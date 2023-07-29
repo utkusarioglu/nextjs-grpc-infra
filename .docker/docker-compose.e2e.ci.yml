@@ -35,7 +35,7 @@ services:
       BASE_URL: nextjs-grpc.utkusarioglu.com
       E2E_VIEWPORT_SIZES: 480x720
     extra_hosts:
-      nextjs-grpc.utkusarioglu.com: 127.0.0.1
+      nextjs-grpc.utkusarioglu.com: host-gateway
     volumes:
       - type: bind
         source: ../../e2e/.env
