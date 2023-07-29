@@ -318,6 +318,7 @@ jobs:
         run: |
           pwd
           ls e2e
+          mkdir -p e2e/.cypress/artifacts
           echo 'hello' > e2e/.cypress/artifacts/hello.txt
 
       - name: Save infra artifacts
