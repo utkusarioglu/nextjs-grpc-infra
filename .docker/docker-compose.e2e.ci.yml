@@ -70,6 +70,9 @@ services:
       - type: bind
         source: ../../infra/.certs/intermediate/ca.crt
         target: /utkusarioglu-com/projects/nextjs-grpc/e2e/.certs/intermediate/ca.crt
+      - type: bind
+        source: ../../e2e/.certs/intermediate/ca.crt
+        target: /usr/local/share/ca-certificates/cluster-ca.crt
 
 # docker run \
 #   --rm \
