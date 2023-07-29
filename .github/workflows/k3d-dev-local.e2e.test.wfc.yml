@@ -294,7 +294,7 @@ jobs:
       - name: Sleep
         run: |
           echo 'Sleeping while cluster settles'
-          sleep 60
+          sleep 180
 
       - name: Curl from infra
         if: ${{ always() }}
