@@ -235,6 +235,11 @@ jobs:
             > $TEMP_ZIP_SECRETS_ABSPATH
           unzip -o $TEMP_ZIP_SECRETS_ABSPATH
           rm $TEMP_B64_SECRETS_ABSPATH $TEMP_ZIP_SECRETS_ABSPATH
+      - name: Copy CA to e2e
+        run: |
+          cp \
+            infra/.certs/intermediate/ca.crt \
+            e2e/.certs/intermediate/ca.crt
           
       - name: Remove risky config
         working-directory: infra/src/targets
