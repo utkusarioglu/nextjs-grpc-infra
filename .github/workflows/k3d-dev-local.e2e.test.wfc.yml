@@ -235,12 +235,15 @@ jobs:
             > $TEMP_ZIP_SECRETS_ABSPATH
           unzip -o $TEMP_ZIP_SECRETS_ABSPATH
           rm $TEMP_B64_SECRETS_ABSPATH $TEMP_ZIP_SECRETS_ABSPATH
+
       - name: Copy CA to e2e
         run: |
           mkdir -p e2e/.certs/intermediate
+          pwd
           cp \
             infra/.certs/intermediate/ca.crt \
             e2e/.certs/intermediate/ca.crt
+          cat e2e/.certs/intermediate/ca.crt
           
       - name: Remove risky config
         working-directory: infra/src/targets
@@ -284,14 +287,19 @@ jobs:
           docker exec -t nextjs-grpc-infra \
             scripts/hosts-entries/add.sh host-gateway
 
-      - name: Create infrastructure
-        working-directory: infra
-        run: scripts/ci/create-infrastructure.sh
+      # - name: Create infrastructure
+      #   working-directory: infra
+      #   run: scripts/ci/create-infrastructure.sh
           
-      - name: Sleep
+      # - name: Sleep
+      #   run: |
+      #     echo 'Sleeping while cluster settles'
+      #     sleep 60
+
+      - name: Prep e2e tests
+        working-directory: e2e
         run: |
-          echo 'Sleeping while cluster settles'
-          sleep 60
+          docker exec -t nextjs-grpc-e2e scripts/prep-cypress-tests.sh
       
       - name: Run e2e tests
         working-directory: e2e
@@ -303,8 +311,7 @@ jobs:
         #   BASE_URL: nextjs-grpc.utkusarioglu.com
         #   E2E_VIEWPORT_SIZES: 480x720
         run: |
-          docker exec -t nextjs-grpc-e2e \
-            scripts/run-cypress-tests.sh
+          docker exec -t nextjs-grpc-e2e scripts/run-cypress-tests.sh
 
       - name: Save artifacts
         if: ${{ always() }}
