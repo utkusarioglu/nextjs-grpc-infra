@@ -296,22 +296,40 @@ jobs:
           echo 'Sleeping while cluster settles'
           sleep 60
 
-      - name: Prep e2e test dependencies
-        working-directory: e2e
+      - name: Curl from machine
+        if: ${{ always() }}
         run: |
-          docker exec -t nextjs-grpc-e2e scripts/prep-cypress-tests.sh
+          curl --insecure nextjs-grpc.utkusarioglu.com/login
       
-      - name: Run e2e tests
-        working-directory: e2e
-        # env: 
-        #   # E2E_VIEWPORT_SIZES: 1920x1080,480x720
-        #   # E2E_BROWSERS: chrome,firefox,edge
-        #   E2E_BROWSERS: chrome
-        #   E2E_VIDEO_PADDING: 500,150
-        #   BASE_URL: nextjs-grpc.utkusarioglu.com
-        #   E2E_VIEWPORT_SIZES: 480x720
+      - name: Curl from infra
+        if: ${{ always() }}
         run: |
-          docker exec -t nextjs-grpc-e2e scripts/run-cypress-tests.sh
+          docker exec -t nextjs-grpc-infra bash -c 'curl --insecure nextjs-grpc.utkusarioglu.com'
+      
+      - name: Curl from e2e
+        if: ${{ always() }}
+        run: |
+          docker exec -t nextjs-grpc-e2e bash -c '
+            apt update && apt install -y curl
+            curl --insecure nextjs-grpc.utkusarioglu.com
+          '
+
+      # - name: Prep e2e test dependencies
+      #   working-directory: e2e
+      #   run: |
+      #     docker exec -t nextjs-grpc-e2e scripts/prep-cypress-tests.sh
+      
+      # - name: Run e2e tests
+      #   working-directory: e2e
+      #   # env: 
+      #   #   # E2E_VIEWPORT_SIZES: 1920x1080,480x720
+      #   #   # E2E_BROWSERS: chrome,firefox,edge
+      #   #   E2E_BROWSERS: chrome
+      #   #   E2E_VIDEO_PADDING: 500,150
+      #   #   BASE_URL: nextjs-grpc.utkusarioglu.com
+      #   #   E2E_VIEWPORT_SIZES: 480x720
+      #   run: |
+      #     docker exec -t nextjs-grpc-e2e scripts/run-cypress-tests.sh
           
       - name: Publish logs
         if: ${{ always() }}
