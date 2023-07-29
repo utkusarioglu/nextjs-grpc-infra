@@ -317,9 +317,8 @@ jobs:
         if: ${{ always() }}
         run: |
           pwd
-          ls
           ls e2e
-          echo 'hello' > touch e2e/.cypress/artifacts/hello.txt
+          echo 'hello' > e2e/.cypress/artifacts/hello.txt
 
       - name: Save infra artifacts
         if: ${{ always() }}
