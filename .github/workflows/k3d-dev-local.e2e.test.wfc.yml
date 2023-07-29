@@ -301,10 +301,10 @@ jobs:
         run: |
           docker exec -t nextjs-grpc-infra bash -c '
             echo "<Home>"
-            curl -s https://nextjs-grpc.utkusarioglu.com | head -n2 -c80
+            curl https://nextjs-grpc.utkusarioglu.com | head -n2 -c80
             echo "</Home>"
             echo "<Login>"
-            curl -s https://nextjs-grpc.utkusarioglu.com/login | head -n3 -c80
+            curl https://nextjs-grpc.utkusarioglu.com/login | head -n3 -c80
             echo "</Login>"
           '
       
@@ -314,13 +314,13 @@ jobs:
           docker exec -t nextjs-grpc-e2e bash -c '
             apt update && apt install -y curl
             echo "<insecure home>"
-            curl -s http://nextjs-grpc.utkusarioglu.com | head -n1 -c80
+            curl http://nextjs-grpc.utkusarioglu.com | head -n1 -c80
             echo "</insecure home>"
             echo "<ssl home>"
-            curl -s https://nextjs-grpc.utkusarioglu.com | head -n1 -c80
+            curl https://nextjs-grpc.utkusarioglu.com | head -n1 -c80
             echo "</ssl home>"
             echo "<ssl login>"
-            curl -s https://nextjs-grpc.utkusarioglu.com/login | head -n1 -c80
+            curl https://nextjs-grpc.utkusarioglu.com/login | head -n1 -c80
             echo "</ssl login>"
           '
 
