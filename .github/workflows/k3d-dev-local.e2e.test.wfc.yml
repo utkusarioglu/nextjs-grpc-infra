@@ -287,14 +287,14 @@ jobs:
           docker exec -t nextjs-grpc-infra \
             scripts/hosts-entries/add.sh host-gateway
 
-      # - name: Create infrastructure
-      #   working-directory: infra
-      #   run: scripts/ci/create-infrastructure.sh
+      - name: Create infrastructure
+        working-directory: infra
+        run: scripts/ci/create-infrastructure.sh
           
-      # - name: Sleep
-      #   run: |
-      #     echo 'Sleeping while cluster settles'
-      #     sleep 60
+      - name: Sleep
+        run: |
+          echo 'Sleeping while cluster settles'
+          sleep 60
 
       - name: Prep e2e tests
         working-directory: e2e
