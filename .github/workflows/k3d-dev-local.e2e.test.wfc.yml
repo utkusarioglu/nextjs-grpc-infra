@@ -237,6 +237,7 @@ jobs:
           rm $TEMP_B64_SECRETS_ABSPATH $TEMP_ZIP_SECRETS_ABSPATH
       - name: Copy CA to e2e
         run: |
+          mkdir -p e2e/.certs/intermediate
           cp \
             infra/.certs/intermediate/ca.crt \
             e2e/.certs/intermediate/ca.crt
