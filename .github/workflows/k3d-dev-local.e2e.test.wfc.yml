@@ -300,9 +300,12 @@ jobs:
         if: ${{ always() }}
         run: |
           docker exec -t nextjs-grpc-infra bash -c '
-            curl http://nextjs-grpc.utkusarioglu.com
-            curl --insecure https://nextjs-grpc.utkusarioglu.com
-            curl --insecure https://nextjs-grpc.utkusarioglu.com/login
+            echo "<Home>"
+            curl --insecure https://nextjs-grpc.utkusarioglu.com | head -n2
+            echo "</Home>"
+            echo "<Login>"
+            curl --insecure https://nextjs-grpc.utkusarioglu.com/login | head -n3
+            echo "</Login>"
           '
       
       - name: Curl from e2e
@@ -311,13 +314,13 @@ jobs:
           docker exec -t nextjs-grpc-e2e bash -c '
             apt update && apt install -y curl
             echo "<insecure home>"
-            curl --insecure http://nextjs-grpc.utkusarioglu.com
+            curl --insecure http://nextjs-grpc.utkusarioglu.com | head -n1
             echo "</insecure home>"
             echo "<ssl home>"
-            curl --insecure https://nextjs-grpc.utkusarioglu.com
+            curl --insecure https://nextjs-grpc.utkusarioglu.com | head -n1
             echo "</ssl home>"
             echo "<ssl login>"
-            curl --insecure https://nextjs-grpc.utkusarioglu.com/login
+            curl --insecure https://nextjs-grpc.utkusarioglu.com/login | head -n1
             echo "</ssl login>"
           '
 
