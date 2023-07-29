@@ -314,17 +314,21 @@ jobs:
       #     docker exec -t nextjs-grpc-e2e scripts/run-cypress-tests.sh
 
       - name: Touch artifacts
+        if: ${{ always() }}
         run: |
+          pwd
+          ls
+          ls e2e
           echo 'hello' > touch e2e/.cypress/artifacts/hello.txt
 
-      - name: Save artifacts
+      - name: Save infra artifacts
         if: ${{ always() }}
         uses: actions/upload-artifact@v3
         with:
           name: utkusarioglu-nextjs-grpc-infra-artifacts
           path: infra/${{ matrix.vars.artifactsRelPath }}
 
-      - name: Save logs
+      - name: Save infra logs
         if: ${{ always() }}
         uses: actions/upload-artifact@v3
         with:
