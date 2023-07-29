@@ -306,8 +306,15 @@ jobs:
         run: |
           docker exec -t nextjs-grpc-e2e bash -c '
             apt update && apt install -y curl
+            echo "<insecure home>"
+            curl --insecure http://nextjs-grpc.utkusarioglu.com
+            echo "</insecure home>"
+            echo "<ssl home>"
             curl --insecure https://nextjs-grpc.utkusarioglu.com
+            echo "</ssl home>"
+            echo "<ssl login>"
             curl --insecure https://nextjs-grpc.utkusarioglu.com/login
+            echo "</ssl login>"
           '
 
       - name: Prep e2e test dependencies
