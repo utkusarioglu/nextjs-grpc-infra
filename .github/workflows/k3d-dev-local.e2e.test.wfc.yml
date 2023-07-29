@@ -301,19 +301,26 @@ jobs:
           
       - name: Sleep
         run: |
-          echo 'Sleeping while cluster settles'
-          sleep 180
+          duration=60
+          echo "Sleeping for $duration while cluster stabilizes…"
+          sleep $duration
 
       - name: Curl from infra
         if: ${{ always() }}
         run: |
           docker exec -t nextjs-grpc-infra bash -c '
-            echo "<Home>"
-            curl https://nextjs-grpc.utkusarioglu.com | head -n2 -c80
-            echo "</Home>"
-            echo "<Login>"
-            curl https://nextjs-grpc.utkusarioglu.com/login | head -n3 -c80
-            echo "</Login>"
+            echo "<insecure home>"
+            curl http://nextjs-grpc.utkusarioglu.com | head -n1 -c80
+            echo "</insecure home>"
+            echo "<ssl home --insecure>"
+            curl --insecure https://nextjs-grpc.utkusarioglu.com | head -n1 -c80
+            echo "</ssl home --insecure>"
+            echo "<ssl home>"
+            curl https://nextjs-grpc.utkusarioglu.com | head -n1 -c80
+            echo "</ssl home>"
+            echo "<ssl login>"
+            curl https://nextjs-grpc.utkusarioglu.com/login | head -n1 -c80
+            echo "</ssl login>"
           '
       
       - name: Curl from e2e
@@ -324,6 +331,9 @@ jobs:
             echo "<insecure home>"
             curl http://nextjs-grpc.utkusarioglu.com | head -n1 -c80
             echo "</insecure home>"
+            echo "<ssl home --insecure>"
+            curl --insecure https://nextjs-grpc.utkusarioglu.com | head -n1 -c80
+            echo "</ssl home --insecure>"
             echo "<ssl home>"
             curl https://nextjs-grpc.utkusarioglu.com | head -n1 -c80
             echo "</ssl home>"

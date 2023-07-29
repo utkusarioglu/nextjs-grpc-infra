@@ -19,7 +19,7 @@ services:
     volumes:
       - type: bind
         source: ../../infra/.certs/intermediate/ca.crt
-        target: /usr/share/ca-certificates/cluster-ca.crt
+        target: /usr/local/share/ca-certificates/cluster-ca.crt
 
   nextjs-grpc-e2e:
     container_name: nextjs-grpc-e2e
@@ -72,7 +72,7 @@ services:
         target: /utkusarioglu-com/projects/nextjs-grpc/e2e/.certs/intermediate/ca.crt
       - type: bind
         source: ../../e2e/.certs/intermediate/ca.crt
-        target: /usr/share/ca-certificates/cluster-ca.crt
+        target: /usr/local/share/ca-certificates/cluster-ca.crt
 
 # docker run \
 #   --rm \
