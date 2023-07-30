@@ -305,43 +305,6 @@ jobs:
           echo "Sleeping for $duration while cluster stabilizes…"
           sleep $duration
 
-      - name: Curl from infra
-        if: ${{ always() }}
-        run: |
-          docker exec -t nextjs-grpc-infra bash -c '
-            echo "<insecure home>"
-            curl http://nextjs-grpc.utkusarioglu.com | head -n1 -c80
-            echo "</insecure home>"
-            echo "<ssl home --insecure>"
-            curl --insecure https://nextjs-grpc.utkusarioglu.com | head -n1 -c80
-            echo "</ssl home --insecure>"
-            echo "<ssl home>"
-            curl https://nextjs-grpc.utkusarioglu.com | head -n1 -c80
-            echo "</ssl home>"
-            echo "<ssl login>"
-            curl https://nextjs-grpc.utkusarioglu.com/login | head -n1 -c80
-            echo "</ssl login>"
-          '
-      
-      - name: Curl from e2e
-        if: ${{ always() }}
-        run: |
-          docker exec -t nextjs-grpc-e2e bash -c '
-            apt update && apt install -y curl
-            echo "<insecure home>"
-            curl http://nextjs-grpc.utkusarioglu.com | head -n1 -c80
-            echo "</insecure home>"
-            echo "<ssl home --insecure>"
-            curl --insecure https://nextjs-grpc.utkusarioglu.com | head -n1 -c80
-            echo "</ssl home --insecure>"
-            echo "<ssl home>"
-            curl https://nextjs-grpc.utkusarioglu.com | head -n1 -c80
-            echo "</ssl home>"
-            echo "<ssl login>"
-            curl https://nextjs-grpc.utkusarioglu.com/login | head -n1 -c80
-            echo "</ssl login>"
-          '
-
       - name: Prep e2e test dependencies
         if: ${{ always() }}
         working-directory: e2e
@@ -364,12 +327,20 @@ jobs:
       - name: Publish logs
         if: ${{ always() }}
         run: |
-          for ns in api ms; do
-            for pod in $(kubectl -n $ns get po | yq '.items[].metadata.name'); do
-              echo "Getting logs for: $ns/$pod"
-              kubectl -n $ns logs $pod
+          docker exec -t nextjs-grpc-infra bash -c '
+            for ns in api ms; do
+              pods=$(kubectl -n $ns get po | yq ".items[].metadata.name")
+              echo "<Pods in ns $ns>"
+              echo $pods
+              echo "<Pods in ns $ns>"
+
+              for pod in $pods; do
+                echo "<Logs: $ns/$pod>"
+                kubectl -n $ns logs $pod
+                echo "</Logs: $ns/$pod>"
+              done
             done
-          done
+          '
 
       # - name: Touch artifacts
       #   if: ${{ always() }}
