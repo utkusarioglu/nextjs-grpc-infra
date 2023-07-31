@@ -11,7 +11,7 @@ cd "$target_path"
 pwd
 
 container_command='
-  terragrunt run-all apply --auto-approve --terragrunt-non-interactive
+  terragrunt run-all destroy --auto-approve --terragrunt-non-interactive
 '
 
 docker exec -t nextjs-grpc-infra bash -c "$container_command"

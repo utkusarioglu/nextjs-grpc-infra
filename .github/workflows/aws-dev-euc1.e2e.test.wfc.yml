@@ -1,4 +1,4 @@
-name: Test K3d Dev Local
+name: Test Aws Dev Eu-central-1
 
 on:
   workflow_call:
@@ -56,7 +56,7 @@ on:
         default: main
         type: string
 
-      webServerImageTag: 
+      webServerImageTag:
         required: false
         type: string
       msImageTag: 
@@ -206,6 +206,12 @@ jobs:
           ref: ${{ matrix.rbacRef }}
           fetch-depth: 0
           path: rbac
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN_TO_ASSUME }}
+          aws-region: ${{ secrets.AWS_REGION }}
       
       - name: Migrate vars and secrets files 
         working-directory: infra
@@ -219,18 +225,18 @@ jobs:
           unzip -o $TEMP_ZIP_SECRETS_ABSPATH
           rm $TEMP_B64_SECRETS_ABSPATH $TEMP_ZIP_SECRETS_ABSPATH
 
-      - name: Copy CA to e2e
-        run: |
-          mkdir -p e2e/.certs/intermediate
-          pwd
-          cp \
-            infra/.certs/intermediate/ca.crt \
-            e2e/.certs/intermediate/ca.crt
-          cat e2e/.certs/intermediate/ca.crt
+      # - name: Copy CA to e2e
+      #   run: |
+      #     mkdir -p e2e/.certs/intermediate
+      #     pwd
+      #     cp \
+      #       infra/.certs/intermediate/ca.crt \
+      #       e2e/.certs/intermediate/ca.crt
+      #     cat e2e/.certs/intermediate/ca.crt
 
-      - name: Remove risky config
-        working-directory: infra/src/targets
-        run: rm -rf aws
+      # - name: Remove risky config
+      #   working-directory: infra/src/targets
+      #   run: rm -rf aws
         
       - name: e2e env vars
         working-directory: e2e
@@ -264,19 +270,19 @@ jobs:
         working-directory: infra
         run: scripts/ci/start-devcontainer.sh $GITHUB_WORKSPACE '12.17.2'
 
-      - name: Alter Infra Hosts
-        working-directory: infra
-        run: |
-          docker exec -t nextjs-grpc-infra \
-            scripts/hosts-entries/add.sh host-gateway
+      # - name: Alter Infra Hosts
+      #   working-directory: infra
+      #   run: |
+      #     docker exec -t nextjs-grpc-infra \
+      #       scripts/hosts-entries/add.sh host-gateway
 
-      - name: Update ca certs in containers
-        run: |
-          for container in infra e2e; do
-            docker exec -t nextjs-grpc-$container bash -c '
-              update-ca-certificates --fresh
-            '
-          done
+      # - name: Update ca certs in containers
+      #   run: |
+      #     for container in infra e2e; do
+      #       docker exec -t nextjs-grpc-$container bash -c '
+      #         update-ca-certificates --fresh
+      #       '
+      #     done
 
       - name: Create infrastructure
         working-directory: infra
@@ -361,6 +367,10 @@ jobs:
               done
             done
           '
+
+      - name: Destroy infrastructure
+        working-directory: infra
+        run: scripts/ci/destroy-infrastructure.sh 'src/targets/k3d/dev/local'
 
       # - name: Touch artifacts
       #   if: ${{ always() }}
