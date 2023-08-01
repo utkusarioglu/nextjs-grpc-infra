@@ -376,6 +376,7 @@ jobs:
           '
 
       - name: Terragrunt cache ls
+        if: ${{ always() }}
         working-directory: infra
         run: |
           echo '<.>'
@@ -389,6 +390,7 @@ jobs:
           echo '</cache/terragrunt>'
 
       - name: Save Terragrunt cache
+        if: ${{ always() }}
         id: terragrunt-cache-save
         uses: actions/cache/save@v3
         with:
