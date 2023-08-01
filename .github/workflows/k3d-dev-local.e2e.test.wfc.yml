@@ -260,6 +260,11 @@ jobs:
         shell: bash
         run: mkdir -p .cypress/cache/{node_modules,cypress}
 
+      - name: Create infra cache paths
+        working-directory: infra
+        run: |
+            mkdir -p .cache
+
       - name: Restore terragrunt cache
         id: terragrunt-cache-restore
         uses: actions/cache/restore@v3
