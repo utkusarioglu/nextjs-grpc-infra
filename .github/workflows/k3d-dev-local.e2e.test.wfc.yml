@@ -378,6 +378,9 @@ jobs:
       - name: Terragrunt cache ls
         working-directory: infra
         run: |
+          echo '<.>'
+          ls
+          echo '</.>'
           echo '<cache>'
           ls .cache
           echo '</cache>'
