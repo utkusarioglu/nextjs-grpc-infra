@@ -259,6 +259,14 @@ jobs:
         working-directory: e2e
         shell: bash
         run: mkdir -p .cypress/cache/{node_modules,cypress}
+
+      - name: Restore terragrunt cache
+        id: terragrunt-cache-restore
+        uses: actions/cache/restore@v3
+        with:
+          path: |
+            infra/.cache
+          key: k3d-dev-local
       
       - name: Start devcontainer
         working-directory: infra
@@ -353,6 +361,7 @@ jobs:
         run: |
           docker exec -t nextjs-grpc-infra bash -c '
             for ns in api ms observability; do
+              kubectl -n $ns get po 
               pods=$(kubectl -n $ns get po | yq ".items[] | .metadata.name")
               echo "<Pods in ns $ns>"
               echo $pods
@@ -365,6 +374,24 @@ jobs:
               done
             done
           '
+
+      - name: Terragrunt cache ls
+        working-directory: infra
+        run: |
+          echo '<cache>'
+          ls .cache
+          echo '</cache>'
+          echo '<cache/terragrunt>'
+          ls .cache/terragrunt
+          echo '</cache/terragrunt>'
+
+      - name: Save Terragrunt cache
+        id: terragrunt-cache-save
+        uses: actions/cache/save@v3
+        with:
+          path: |
+            infra/.cache
+          key: k3d-dev-local
 
       # - name: Touch artifacts
       #   if: ${{ always() }}
