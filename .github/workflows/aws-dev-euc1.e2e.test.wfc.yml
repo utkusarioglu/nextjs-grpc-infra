@@ -207,12 +207,6 @@ jobs:
           fetch-depth: 0
           path: rbac
 
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          role-to-assume: ${{ secrets.AWS_ROLE_ARN_TO_ASSUME }}
-          aws-region: ${{ secrets.AWS_REGION }}
-      
       - name: Migrate vars and secrets files 
         working-directory: infra
         shell: bash
@@ -270,6 +264,21 @@ jobs:
         working-directory: infra
         run: scripts/ci/start-devcontainer.sh $GITHUB_WORKSPACE '12.17.2'
 
+      # - name: Configure AWS Credentials
+      #   run: |
+      #     docker exec -t nextjs-grpc-infra bash -c '
+      #       credentials_path=/home/terraform/.aws
+      #       mkdir -p $credentials_path
+      #       rm $credentials_path/credentials
+      #       touch $credentials_path/credentials
+
+      #       echo '[utkusarioglu]'
+      #       echo "aws_access_key_id = AKIA2UURBKK57DSUPU5S"
+
+      #       role-to-assume: ${{ secrets.AWS_ROLE_ARN_TO_ASSUME }}
+      #       aws-region: ${{ secrets.AWS_REGION }}
+      #     '
+
       # - name: Alter Infra Hosts
       #   working-directory: infra
       #   run: |
@@ -286,6 +295,8 @@ jobs:
 
       - name: Create infrastructure
         working-directory: infra
+        env: 
+          AWS_ROLE_ARN: ${{ secrets.AWS_ROLE_ARN_TO_ASSUME }}
         run: scripts/ci/create-infrastructure.sh 'src/targets/k3d/dev/local'
           
       - name: Sleep
@@ -370,6 +381,8 @@ jobs:
 
       - name: Destroy infrastructure
         working-directory: infra
+        env: 
+          AWS_ROLE_ARN: ${{ secrets.AWS_ROLE_ARN_TO_ASSUME }}
         run: scripts/ci/destroy-infrastructure.sh 'src/targets/k3d/dev/local'
 
       # - name: Touch artifacts

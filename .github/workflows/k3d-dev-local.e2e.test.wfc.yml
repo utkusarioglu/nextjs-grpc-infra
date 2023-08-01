@@ -262,7 +262,11 @@ jobs:
       
       - name: Start devcontainer
         working-directory: infra
-        run: scripts/ci/start-devcontainer.sh $GITHUB_WORKSPACE '12.17.2'
+        run: |
+          scripts/ci/start-devcontainer.sh \
+            $GITHUB_WORKSPACE \
+            '12.17.2' \
+            'no_observability'
 
       - name: Alter Infra Hosts
         working-directory: infra

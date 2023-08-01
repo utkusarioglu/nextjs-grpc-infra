@@ -14,6 +14,7 @@ services:
       VAULT_ADDR: https://vault.nextjs-grpc.utkusarioglu.com:8200
       CLUSTER_HOST: local.dev.k3d.nextjs-grpc.projects.utkusarioglu.com
       PROJECT_ROOT_ABSPATH: ${WORKSPACE_PATH}
+      K3D_DEV_LOCAL_DEPLOYMENT_MODE: ${K3D_DEV_LOCAL_DEPLOYMENT_MODE}
     extra_hosts:
       host-gateway: host-gateway
     volumes:

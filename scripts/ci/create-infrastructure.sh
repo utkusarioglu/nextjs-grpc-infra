@@ -2,6 +2,8 @@
 
 target_path=$1
 
+echo $AWS_ROLE_ARN
+
 if [ -z "$target_path" ]; then
   echo "Error: Target path needs to be set"
   exit 1

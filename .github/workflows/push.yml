@@ -22,16 +22,16 @@ jobs:
   #     # msRef: experiment/chore/workflow-call
       # e2eRef: experiment/chore/infra-integration
 
-  # k3d-dev-local-e2e-test:
-  #   uses: ./.github/workflows/k3d-dev-local.e2e.test.wfc.yml
-  #   secrets: inherit
-  #   with:
-  #     infraRef: ${{ github.ref_name }}
-  #     e2eRef: experiment/chore/infra-integration
-
-  aws-dev-euc1-e2e-test:
-    uses: ./.github/workflows/aws-dev-euc1.e2e.test.wfc.yml
+  k3d-dev-local-e2e-test:
+    uses: ./.github/workflows/k3d-dev-local.e2e.test.wfc.yml
     secrets: inherit
     with:
       infraRef: ${{ github.ref_name }}
       e2eRef: experiment/chore/infra-integration
+
+  # aws-dev-euc1-e2e-test:
+  #   uses: ./.github/workflows/aws-dev-euc1.e2e.test.wfc.yml
+  #   secrets: inherit
+  #   with:
+  #     infraRef: ${{ github.ref_name }}
+  #     e2eRef: experiment/chore/infra-integration

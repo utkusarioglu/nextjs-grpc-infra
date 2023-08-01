@@ -1,5 +1,6 @@
 inputs = {
-  deployment_mode   = "all"
+  // deployment_mode   = "all"
+  deployment_mode   = get_env("K3D_DEV_LOCAL_DEPLOYMENT_MODE", "all")
   helm_timeout_unit = 600
   helm_atomic       = true
 
