@@ -60,3 +60,5 @@ terraform.rc
 modules/vault/artifacts
 
 TODO.md
+
+.infracost

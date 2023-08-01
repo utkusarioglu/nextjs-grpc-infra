@@ -380,6 +380,12 @@ jobs:
             done
           '
 
+
+      - name: Create infra cache paths
+        working-directory: infra
+        run: |
+            chown -R 1000:1000 .cache
+
       - name: Terragrunt cache ls
         if: ${{ always() }}
         working-directory: infra
