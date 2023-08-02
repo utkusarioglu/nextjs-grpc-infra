@@ -31,10 +31,14 @@ services:
     network_mode: host
     entrypoint: /bin/sh -c "while sleep 1000; do :; done"
     environment:
-      E2E_BROWSERS: chrome
+      # E2E_BROWSERS: chrome
       E2E_VIDEO_PADDING: 500,150
+      # BASE_URL: nextjs-grpc.utkusarioglu.com
+      # E2E_VIEWPORT_SIZES: 480x720
       BASE_URL: nextjs-grpc.utkusarioglu.com
-      E2E_VIEWPORT_SIZES: 480x720
+      E2E_VIEWPORT_SIZES: 1920x1080,540x1200,480x850,480x720
+      E2E_BROWSERS: chrome,firefox,edge
+
     extra_hosts:
       nextjs-grpc.utkusarioglu.com: host-gateway
     volumes:

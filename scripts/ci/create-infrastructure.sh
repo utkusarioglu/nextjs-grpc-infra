@@ -17,7 +17,6 @@ container_command='
     --auto-approve \
     --terragrunt-non-interactive \
     --terragrunt-download-dir /utkusarioglu-com/projects/nextjs-grpc/infra/.cache/terragrunt
-  chown -R 1000:1000 /utkusarioglu-com/projects/nextjs-grpc/infra/.cache
 '
 
 docker exec -t nextjs-grpc-infra bash -c "$container_command"
