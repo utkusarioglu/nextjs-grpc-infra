@@ -272,15 +272,17 @@ jobs:
           path: |
             infra/.cache
           key: k3d-dev-local
+          fail-on-cache-miss: true
           restore-keys: |
-            k3d-dev-local
+            k3d-dev-
+            k3d--
       
-      - name: Cache hit check
-        run: |
-          if [ "${{ steps.terragrunt-cache-restore.outputs.cache-hit }}" != "true" ]; then
-            echo "Error: No cache hit, exiting."
-            exit 1
-          fi
+      # - name: Cache hit check
+      #   run: |
+      #     if [ "${{ steps.terragrunt-cache-restore.outputs.cache-hit }}" != "true" ]; then
+      #       echo "Error: No cache hit, exiting."
+      #       exit 1
+      #     fi
 
       - name: Start devcontainer
         working-directory: infra
