@@ -272,7 +272,7 @@ jobs:
           path: |
             infra/.cache
           key: k3d-dev-local
-      
+
       - name: Start devcontainer
         working-directory: infra
         run: |
@@ -401,7 +401,7 @@ jobs:
           echo '</cache/terragrunt>'
 
       - name: Save Terragrunt cache
-        if: ${{ always() }}
+        # if: ${{ always() }}
         id: terragrunt-cache-save
         uses: actions/cache/save@v3
         with:
