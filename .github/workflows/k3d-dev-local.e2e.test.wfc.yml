@@ -272,10 +272,10 @@ jobs:
           path: |
             infra/.cache
           key: k3d-dev-local
-          fail-on-cache-miss: true
+          # fail-on-cache-miss: true
           restore-keys: |
             k3d-dev-
-            k3d--
+            k3d-
       
       # - name: Cache hit check
       #   run: |
@@ -419,6 +419,9 @@ jobs:
           path: |
             infra/.cache
           key: k3d-dev-local
+          restore-keys: |
+            k3d-dev-
+            k3d-
 
       - name: Save infra artifacts
         if: ${{ always() }}
