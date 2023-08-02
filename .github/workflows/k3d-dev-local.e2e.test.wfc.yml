@@ -272,6 +272,8 @@ jobs:
           path: |
             infra/.cache
           key: k3d-dev-local
+          restore-keys: |
+            k3d-dev-local
       
       - name: Cache hit check
         run: |
