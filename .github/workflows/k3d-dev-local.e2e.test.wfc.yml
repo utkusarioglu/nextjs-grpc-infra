@@ -272,7 +272,7 @@ jobs:
           path: |
             infra/.cache
           key: k3d-dev-local
-          # fail-on-cache-miss: true
+          fail-on-cache-miss: true
           restore-keys: |
             k3d-dev-
             k3d-
