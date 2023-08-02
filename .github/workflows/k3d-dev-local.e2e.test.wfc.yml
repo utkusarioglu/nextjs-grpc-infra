@@ -260,10 +260,10 @@ jobs:
         shell: bash
         run: mkdir -p .cypress/cache/{node_modules,cypress}
 
-      - name: Create infra cache paths
-        working-directory: infra
-        run: |
-            mkdir -p .cache
+      # - name: Create infra cache paths
+      #   working-directory: infra
+      #   run: |
+      #       mkdir -p .cache
 
       - name: Restore terragrunt cache
         id: terragrunt-cache-restore
@@ -301,7 +301,7 @@ jobs:
       
       - name: Sleep
         run: |
-          duration=180
+          duration=60
           echo "Sleeping for $duration while cluster stabilizes…"
           sleep $duration
 
@@ -381,10 +381,11 @@ jobs:
           '
 
 
-      - name: Create infra cache paths
+      - name: Alter infra cache path permissions
         working-directory: infra
         run: |
-            sudo chown -R 1000:1000 .cache
+            sudo chown -R "$(id -u):$(id -g)" .cache
+            ls -al .cache
 
       - name: Terragrunt cache ls
         if: ${{ always() }}
