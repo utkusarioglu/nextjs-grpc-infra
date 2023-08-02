@@ -305,42 +305,42 @@ jobs:
           echo "Sleeping for $duration while cluster stabilizes…"
           sleep $duration
 
-      - name: Curl from infra
-        if: ${{ always() }}
-        run: |
-          docker exec -t nextjs-grpc-infra bash -c '
-            echo "<insecure home>"
-            curl http://nextjs-grpc.utkusarioglu.com | head -n1 -c80
-            echo "</insecure home>"
-            echo "<ssl home --insecure>"
-            curl --insecure https://nextjs-grpc.utkusarioglu.com | head -n1 -c80
-            echo "</ssl home --insecure>"
-            echo "<ssl home>"
-            curl https://nextjs-grpc.utkusarioglu.com | head -n1 -c80
-            echo "</ssl home>"
-            echo "<ssl login>"
-            curl https://nextjs-grpc.utkusarioglu.com/login | head -n1 -c80
-            echo "</ssl login>"
-          '
+      # - name: Curl from infra
+      #   if: ${{ always() }}
+      #   run: |
+      #     docker exec -t nextjs-grpc-infra bash -c '
+      #       echo "<insecure home>"
+      #       curl http://nextjs-grpc.utkusarioglu.com | head -n1 -c80
+      #       echo "</insecure home>"
+      #       echo "<ssl home --insecure>"
+      #       curl --insecure https://nextjs-grpc.utkusarioglu.com | head -n1 -c80
+      #       echo "</ssl home --insecure>"
+      #       echo "<ssl home>"
+      #       curl https://nextjs-grpc.utkusarioglu.com | head -n1 -c80
+      #       echo "</ssl home>"
+      #       echo "<ssl login>"
+      #       curl https://nextjs-grpc.utkusarioglu.com/login | head -n1 -c80
+      #       echo "</ssl login>"
+      #     '
       
-      - name: Curl from e2e
-        if: ${{ always() }}
-        run: |
-          docker exec -t nextjs-grpc-e2e bash -c '
-            apt update && apt install -y curl
-            echo "<insecure home>"
-            curl http://nextjs-grpc.utkusarioglu.com | head -n1 -c80
-            echo "</insecure home>"
-            echo "<ssl home --insecure>"
-            curl --insecure https://nextjs-grpc.utkusarioglu.com | head -n1 -c80
-            echo "</ssl home --insecure>"
-            echo "<ssl home>"
-            curl https://nextjs-grpc.utkusarioglu.com | head -n1 -c80
-            echo "</ssl home>"
-            echo "<ssl login>"
-            curl https://nextjs-grpc.utkusarioglu.com/login | head -n1 -c80
-            echo "</ssl login>"
-          '
+      # - name: Curl from e2e
+      #   if: ${{ always() }}
+      #   run: |
+      #     docker exec -t nextjs-grpc-e2e bash -c '
+      #       apt update && apt install -y curl
+      #       echo "<insecure home>"
+      #       curl http://nextjs-grpc.utkusarioglu.com | head -n1 -c80
+      #       echo "</insecure home>"
+      #       echo "<ssl home --insecure>"
+      #       curl --insecure https://nextjs-grpc.utkusarioglu.com | head -n1 -c80
+      #       echo "</ssl home --insecure>"
+      #       echo "<ssl home>"
+      #       curl https://nextjs-grpc.utkusarioglu.com | head -n1 -c80
+      #       echo "</ssl home>"
+      #       echo "<ssl login>"
+      #       curl https://nextjs-grpc.utkusarioglu.com/login | head -n1 -c80
+      #       echo "</ssl login>"
+      #     '
 
       - name: Prep e2e test dependencies
         if: ${{ always() }}
@@ -380,7 +380,6 @@ jobs:
             done
           '
 
-
       - name: Alter infra cache path permissions
         working-directory: infra
         run: |
@@ -409,14 +408,6 @@ jobs:
           path: |
             infra/.cache
           key: k3d-dev-local
-
-      # - name: Touch artifacts
-      #   if: ${{ always() }}
-      #   run: |
-      #     pwd
-      #     ls e2e
-      #     mkdir -p e2e/.cypress/artifacts
-      #     echo 'hello' > e2e/.cypress/artifacts/hello.txt
 
       - name: Save infra artifacts
         if: ${{ always() }}
