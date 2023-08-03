@@ -101,6 +101,7 @@ jobs:
           - infraRepoRelPath: infra
             artifactsRelPath: artifacts
             logsRelPath: logs
+            tgCacheEnabled: false
 
     steps:
       - name: Checkout `certificates`
@@ -261,6 +262,7 @@ jobs:
         run: mkdir -p .cypress/cache/{node_modules,cypress}
 
       - name: Restore terragrunt cache
+        if: ${{ matrix.vars.tgCacheEnabled }}
         id: terragrunt-cache-restore
         uses: actions/cache/restore@v3
         with:
@@ -399,6 +401,7 @@ jobs:
           echo '</cache/terragrunt>'
 
       - name: Save Terragrunt cache
+        if: ${{ matrix.vars.tgCacheEnabled }}
         id: terragrunt-cache-save
         uses: actions/cache/save@v3
         with:
