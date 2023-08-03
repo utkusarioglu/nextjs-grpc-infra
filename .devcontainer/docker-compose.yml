@@ -18,7 +18,7 @@ services:
         source: ~/.kube
         target: /home/terraform/.kube
       - type: bind
-        source: ../.certs/root/root.crt
+        source: ../.certs/intermediate/ca.crt
         target: /etc/ssl/certs/root.crt
         read_only: true
       - type: bind

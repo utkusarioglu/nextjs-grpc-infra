@@ -1,0 +1,101 @@
+version: "3.11"
+
+services:
+  nextjs-grpc-infra:
+    container_name: nextjs-grpc-infra
+    image: utkusarioglu/tf-k8s-devcontainer:1.4.experiment-feat-devcontainer-features-15
+    working_dir: /utkusarioglu-com/projects/nextjs-grpc/infra
+    user: 0:0
+    tty: true
+    network_mode: host
+    environment:
+      HOST_VOLUMES_ROOT: ${WORKSPACE_PATH}/volumes/nextjs-grpc
+      HOST_SOURCE_CODE_ROOT: ${WORKSPACE_PATH}
+      VAULT_ADDR: https://vault.nextjs-grpc.utkusarioglu.com:8200
+      CLUSTER_HOST: local.dev.k3d.nextjs-grpc.projects.utkusarioglu.com
+      PROJECT_ROOT_ABSPATH: ${WORKSPACE_PATH}
+      K3D_DEV_LOCAL_DEPLOYMENT_MODE: ${K3D_DEV_LOCAL_DEPLOYMENT_MODE}
+    extra_hosts:
+      host-gateway: host-gateway
+    volumes:
+      - type: bind
+        source: ../../infra/.certs/intermediate/ca.crt
+        target: /usr/local/share/ca-certificates/cluster-ca.crt
+
+  nextjs-grpc-e2e:
+    container_name: nextjs-grpc-e2e
+    image: cypress/included:$CYPRESS_VERSION
+    user: 0:0
+    tty: true
+    working_dir: /utkusarioglu-com/projects/nextjs-grpc/e2e
+    network_mode: host
+    entrypoint: /bin/sh -c "while sleep 1000; do :; done"
+    environment:
+      # E2E_BROWSERS: chrome
+      E2E_VIDEO_PADDING: 500,150
+      # BASE_URL: nextjs-grpc.utkusarioglu.com
+      # E2E_VIEWPORT_SIZES: 480x720
+      BASE_URL: nextjs-grpc.utkusarioglu.com
+      E2E_VIEWPORT_SIZES: 1920x1080,540x1200,480x850,480x720
+      E2E_BROWSERS: chrome,firefox,edge
+
+    extra_hosts:
+      nextjs-grpc.utkusarioglu.com: host-gateway
+    volumes:
+      - type: bind
+        source: ../../e2e/.env
+        target: /utkusarioglu-com/projects/nextjs-grpc/e2e/.env
+      - type: bind
+        source: ../../e2e/package.json
+        target: /utkusarioglu-com/projects/nextjs-grpc/e2e/package.json
+      - type: bind
+        source: ../../e2e/scripts
+        target: /utkusarioglu-com/projects/nextjs-grpc/e2e/scripts
+      - type: bind
+        source: ../../e2e/.cypress
+        target: /utkusarioglu-com/projects/nextjs-grpc/e2e/cypress
+      - type: bind
+        source: ../../e2e/cypress.config.js
+        target: /utkusarioglu-com/projects/nextjs-grpc/e2e/cypress.config.js
+      - type: bind
+        source: ../../e2e/.cypress/cache/node_modules
+        target: /utkusarioglu-com/projects/nextjs-grpc/e2e/node_modules
+      - type: bind
+        source: ../../e2e/.cypress/cache/cypress
+        target: /root/.cache/cypress
+      - type: bind
+        source: ../../e2e/.yarnrc.yml
+        target: /utkusarioglu-com/projects/nextjs-grpc/e2e/.yarnrc.yml
+      - type: bind
+        source: ../../e2e/.yarn
+        target: /utkusarioglu-com/projects/nextjs-grpc/e2e/.yarn
+      - type: bind
+        source: ../../e2e/yarn.lock
+        target: /utkusarioglu-com/projects/nextjs-grpc/e2e/yarn.lock
+      - type: bind
+        source: ../../infra/.certs/intermediate/ca.crt
+        target: /utkusarioglu-com/projects/nextjs-grpc/e2e/.certs/intermediate/ca.crt
+      - type: bind
+        source: ../../e2e/.certs/intermediate/ca.crt
+        target: /usr/local/share/ca-certificates/cluster-ca.crt
+
+# docker run \
+#   --rm \
+#   --user 0:0 \
+#   -t \
+#   -v "$repo_dir/.env:$workdir/.env" \
+#   -v "$repo_dir/package.json:$workdir/package.json" \
+#   -v "$repo_dir/scripts:$workdir/scripts" \
+#   -v "$repo_dir/.cypress:$workdir/cypress" \
+#   -v "$repo_dir/cypress.config.js:$workdir/cypress.config.js" \
+#   -v "$repo_dir/.cypress/cache/node_modules:$workdir/node_modules" \
+#   -v "$repo_dir/.cypress/cache/cypress:
+#   -v "$repo_dir/.yarnrc.yml:$workdir/.yarnrc.yml" \
+#   -v "$repo_dir/.yarn:$workdir/.yarn" \
+#   -v "$repo_dir/yarn.lock:$workdir/yarn.lock" \
+#   -w $workdir \
+#   --network host \
+#   --name nextjs-grpc-e2e \
+#   --add-host "$base_url:127.0.0.1" \
+#   --entrypoint scripts/run-cypress-tests.sh \
+#   cypress/included:$cypress_version

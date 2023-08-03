@@ -8,15 +8,15 @@ inputs = {
   // find a better way of handling these
   intermediate_crt_b64 = base64encode(file(join("/", [
     local.certs_path,
-    "intermediate/intermediate.crt"
+    "intermediate/tls.crt"
   ])))
   intermediate_key_b64 = base64encode(file(join("/", [
     local.certs_path,
-    "intermediate/intermediate.key"
+    "intermediate/tls.key"
   ])))
   ca_crt_b64 = base64encode(file(join("/", [
     local.certs_path,
-    "root/root.crt"
+    "intermediate/ca.crt"
   ])))
 }
 

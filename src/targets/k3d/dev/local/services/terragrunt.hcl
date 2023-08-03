@@ -34,7 +34,7 @@ dependencies {
 }
 
 inputs = {
-  web_server_image_tag = get_env("WEB_SERVER_IMAGE_TAG")
-  ms_image_tag         = get_env("MS_IMAGE_TAG")
+  web_server_image_tag = get_env("WEB_SERVER_IMAGE_TAG", "")
+  ms_image_tag         = get_env("MS_IMAGE_TAG", "")
   ingress_sg           = "DOES_NOT_APPLY_IN_K3D"
 }

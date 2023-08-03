@@ -68,31 +68,31 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix: 
-        certificates: 
+        certificatesRef: 
           - "${{ inputs.certificatesRef }}"
-        e2e: 
+        e2eRef: 
           - "${{ inputs.e2eRef }}"
-        frontend: 
+        frontendRef: 
           - "${{ inputs.frontendRef }}"
-        grafana: 
+        grafanaRef: 
           - "${{ inputs.grafanaRef }}"
-        infra: 
+        infraRef: 
           - "${{ inputs.infraRef }}"
-        jaeger: 
+        jaegerRef: 
           - "${{ inputs.jaegerRef }}"
-        loki: 
+        lokiRef: 
           - "${{ inputs.lokiRef }}"
-        ms: 
+        msRef: 
           - "${{ inputs.msRef }}"
-        notebooks: 
+        notebooksRef: 
           - "${{ inputs.notebooksRef }}"
-        otel_collectors: 
+        otelCollectorsRef: 
           - "${{ inputs.otelCollectorsRef }}"
-        prometheus: 
+        prometheusRef: 
           - "${{ inputs.prometheusRef }}"
-        proto: 
+        protoRef: 
           - "${{ inputs.protoRef }}"
-        rbac: 
+        rbacRef: 
           - "${{ inputs.rbacRef }}"
 
         vars: 
@@ -239,7 +239,7 @@ jobs:
       - name: Register Root CA
         working-directory: infra
         run: |
-          cp .certs/root/root.crt /usr/local/share/ca-certificates/
+          cp .certs/intermediate/ca.crt /usr/local/share/ca-certificates/
           update-ca-certificates
 
       - name: Alter hosts

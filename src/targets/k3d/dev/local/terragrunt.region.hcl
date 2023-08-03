@@ -1,8 +1,5 @@
 inputs = {
-  deployment_mode = "all"
-  // deployment_mode = "no_observability"
-  // deployment_mode   = "grafana"
-  // deployment_mode   = "web_server"
+  deployment_mode   = get_env("K3D_DEV_LOCAL_DEPLOYMENT_MODE", "all")
   helm_timeout_unit = 180
   helm_atomic       = true
   api_run_mode      = "production"

@@ -1,7 +1,6 @@
 package test
 
 import (
-	"fmt"
 	"testing"
 
 	"github.com/gruntwork-io/terratest/modules/terraform"
@@ -21,9 +20,8 @@ func TestK3dDevLocal(t *testing.T) {
 }
 
 func kubernetesTests(t *testing.T) {
+	defer test_structure.RunTestStage(t, "logs", LogTests(t))
 	test_structure.RunTestStage(t, "ingress", IngressTests(t))
 	test_structure.RunTestStage(t, "observability", ObservabilityTests(t))
 	test_structure.RunTestStage(t, "endpoint", EndpointTests(t))
-	fmt.Println("Starting log retrieval...")
-	test_structure.RunTestStage(t, "logs", LogTests(t))
 }
