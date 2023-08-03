@@ -12,8 +12,14 @@ on:
   workflow_dispatch:
 
 jobs:
-  infra-test-web:
-    uses: ./.github/workflows/k3d-dev-local.test.wfc.yml
+  k3d-dev-local-integration-test:
+    uses: ./.github/workflows/k3d-dev-local.integration.test.wfc.yml
+    secrets: inherit
+    with:
+      infraRef: ${{ github.head_ref }}
+
+  k3d-dev-local-e2e-test:
+    uses: ./.github/workflows/k3d-dev-local.e2e.test.wfc.yml
     secrets: inherit
     with:
       infraRef: ${{ github.head_ref }}
