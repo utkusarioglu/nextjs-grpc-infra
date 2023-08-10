@@ -35,3 +35,9 @@ jobs:
   #   with:
   #     infraRef: ${{ github.ref_name }}
   #     e2eRef: experiment/chore/infra-integration
+
+  k3d-dev-local-tflint:
+    uses: ./.github/workflows/k3d-dev-local.tflint.wfc.yml
+    secrets: inherit
+    with:
+      infraRef: ${{ github.head_ref }}

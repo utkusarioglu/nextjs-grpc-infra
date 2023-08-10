@@ -1,0 +1,442 @@
+name: Test K3d Dev Local
+
+on:
+  workflow_call:
+    inputs:
+      certificatesRef:
+        required: false
+        default: main
+        type: string
+      e2eRef:
+        required: false
+        default: main
+        type: string
+      frontendRef:
+        required: false
+        default: main
+        type: string
+      grafanaRef:
+        required: false
+        default: main
+        type: string
+      infraRef:
+        required: false
+        default: main
+        type: string
+      jaegerRef:
+        required: false
+        default: main
+        type: string
+      lokiRef:
+        required: false
+        default: main
+        type: string
+      msRef:
+        required: false
+        default: main
+        type: string
+      notebooksRef:
+        required: false
+        default: main
+        type: string
+      otelCollectorsRef:
+        required: false
+        default: main
+        type: string
+      prometheusRef:
+        required: false
+        default: main
+        type: string
+      protoRef:
+        required: false
+        default: main
+        type: string
+      rbacRef:
+        required: false
+        default: main
+        type: string
+
+      webServerImageTag: 
+        required: false
+        type: string
+      msImageTag: 
+        required: false
+        type: string
+
+jobs:
+  test-k3d-dev-local:
+    runs-on: ubuntu-latest
+    env:
+      NODE_ENV: production
+    strategy:
+      matrix: 
+        certificatesRef: 
+          - "${{ inputs.certificatesRef }}"
+        e2eRef: 
+          - "${{ inputs.e2eRef }}"
+        frontendRef: 
+          - "${{ inputs.frontendRef }}"
+        grafanaRef: 
+          - "${{ inputs.grafanaRef }}"
+        infraRef: 
+          - "${{ inputs.infraRef }}"
+        jaegerRef: 
+          - "${{ inputs.jaegerRef }}"
+        lokiRef: 
+          - "${{ inputs.lokiRef }}"
+        msRef: 
+          - "${{ inputs.msRef }}"
+        notebooksRef: 
+          - "${{ inputs.notebooksRef }}"
+        otelCollectorsRef: 
+          - "${{ inputs.otelCollectorsRef }}"
+        prometheusRef: 
+          - "${{ inputs.prometheusRef }}"
+        protoRef: 
+          - "${{ inputs.protoRef }}"
+        rbacRef: 
+          - "${{ inputs.rbacRef }}"
+
+        vars: 
+          - infraRepoRelPath: infra
+            artifactsRelPath: artifacts
+            logsRelPath: logs
+            tgCacheEnabled: false
+
+    steps:
+      - name: Checkout `certificates`
+        uses: actions/checkout@v3
+        with:
+          repository: utkusarioglu/nextjs-grpc-certificates
+          ref: ${{ matrix.certificatesRef }}
+          fetch-depth: 0
+          path: certificates
+
+      - name: Checkout `e2e`
+        uses: actions/checkout@v3
+        with:
+          repository: utkusarioglu/nextjs-grpc-e2e
+          ref: ${{ matrix.e2eRef }}
+          fetch-depth: 0
+          path: e2e
+
+      - name: Checkout `frontend`
+        uses: actions/checkout@v3
+        with:
+          repository: utkusarioglu/nextjs-grpc-frontend
+          ref: ${{ matrix.frontendRef }}
+          fetch-depth: 0
+          path: frontend
+      
+      - name: Checkout `grafana`
+        uses: actions/checkout@v3
+        with:
+          repository: utkusarioglu/nextjs-grpc-grafana
+          ref: ${{ matrix.grafanaRef }}
+          fetch-depth: 0
+          path: grafana
+
+      - name: Checkout `infra`
+        uses: actions/checkout@v3
+        with:
+          repository: utkusarioglu/nextjs-grpc-infra
+          ref: ${{ matrix.infraRef }}
+          fetch-depth: 0
+          path: infra
+
+      - name: Checkout `jaeger`
+        uses: actions/checkout@v3
+        with:
+          repository: utkusarioglu/nextjs-grpc-jaeger
+          ref: ${{ matrix.jaegerRef }}
+          fetch-depth: 0
+          path: jaeger
+      
+      - name: Checkout `loki`
+        uses: actions/checkout@v3
+        with:
+          repository: utkusarioglu/nextjs-grpc-loki
+          ref: ${{ matrix.lokiRef }}
+          fetch-depth: 0
+          path: loki
+      
+      - name: Checkout `ms`
+        uses: actions/checkout@v3
+        with:
+          repository: utkusarioglu/nextjs-grpc-ms
+          ref: ${{ matrix.msRef }}
+          fetch-depth: 0
+          path: ms
+      
+      - name: Checkout `notebooks`
+        uses: actions/checkout@v3
+        with:
+          repository: utkusarioglu/nextjs-grpc-notebooks
+          ref: ${{ matrix.notebooksRef }}
+          fetch-depth: 0
+          path: notebooks
+      
+      - name: Checkout `otel-collectors`
+        uses: actions/checkout@v3
+        with:
+          repository: utkusarioglu/nextjs-grpc-otel-collectors
+          ref: ${{ matrix.otelCollectorsRef }}
+          fetch-depth: 0
+          path: otel-collectors
+      
+      - name: Checkout `prometheus`
+        uses: actions/checkout@v3
+        with:
+          repository: utkusarioglu/nextjs-grpc-prometheus
+          ref: ${{ matrix.prometheusRef }}
+          fetch-depth: 0
+          path: prometheus
+
+      - name: Checkout `proto`
+        uses: actions/checkout@v3
+        with:
+          repository: utkusarioglu/nextjs-grpc-proto
+          ref: ${{ matrix.protoRef }}
+          fetch-depth: 0
+          path: proto
+
+      - name: Checkout `rbac`
+        uses: actions/checkout@v3
+        with:
+          repository: utkusarioglu/nextjs-grpc-rbac
+          ref: ${{ matrix.rbacRef }}
+          fetch-depth: 0
+          path: rbac
+      
+      - name: Migrate vars and secrets files 
+        working-directory: infra
+        shell: bash
+        run: |
+          TEMP_B64_SECRETS_ABSPATH=/tmp/secrets.b64
+          TEMP_ZIP_SECRETS_ABSPATH=/tmp/secrets.zip
+          echo '${{ secrets.SECRET_FILES }}' > $TEMP_B64_SECRETS_ABSPATH
+          cat $TEMP_B64_SECRETS_ABSPATH | base64 --decode \
+            > $TEMP_ZIP_SECRETS_ABSPATH
+          unzip -o $TEMP_ZIP_SECRETS_ABSPATH
+          rm $TEMP_B64_SECRETS_ABSPATH $TEMP_ZIP_SECRETS_ABSPATH
+
+      - name: Copy CA to e2e
+        run: |
+          mkdir -p e2e/.certs/intermediate
+          pwd
+          cp \
+            infra/.certs/intermediate/ca.crt \
+            e2e/.certs/intermediate/ca.crt
+          cat e2e/.certs/intermediate/ca.crt
+
+      - name: Remove risky config
+        working-directory: infra/src/targets
+        run: rm -rf aws
+        
+      - name: e2e env vars
+        working-directory: e2e
+        env: 
+          BASE_URL: nextjs-grpc.utkusarioglu.com
+          E2E_VIEWPORT_SIZES: 1920x1080,480x720
+          E2E_BROWSERS: chrome,firefox,edge
+          E2E_VIDEO_PADDING: 500,150
+          # E2E_BROWSERS: chrome
+          # E2E_VIEWPORT_SIZES: 480x720
+        run: |
+          required_values='
+            E2E_BROWSERS 
+            E2E_VIDEO_PADDING 
+            BASE_URL 
+            E2E_VIEWPORT_SIZES
+          '
+
+          touch .env
+          for var in $required_values; do
+            echo "${var}=${!var}"
+          done
+          cat .env
+      
+      - name: Create e2e cache paths
+        working-directory: e2e
+        shell: bash
+        run: mkdir -p .cypress/cache/{node_modules,cypress}
+
+      - name: Restore terragrunt cache
+        if: ${{ matrix.vars.tgCacheEnabled }}
+        id: terragrunt-cache-restore
+        uses: actions/cache/restore@v3
+        with:
+          path: |
+            infra/.cache
+          key: k3d-dev-local
+          restore-keys: |
+            k3d-dev-
+            k3d-
+      
+      - name: Start devcontainer
+        working-directory: infra
+        run: |
+          scripts/ci/start-devcontainer.sh \
+            $GITHUB_WORKSPACE \
+            '12.17.2' \
+            'no_observability'
+
+      - name: Alter Infra Hosts
+        working-directory: infra
+        run: |
+          docker exec -t nextjs-grpc-infra \
+            scripts/hosts-entries/add.sh host-gateway
+
+      - name: Update ca certs in containers
+        run: |
+          for container in infra e2e; do
+            docker exec -t nextjs-grpc-$container bash -c '
+              update-ca-certificates --fresh
+            '
+          done
+      
+      - name: Run Tflint on cluster
+        run: |
+          docker exec -t nextjs-grpc-infra \
+            bash -c '
+              cd src/targets/k3d/dev/local/k3d-cluster
+              terragrunt validate
+            '
+
+      # - name: Create infrastructure
+      #   working-directory: infra
+      #   run: scripts/ci/create-infrastructure.sh 'src/targets/k3d/dev/local'
+      
+      # - name: Sleep
+      #   run: |
+      #     duration=60
+      #     echo "Sleeping for $duration while cluster stabilizes…"
+      #     sleep $duration
+
+      # # - name: Curl from infra
+      # #   if: ${{ always() }}
+      # #   run: |
+      # #     docker exec -t nextjs-grpc-infra bash -c '
+      # #       echo "<insecure home>"
+      # #       curl http://nextjs-grpc.utkusarioglu.com | head -n1 -c80
+      # #       echo "</insecure home>"
+      # #       echo "<ssl home --insecure>"
+      # #       curl --insecure https://nextjs-grpc.utkusarioglu.com | head -n1 -c80
+      # #       echo "</ssl home --insecure>"
+      # #       echo "<ssl home>"
+      # #       curl https://nextjs-grpc.utkusarioglu.com | head -n1 -c80
+      # #       echo "</ssl home>"
+      # #       echo "<ssl login>"
+      # #       curl https://nextjs-grpc.utkusarioglu.com/login | head -n1 -c80
+      # #       echo "</ssl login>"
+      # #     '
+      
+      # # - name: Curl from e2e
+      # #   if: ${{ always() }}
+      # #   run: |
+      # #     docker exec -t nextjs-grpc-e2e bash -c '
+      # #       apt update && apt install -y curl
+      # #       echo "<insecure home>"
+      # #       curl http://nextjs-grpc.utkusarioglu.com | head -n1 -c80
+      # #       echo "</insecure home>"
+      # #       echo "<ssl home --insecure>"
+      # #       curl --insecure https://nextjs-grpc.utkusarioglu.com | head -n1 -c80
+      # #       echo "</ssl home --insecure>"
+      # #       echo "<ssl home>"
+      # #       curl https://nextjs-grpc.utkusarioglu.com | head -n1 -c80
+      # #       echo "</ssl home>"
+      # #       echo "<ssl login>"
+      # #       curl https://nextjs-grpc.utkusarioglu.com/login | head -n1 -c80
+      # #       echo "</ssl login>"
+      # #     '
+
+      # - name: Prep e2e test dependencies
+      #   if: ${{ always() }}
+      #   working-directory: e2e
+      #   run: |
+      #     docker exec -t nextjs-grpc-e2e scripts/prep-cypress-tests.sh
+      
+      # - name: Run e2e tests
+      #   if: ${{ always() }}
+      #   working-directory: e2e
+      #   # env: 
+      #   #   # E2E_VIEWPORT_SIZES: 1920x1080,480x720
+      #   #   # E2E_BROWSERS: chrome,firefox,edge
+      #   #   E2E_BROWSERS: chrome
+      #   #   E2E_VIDEO_PADDING: 500,150
+      #   #   BASE_URL: nextjs-grpc.utkusarioglu.com
+      #   #   E2E_VIEWPORT_SIZES: 480x720
+      #   run: |
+      #     docker exec -t nextjs-grpc-e2e scripts/run-cypress-tests.sh
+          
+      # - name: Publish logs
+      #   if: ${{ always() }}
+      #   run: |
+      #     docker exec -t nextjs-grpc-infra bash -c '
+      #       for ns in api ms observability; do
+      #         kubectl -n $ns get po 
+      #         pods=$(kubectl -n $ns get po | yq ".items[] | .metadata.name")
+      #         echo "<Pods in ns $ns>"
+      #         echo $pods
+      #         echo "<Pods in ns $ns>"
+
+      #         for pod in $pods; do
+      #           echo "<Logs: $ns/$pod>"
+      #           kubectl -n $ns logs $pod
+      #           echo "</Logs: $ns/$pod>"
+      #         done
+      #       done
+      #     '
+
+      - name: Alter infra cache path permissions
+        working-directory: infra
+        run: |
+            sudo chown -R "$(id -u):$(id -g)" .cache
+            ls -al .cache
+
+      - name: Terragrunt cache ls
+        if: ${{ always() }}
+        working-directory: infra
+        run: |
+          echo '<.>'
+          ls
+          echo '</.>'
+          echo '<cache>'
+          ls .cache
+          echo '</cache>'
+          echo '<cache/terragrunt>'
+          ls .cache/terragrunt
+          echo '</cache/terragrunt>'
+
+      - name: Save Terragrunt cache
+        if: ${{ matrix.vars.tgCacheEnabled }}
+        id: terragrunt-cache-save
+        uses: actions/cache/save@v3
+        with:
+          path: |
+            infra/.cache
+          key: k3d-dev-local
+          restore-keys: |
+            k3d-dev-
+            k3d-
+
+      - name: Save infra artifacts
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: utkusarioglu-nextjs-grpc-infra-artifacts
+          path: infra/${{ matrix.vars.artifactsRelPath }}
+
+      - name: Save infra logs
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: utkusarioglu-nextjs-grpc-infra-logs
+          path: infra/${{ matrix.vars.logsRelPath }}
+
+      - name: Save e2e Artifacts
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: utkusarioglu-nextjs-grpc-e2e-artifacts
+          path: e2e/.cypress/artifacts
