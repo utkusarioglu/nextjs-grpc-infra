@@ -303,91 +303,6 @@ jobs:
               terragrunt validate
             '
 
-      # - name: Create infrastructure
-      #   working-directory: infra
-      #   run: scripts/ci/create-infrastructure.sh 'src/targets/k3d/dev/local'
-      
-      # - name: Sleep
-      #   run: |
-      #     duration=60
-      #     echo "Sleeping for $duration while cluster stabilizes…"
-      #     sleep $duration
-
-      # # - name: Curl from infra
-      # #   if: ${{ always() }}
-      # #   run: |
-      # #     docker exec -t nextjs-grpc-infra bash -c '
-      # #       echo "<insecure home>"
-      # #       curl http://nextjs-grpc.utkusarioglu.com | head -n1 -c80
-      # #       echo "</insecure home>"
-      # #       echo "<ssl home --insecure>"
-      # #       curl --insecure https://nextjs-grpc.utkusarioglu.com | head -n1 -c80
-      # #       echo "</ssl home --insecure>"
-      # #       echo "<ssl home>"
-      # #       curl https://nextjs-grpc.utkusarioglu.com | head -n1 -c80
-      # #       echo "</ssl home>"
-      # #       echo "<ssl login>"
-      # #       curl https://nextjs-grpc.utkusarioglu.com/login | head -n1 -c80
-      # #       echo "</ssl login>"
-      # #     '
-      
-      # # - name: Curl from e2e
-      # #   if: ${{ always() }}
-      # #   run: |
-      # #     docker exec -t nextjs-grpc-e2e bash -c '
-      # #       apt update && apt install -y curl
-      # #       echo "<insecure home>"
-      # #       curl http://nextjs-grpc.utkusarioglu.com | head -n1 -c80
-      # #       echo "</insecure home>"
-      # #       echo "<ssl home --insecure>"
-      # #       curl --insecure https://nextjs-grpc.utkusarioglu.com | head -n1 -c80
-      # #       echo "</ssl home --insecure>"
-      # #       echo "<ssl home>"
-      # #       curl https://nextjs-grpc.utkusarioglu.com | head -n1 -c80
-      # #       echo "</ssl home>"
-      # #       echo "<ssl login>"
-      # #       curl https://nextjs-grpc.utkusarioglu.com/login | head -n1 -c80
-      # #       echo "</ssl login>"
-      # #     '
-
-      # - name: Prep e2e test dependencies
-      #   if: ${{ always() }}
-      #   working-directory: e2e
-      #   run: |
-      #     docker exec -t nextjs-grpc-e2e scripts/prep-cypress-tests.sh
-      
-      # - name: Run e2e tests
-      #   if: ${{ always() }}
-      #   working-directory: e2e
-      #   # env: 
-      #   #   # E2E_VIEWPORT_SIZES: 1920x1080,480x720
-      #   #   # E2E_BROWSERS: chrome,firefox,edge
-      #   #   E2E_BROWSERS: chrome
-      #   #   E2E_VIDEO_PADDING: 500,150
-      #   #   BASE_URL: nextjs-grpc.utkusarioglu.com
-      #   #   E2E_VIEWPORT_SIZES: 480x720
-      #   run: |
-      #     docker exec -t nextjs-grpc-e2e scripts/run-cypress-tests.sh
-          
-      # - name: Publish logs
-      #   if: ${{ always() }}
-      #   run: |
-      #     docker exec -t nextjs-grpc-infra bash -c '
-      #       for ns in api ms observability; do
-      #         kubectl -n $ns get po 
-      #         pods=$(kubectl -n $ns get po | yq ".items[] | .metadata.name")
-      #         echo "<Pods in ns $ns>"
-      #         echo $pods
-      #         echo "<Pods in ns $ns>"
-
-      #         for pod in $pods; do
-      #           echo "<Logs: $ns/$pod>"
-      #           kubectl -n $ns logs $pod
-      #           echo "</Logs: $ns/$pod>"
-      #         done
-      #       done
-      #     '
-
       - name: Alter infra cache path permissions
         working-directory: infra
         run: |
@@ -395,7 +310,7 @@ jobs:
             ls -al .cache
 
       - name: Terragrunt cache ls
-        if: ${{ always() }}
+        if: ${{ matrix.vars.tgCacheEnabled }}
         working-directory: infra
         run: |
           echo '<.>'
