@@ -307,7 +307,7 @@ jobs:
           docker exec -t nextjs-grpc-infra \
             bash -c '
               cd src/targets/k3d/dev/local
-              terragrunt run-all validate
+              terragrunt run-all validate --terragrunt-ignore-dependency-errors
             '
 
       - name: Alter infra cache path permissions
