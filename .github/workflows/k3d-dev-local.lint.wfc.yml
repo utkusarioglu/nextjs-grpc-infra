@@ -261,6 +261,13 @@ jobs:
         shell: bash
         run: mkdir -p .cypress/cache/{node_modules,cypress}
 
+      - name: Create fake cluster CA
+        working-directory: infra
+        run: |
+          mkdir -p artifacts/cluster-ca
+          cd $_
+          touch cluster-ca.crt
+
       # - name: Restore terragrunt cache
       #   if: ${{ matrix.vars.tgCacheEnabled }}
       #   id: terragrunt-cache-restore
