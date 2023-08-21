@@ -256,22 +256,22 @@ jobs:
           done
           cat .env
       
-      - name: Create e2e cache paths
-        working-directory: e2e
-        shell: bash
-        run: mkdir -p .cypress/cache/{node_modules,cypress}
+      # - name: Create e2e cache paths
+      #   working-directory: e2e
+      #   shell: bash
+      #   run: mkdir -p .cypress/cache/{node_modules,cypress}
 
-      - name: Restore terragrunt cache
-        if: ${{ matrix.vars.tgCacheEnabled }}
-        id: terragrunt-cache-restore
-        uses: actions/cache/restore@v3
-        with:
-          path: |
-            infra/.cache
-          key: k3d-dev-local
-          restore-keys: |
-            k3d-dev-
-            k3d-
+      # - name: Restore terragrunt cache
+      #   if: ${{ matrix.vars.tgCacheEnabled }}
+      #   id: terragrunt-cache-restore
+      #   uses: actions/cache/restore@v3
+      #   with:
+      #     path: |
+      #       infra/.cache
+      #     key: k3d-dev-local
+      #     restore-keys: |
+      #       k3d-dev-
+      #       k3d-
       
       - name: Start devcontainer
         working-directory: infra
@@ -309,31 +309,31 @@ jobs:
             sudo chown -R "$(id -u):$(id -g)" .cache
             ls -al .cache
 
-      - name: Terragrunt cache ls
-        if: ${{ matrix.vars.tgCacheEnabled }}
-        working-directory: infra
-        run: |
-          echo '<.>'
-          ls
-          echo '</.>'
-          echo '<cache>'
-          ls .cache
-          echo '</cache>'
-          echo '<cache/terragrunt>'
-          ls .cache/terragrunt
-          echo '</cache/terragrunt>'
+      # - name: Terragrunt cache ls
+      #   if: ${{ matrix.vars.tgCacheEnabled }}
+      #   working-directory: infra
+      #   run: |
+      #     echo '<.>'
+      #     ls
+      #     echo '</.>'
+      #     echo '<cache>'
+      #     ls .cache
+      #     echo '</cache>'
+      #     echo '<cache/terragrunt>'
+      #     ls .cache/terragrunt
+      #     echo '</cache/terragrunt>'
 
-      - name: Save Terragrunt cache
-        if: ${{ matrix.vars.tgCacheEnabled }}
-        id: terragrunt-cache-save
-        uses: actions/cache/save@v3
-        with:
-          path: |
-            infra/.cache
-          key: k3d-dev-local
-          restore-keys: |
-            k3d-dev-
-            k3d-
+      # - name: Save Terragrunt cache
+      #   if: ${{ matrix.vars.tgCacheEnabled }}
+      #   id: terragrunt-cache-save
+      #   uses: actions/cache/save@v3
+      #   with:
+      #     path: |
+      #       infra/.cache
+      #     key: k3d-dev-local
+      #     restore-keys: |
+      #       k3d-dev-
+      #       k3d-
 
       - name: Save infra artifacts
         if: ${{ always() }}
