@@ -256,10 +256,10 @@ jobs:
           done
           cat .env
       
-      # - name: Create e2e cache paths
-      #   working-directory: e2e
-      #   shell: bash
-      #   run: mkdir -p .cypress/cache/{node_modules,cypress}
+      - name: Create e2e cache paths
+        working-directory: e2e
+        shell: bash
+        run: mkdir -p .cypress/cache/{node_modules,cypress}
 
       # - name: Restore terragrunt cache
       #   if: ${{ matrix.vars.tgCacheEnabled }}
