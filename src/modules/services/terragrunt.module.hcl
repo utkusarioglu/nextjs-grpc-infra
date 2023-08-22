@@ -36,9 +36,6 @@ locals {
         name = "platform"
       },
       {
-        name = "project-name"
-      },
-      {
         name = "project-root-abspath"
       },
       {

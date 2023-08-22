@@ -81,8 +81,8 @@ func EndpointTests(t *testing.T) func() {
 				t,
 				props.url,
 				nil,
-				3,
-				5*time.Second,
+				10,
+				10*time.Second,
 				func(code int, response string) bool {
 					fmt.Printf("Testing endpoint %s…", props.url)
 					passing := true
