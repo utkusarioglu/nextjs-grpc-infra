@@ -1,6 +1,7 @@
 package test
 
 import (
+	"fmt"
 	"strings"
 	"testing"
 	"time"
@@ -51,22 +52,22 @@ var endpoints = []Endpoint{
 			"utku",
 		},
 	},
-	// {
-	// 	url:             "https://jaeger.nextjs-grpc.utkusarioglu.com",
-	// 	expectedStrings: []string{"jaeger"},
-	// },
-	// {
-	// 	url:             "https://grafana.nextjs-grpc.utkusarioglu.com",
-	// 	expectedStrings: []string{"Grafana"},
-	// },
-	// {
-	// 	url:             "https://kubernetes-dashboard.nextjs-grpc.utkusarioglu.com",
-	// 	expectedStrings: []string{"Kubernetes Dashboard"},
-	// },
-	// {
-	// 	url:             "https://prometheus.nextjs-grpc.utkusarioglu.com",
-	// 	expectedStrings: []string{"Prometheus"},
-	// },
+	{
+		url:             "https://jaeger.nextjs-grpc.utkusarioglu.com",
+		expectedStrings: []string{"jaeger"},
+	},
+	{
+		url:             "https://grafana.nextjs-grpc.utkusarioglu.com",
+		expectedStrings: []string{"Grafana"},
+	},
+	{
+		url:             "https://kubernetes-dashboard.nextjs-grpc.utkusarioglu.com",
+		expectedStrings: []string{"Kubernetes Dashboard"},
+	},
+	{
+		url:             "https://prometheus.nextjs-grpc.utkusarioglu.com",
+		expectedStrings: []string{"Prometheus"},
+	},
 	{
 		url:             "https://vault.nextjs-grpc.utkusarioglu.com:8200",
 		expectedStrings: []string{"Vault"},
@@ -83,6 +84,7 @@ func EndpointTests(t *testing.T) func() {
 				3,
 				5*time.Second,
 				func(code int, response string) bool {
+					fmt.Printf("Testing endpoint %s…", props.url)
 					passing := true
 					if code < 200 || code >= 300 {
 						passing = false

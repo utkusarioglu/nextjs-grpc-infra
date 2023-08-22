@@ -27,17 +27,22 @@ locals {
         name = "deployment-config"
       },
       {
-        name = "paths"
+        name = "configs-abspath"
+      },
+      {
+        name = "secrets-abspath"
       },
       {
         name = "vault-secrets-mount-path"
       }
     ]
+
     providers = [
       {
         name = "vault"
       }
     ]
+
     data = [
       {
         name = "postgres-storage-postgres-role-credentials"
@@ -46,6 +51,7 @@ locals {
         name = "postgres-storage-vault-manager-roles-credentials",
       }
     ]
+
     locals = [
       {
         name = "postgres-storage-postgres-role-credentials"

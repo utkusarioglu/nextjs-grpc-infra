@@ -27,9 +27,13 @@ locals {
         name = "deployment-config"
       },
       {
-        name = "paths"
+        name = "secrets-abspath"
+      },
+      {
+        name = "configs-abspath"
       }
     ],
+
     providers = [
       {
         name = "vault"
@@ -38,6 +42,7 @@ locals {
         name = "null"
       }
     ]
+
     required_providers = [
       {
         name = "vault"

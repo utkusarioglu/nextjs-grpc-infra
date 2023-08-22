@@ -47,9 +47,13 @@ locals {
         name = "observability-subdomains"
       }
     ],
+
     locals = [
       {
-        name = "ingress"
+        name = "ingress-class-mapping"
+      },
+      {
+        name = "ingress-service-types"
       }
     ]
   }

@@ -38,7 +38,7 @@ locals {
 
     locals = [
       {
-        name = "ingress"
+        name = "ingress-class-mapping"
       }
     ]
 
@@ -62,7 +62,7 @@ locals {
         name = "url"
       },
       {
-        name = "paths"
+        name = "configs-abspath"
       },
       {
         name = "platform"

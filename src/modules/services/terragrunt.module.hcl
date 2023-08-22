@@ -42,9 +42,16 @@ locals {
         name = "url"
       },
     ]
+
     locals = [
       {
-        name = "ingress"
+        name = "ingress-class-mapping"
+      },
+      {
+        name = "ingress-paths"
+      },
+      {
+        name = "ingres-service-types"
       }
     ]
   }
