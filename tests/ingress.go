@@ -16,22 +16,22 @@ var ingressInstances = []IngressInstances{
 		namespace:   "api",
 		serviceName: "web-server",
 	},
-	{
-		namespace:   "observability",
-		serviceName: "grafana-ingress",
-	},
-	{
-		namespace:   "observability",
-		serviceName: "prometheus-server",
-	},
-	{
-		namespace:   "observability",
-		serviceName: "kubernetes-dashboard",
-	},
-	{
-		namespace:   "observability",
-		serviceName: "jaeger-query",
-	},
+	// {
+	// 	namespace:   "observability",
+	// 	serviceName: "grafana-ingress",
+	// },
+	// {
+	// 	namespace:   "observability",
+	// 	serviceName: "prometheus-server",
+	// },
+	// {
+	// 	namespace:   "observability",
+	// 	serviceName: "kubernetes-dashboard",
+	// },
+	// {
+	// 	namespace:   "observability",
+	// 	serviceName: "jaeger-query",
+	// },
 	{
 		namespace:   "vault",
 		serviceName: "vault",
