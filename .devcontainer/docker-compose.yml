@@ -14,9 +14,9 @@ services:
       - type: volume
         source: go
         target: /go
-      # - type: bind
-      #   source: ~/.kube/config
-      #   target: /home/terraform/.kube/config
+      - type: bind
+        source: ~/.kube
+        target: /home/terraform/.kube
       - type: bind
         source: ../.certs/intermediate/ca.crt
         target: /etc/ssl/certs/root.crt
