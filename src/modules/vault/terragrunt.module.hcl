@@ -59,7 +59,10 @@ locals {
         name = "tls-intermediate-key"
       },
       {
-        name = "url"
+        name = "tld"
+      },
+      {
+        name = "sld"
       },
       {
         name = "configs-abspath"

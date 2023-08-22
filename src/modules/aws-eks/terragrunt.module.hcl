@@ -26,7 +26,7 @@ locals {
   config_templates = {
     vars = [
       {
-        name = "cluster"
+        name = "cluster-name"
       },
     ],
   }

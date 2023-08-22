@@ -24,7 +24,10 @@ locals {
   config_templates = {
     vars = [
       {
-        name = "url"
+        name = "tld"
+      },
+      {
+        name = "sld"
       },
       {
         name = "vault-subdomain"

@@ -10,6 +10,16 @@ include "region" {
   path = find_in_parent_folders("terragrunt.region.hcl")
 }
 
+dependency "vault_config" {
+  config_path = "../vault-config"
+
+  mock_outputs = {
+    vault_secrets_mount_path = "mock"   
+  }
+
+  mock_outputs_allowed_terraform_commands = ["validate"] 
+}
+
 include "module" {
   path = join("/", [
     get_repo_root(),
@@ -17,10 +27,6 @@ include "module" {
     basename(get_terragrunt_dir()),
     "terragrunt.module.hcl"
   ])
-}
-
-dependency "vault_config" {
-  config_path = "../vault-config"
 }
 
 dependencies {

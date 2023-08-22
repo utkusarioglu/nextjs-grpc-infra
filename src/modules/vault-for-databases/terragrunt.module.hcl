@@ -30,9 +30,6 @@ locals {
         name = "configs-abspath"
       },
       {
-        name = "secrets-abspath"
-      },
-      {
         name = "vault-secrets-mount-path"
       }
     ]
@@ -43,19 +40,25 @@ locals {
       }
     ]
 
-    data = [
+    required_providers = [
       {
-        name = "postgres-storage-postgres-role-credentials"
-      },
+        name = "vault"
+      }
+    ]
+
+    data = [
+      // {
+      //   name = "postgres-storage-postgres-role-credentials"
+      // },
       {
         name = "postgres-storage-vault-manager-roles-credentials",
       }
     ]
 
     locals = [
-      {
-        name = "postgres-storage-postgres-role-credentials"
-      },
+      // {
+      //   name = "postgres-storage-postgres-master-credentials"
+      // },
       {
         name = "postgres-storage-vault-manager-roles-credentials",
       }

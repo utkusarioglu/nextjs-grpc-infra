@@ -39,7 +39,10 @@ locals {
         name = "project-root-abspath"
       },
       {
-        name = "url"
+        name = "tld"
+      },
+      {
+        name = "sld"
       },
     ]
 

@@ -19,6 +19,16 @@ include "module" {
   ])
 }
 
+dependency "vault_config" {
+  config_path = "../vault-config"
+  
+  mock_outputs = {
+    vault_kubernetes_mount_path = "mock"   
+  }
+
+  mock_outputs_allowed_terraform_commands = ["validate"] 
+}
+
 dependencies {
   paths = [
     "../k3d-cluster",
@@ -27,10 +37,6 @@ dependencies {
     "../cert-manager",
     "../vault-config"
   ]
-}
-
-dependency "vault_config" {
-  config_path = "../vault-config"
 }
 
 locals {

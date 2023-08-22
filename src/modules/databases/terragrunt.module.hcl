@@ -31,28 +31,24 @@ locals {
       {
         name = "deployment-config",
       },
-      {
-        name = "secrets-abspath",
-      },
-      {
-        name = "configs-abspath",
-      },
+      // {
+      //   name = "configs-abspath",
+      // },
       {
         name = "vault-secrets-mount-path",
       },
-
-      // TODO these don't matter to aws, they only matter to k3d, but 
-      // I'm not sure whether they should be added by the target or 
-      // should be a part of the module
-      // {
-      //   name = "k3d-volumes"
-      // },
       {
         name = "platform"
       }
     ]
 
     providers = [
+      {
+        name = "vault"
+      }
+    ]
+
+    required_providers = [
       {
         name = "vault"
       }
@@ -69,7 +65,7 @@ locals {
 
     locals = [
       {
-        name = "postgres-storage-postgres-role-credentials",
+        name = "postgres-storage-postgres-master-credentials",
       },
       {
         name = "postgres-storage-vault-manager-roles-credentials",

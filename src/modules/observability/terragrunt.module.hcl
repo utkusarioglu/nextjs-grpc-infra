@@ -41,7 +41,10 @@ locals {
         name = "ingress-sg"
       },
       {
-        name = "url"
+        name = "tld"
+      },
+      {
+        name = "sld"
       },
       {
         name = "observability-subdomains"

@@ -92,13 +92,13 @@ resource "helm_release" "postgres_storage" {
           {
             name = "postgres-storage-migrations-sql-tar"
             configMap = {
-              name = kubernetes_config_map.postgres_storage_migrations_sql.0.metadata.0.name
+              name = kubernetes_config_map.postgres_storage_migrations_sql[0].metadata[0].name
             }
           },
           {
             name = "postgres-storage-migrations-data-tar"
             configMap = {
-              name = kubernetes_config_map.postgres_storage_migrations_data.0.metadata.0.name
+              name = kubernetes_config_map.postgres_storage_migrations_data[0].metadata[0].name
             }
           },
           {

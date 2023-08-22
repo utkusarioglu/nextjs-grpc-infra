@@ -20,8 +20,8 @@ resource "vault_database_secret_backend_role" "postgres_storage_ai_education_res
   for_each = local.deployment_configs.postgres_storage_ai_education_restricted_roles.for_each
 
   name        = each.key
-  backend     = vault_database_secrets_mount.postgres_storage_ai_education_restricted.0.path
-  db_name     = vault_database_secrets_mount.postgres_storage_ai_education_restricted.0.postgresql.0.name
+  backend     = vault_database_secrets_mount.postgres_storage_ai_education_restricted[0].path
+  db_name     = vault_database_secrets_mount.postgres_storage_ai_education_restricted[0].postgresql[0].name
   default_ttl = 1 * 60 * 60 // 1h
   max_ttl     = 5 * 60 * 60 // 5h
   creation_statements = concat(

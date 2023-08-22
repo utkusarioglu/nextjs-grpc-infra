@@ -35,7 +35,7 @@ locals {
     ]
     vars = [
       {
-        name = "cluster"
+        name = "cluster-name"
       }
     ],
   }
