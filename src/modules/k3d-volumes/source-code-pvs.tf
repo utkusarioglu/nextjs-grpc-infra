@@ -9,7 +9,7 @@ resource "kubernetes_persistent_volume_v1" "source_code_pvs" {
       storage = "20Gi"
     }
     access_modes       = ["ReadWriteMany"]
-    storage_class_name = kubernetes_storage_class.source_code_sc.0.metadata.0.name
+    storage_class_name = kubernetes_storage_class.source_code_sc[0].metadata[0].name
 
     persistent_volume_source {
       host_path {

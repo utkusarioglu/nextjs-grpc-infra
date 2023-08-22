@@ -118,7 +118,9 @@ jobs:
         CLUSTER_HOST: local.dev.k3d.nextjs-grpc.projects.utkusarioglu.com
         PROJECT_ROOT_ABSPATH: ${{ github.workspace }}
         HOME: ${{ github.workspace }}
-
+          
+        # This is for experimentation, remove it before commit
+        K3D_DEV_LOCAL_DEPLOYMENT_MODE: no_observability
     steps:
       - name: Checkout `certificates`
         uses: actions/checkout@v3

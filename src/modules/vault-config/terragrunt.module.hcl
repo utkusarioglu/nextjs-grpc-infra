@@ -33,11 +33,17 @@ locals {
     providers = [
       {
         name = "vault"
+      },
+      {
+        name = "null"
       }
     ]
     required_providers = [
       {
         name = "vault"
+      },
+      {
+        name = "null"
       }
     ]
   }

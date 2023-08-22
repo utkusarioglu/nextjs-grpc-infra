@@ -1,6 +1,6 @@
-data "kubernetes_service" "kubernetes" {
-  metadata {
-    name      = "kubernetes"
-    namespace = "default"
-  }
-}
+# data "kubernetes_service" "kubernetes" {
+#   metadata {
+#     name      = "kubernetes"
+#     namespace = "default"
+#   }
+# }

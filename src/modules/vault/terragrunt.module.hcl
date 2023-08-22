@@ -24,11 +24,24 @@ locals {
   ]
 
   config_templates = {
+    providers = [
+      {
+        name = "tls"
+      }
+    ]
+
+    required_providers = [
+      {
+        name = "tls"
+      }
+    ]
+
     locals = [
       {
         name = "ingress"
       }
     ]
+
     vars = [
       {
         name = "helm"
@@ -60,9 +73,9 @@ locals {
       {
         name = "vault-subdomain"
       },
-      {
-        name = "ingress-sg"
-      },
+      // {
+      //   name = "ingress-sg"
+      // },
       {
         name = "cluster-ca"
       }

@@ -24,6 +24,18 @@ locals {
   ]
 
   config_templates = {
+    providers = [
+      {
+        name = "tls"
+      }
+    ]
+
+    required_providers = [
+      {
+        name = "tls"
+      }
+    ]
+
     vars = [
       {
         name = "helm"
