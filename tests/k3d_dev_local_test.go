@@ -22,6 +22,10 @@ func TestK3dDevLocal(t *testing.T) {
 func kubernetesTests(t *testing.T) {
 	defer test_structure.RunTestStage(t, "logs", LogTests(t))
 	test_structure.RunTestStage(t, "ingress", IngressTests(t))
-	// test_structure.RunTestStage(t, "observability", ObservabilityTests(t))
+
+	if IsObservabilityEnabled() {
+		test_structure.RunTestStage(t, "observability", ObservabilityTests(t))
+	}
+
 	test_structure.RunTestStage(t, "endpoint", EndpointTests(t))
 }

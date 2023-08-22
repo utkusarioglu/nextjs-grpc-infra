@@ -14,7 +14,7 @@ type Endpoint struct {
 	expectedStrings []string
 }
 
-var endpoints = []Endpoint{
+var servicesEndpoints = []Endpoint{
 	{
 		url: "https://nextjs-grpc.utkusarioglu.com/api/v1/data/inflation/decade-stats?codes=TUR,USA",
 		expectedStrings: []string{
@@ -52,29 +52,43 @@ var endpoints = []Endpoint{
 			"utku",
 		},
 	},
-	// {
-	// 	url:             "https://jaeger.nextjs-grpc.utkusarioglu.com",
-	// 	expectedStrings: []string{"jaeger"},
-	// },
-	// {
-	// 	url:             "https://grafana.nextjs-grpc.utkusarioglu.com",
-	// 	expectedStrings: []string{"Grafana"},
-	// },
-	// {
-	// 	url:             "https://kubernetes-dashboard.nextjs-grpc.utkusarioglu.com",
-	// 	expectedStrings: []string{"Kubernetes Dashboard"},
-	// },
-	// {
-	// 	url:             "https://prometheus.nextjs-grpc.utkusarioglu.com",
-	// 	expectedStrings: []string{"Prometheus"},
-	// },
+}
+
+var vaultEndpoints = []Endpoint{
 	{
 		url:             "https://vault.nextjs-grpc.utkusarioglu.com:8200",
 		expectedStrings: []string{"Vault"},
 	},
 }
 
+var observabilityEndpoints = []Endpoint{
+	{
+		url:             "https://jaeger.nextjs-grpc.utkusarioglu.com",
+		expectedStrings: []string{"jaeger"},
+	},
+	{
+		url:             "https://grafana.nextjs-grpc.utkusarioglu.com",
+		expectedStrings: []string{"Grafana"},
+	},
+	{
+		url:             "https://kubernetes-dashboard.nextjs-grpc.utkusarioglu.com",
+		expectedStrings: []string{"Kubernetes Dashboard"},
+	},
+	{
+		url:             "https://prometheus.nextjs-grpc.utkusarioglu.com",
+		expectedStrings: []string{"Prometheus"},
+	},
+}
+
 func EndpointTests(t *testing.T) func() {
+	endpoints := []Endpoint{}
+	endpoints = append(endpoints, servicesEndpoints...)
+	endpoints = append(endpoints, vaultEndpoints...)
+
+	if IsObservabilityEnabled() {
+		endpoints = append(endpoints, observabilityEndpoints...)
+	}
+
 	return func() {
 		for _, props := range endpoints {
 			http_helper.HttpGetWithRetryWithCustomValidation(
