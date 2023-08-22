@@ -31,9 +31,6 @@ locals {
       {
         name = "deployment-config"
       },
-      // {
-      //   name = "k3d-volumes"
-      // }
     ]
   }
 }

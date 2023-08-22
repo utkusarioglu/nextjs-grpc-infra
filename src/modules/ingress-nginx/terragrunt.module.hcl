@@ -59,7 +59,7 @@ locals {
         name = "vault-subdomain"
       },
       {
-        name = "project"
+        name = "project-name"
       }
     ]
   }

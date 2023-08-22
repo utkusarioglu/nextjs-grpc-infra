@@ -36,7 +36,10 @@ locals {
         name = "platform"
       },
       {
-        name = "project"
+        name = "project-name"
+      },
+      {
+        name = "project-root-abspath"
       },
       {
         name = "url"
@@ -51,7 +54,7 @@ locals {
         name = "ingress-paths"
       },
       {
-        name = "ingres-service-types"
+        name = "ingress-service-types"
       }
     ]
   }

@@ -35,7 +35,7 @@ locals {
         name = "platform"
       },
       {
-        name = "project"
+        name = "project-root-abspath"
       },
       {
         name = "ingress-sg"

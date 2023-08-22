@@ -68,14 +68,11 @@ locals {
         name = "platform"
       },
       {
-        name = "project"
+        name = "project-name"
       },
       {
         name = "vault-subdomain"
       },
-      // {
-      //   name = "ingress-sg"
-      // },
       {
         name = "cluster-ca"
       }

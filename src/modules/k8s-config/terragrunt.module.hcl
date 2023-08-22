@@ -36,7 +36,10 @@ locals {
         name = "tls-intermediate-cert"
       },
       {
-        name = "project"
+        name = "project-name"
+      },
+      {
+        name = "project-root-abspath"
       },
       {
         name = "url"

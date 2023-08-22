@@ -28,9 +28,6 @@ locals {
       {
         name = "cluster"
       },
-      // {
-      //   name = "project"
-      // },
     ],
   }
 }
