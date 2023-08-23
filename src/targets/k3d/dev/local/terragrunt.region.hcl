@@ -39,7 +39,7 @@ locals {
         }
       },
       {
-        name = "k3d-kubernetes"
+        name = "kubernetes"
         args = {
           cluster_name = local.cluster_name
         }
