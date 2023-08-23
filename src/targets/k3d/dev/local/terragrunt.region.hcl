@@ -33,7 +33,7 @@ locals {
   config_templates = {
     required_providers = [
       {
-        name = "k3d-helm"
+        name = "helm"
         args = {
           cluster_name = local.cluster_name
         }
