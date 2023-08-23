@@ -1,43 +1,3 @@
-include "repo" {
-  path = find_in_parent_folders("terragrunt.repo.hcl")
-}
-
-include "region" {
-  path = find_in_parent_folders("terragrunt.region.hcl")
-}
-
-include "module" {
-  path = join("/", [
-    get_repo_root(),
-    "src/modules/",
-    basename(get_terragrunt_dir()),
-    "terragrunt.module.hcl"
-  ])
-}
-
-dependency "vault_config" {
-  config_path = "../vault-config"
-
-  mock_outputs = {
-    vault_secrets_mount_path = "mock"
-  }
-
-  mock_outputs_allowed_terraform_commands = ["validate"]
-}
-
-dependencies {
-  paths = [
-    // target-dependent
-    "../k3d-cluster",
-
-    // target-independent
-    "../k8s-namespaces",
-    "../vault",
-    "../vault-config",
-    "../databases",
-  ]
-}
-
 locals {
   parent_precedence = ["repo", "platform", "environment", "region"]
   template_types = [
@@ -63,6 +23,7 @@ locals {
       ])
     )
   })
+
   aggregated_config_templates = {
     for template_type in local.template_types :
     template_type => flatten([
@@ -70,10 +31,6 @@ locals {
       try(local.parents[parent].locals.config_templates[template_type], [])
     ])
   }
-}
-
-inputs = {
-  vault_secrets_mount_path = dependency.vault_config.outputs.vault_secrets_mount_path
 }
 
 terraform {
@@ -90,11 +47,21 @@ generate "generated_config_target" {
     for key, items in local.aggregated_config_templates :
     (
       templatefile(
-        "${get_repo_root()}/src/templates/wrappers/${key}.tftpl.hcl", {
+        join("/", [
+          get_repo_root(),
+          "src/templates/wrappers",
+          "${key}.tftpl.hcl"
+        ]),
+        {
           contents = join("\n", [
             for j, template in items :
             templatefile(
-              "${get_repo_root()}/src/templates/${key}/${template.name}.tftpl.hcl",
+              join("/", [
+                get_repo_root(),
+                "src/templates",
+                key,
+                "${template.name}.tftpl.hcl",
+              ]),
               try(template.args, {})
             )
           ])

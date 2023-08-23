@@ -10,11 +10,11 @@
       "isAsync": true,
       "command": "terraform fmt -recursive"
     },
-    // {
-    //   "match": "\\.hcl$",
-    //   "isAsync": true,
-    //   "command": "terragrunt hclfmt"
-    // },
+    {
+      "match": "\\.hcl$",
+      "isAsync": true,
+      "command": "terragrunt hclfmt"
+    },
     {
       "match": "\\.env(\\.\\w+)?$",
       "notMatch": "\\.example$",

@@ -14,10 +14,10 @@ dependency "vault_config" {
   config_path = "../vault-config"
 
   mock_outputs = {
-    vault_secrets_mount_path = "mock"   
+    vault_secrets_mount_path = "mock"
   }
 
-  mock_outputs_allowed_terraform_commands = ["validate"] 
+  mock_outputs_allowed_terraform_commands = ["validate"]
 }
 
 include "module" {
