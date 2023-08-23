@@ -47,8 +47,7 @@ dependencies {
 }
 
 locals {
-  logic   = read_terragrunt_config("./terragrunt.logic.hcl")
-  parents = local.logic.locals.parents
+  parents = read_terragrunt_config("./terragrunt.logic.hcl").locals.parents
 
   artifacts_abspath    = local.parents.repo.inputs.artifacts_abspath
   project_root_abspath = local.parents.repo.inputs.project_root_abspath
