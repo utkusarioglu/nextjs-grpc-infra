@@ -1,13 +1,11 @@
 locals {
-  parent_precedence = ["repo", "platform", "environment", "region"]
-  template_types = [
-    "required_providers",
-    "providers",
-    "backends",
-    "data",
-    "locals",
-    "vars"
-  ]
+  constants = read_terragrunt_config(join("/", [
+    get_repo_root(),
+    "terragrunt.constants.hcl"
+  ])).locals
+
+  parent_precedence = local.constants.parent_precedence
+  template_types    = local.constants.template_types
 
   parents = merge({
     for parent in local.parent_precedence :
@@ -23,12 +21,15 @@ locals {
       ])
     )
   })
+
+  config_templates = []
+
   aggregated_config_templates = {
     for template_type in local.template_types :
-    template_type => flatten([
+    template_type => flatten([[
       for parent in flatten([local.parent_precedence, "module"]) :
       try(local.parents[parent].locals.config_templates[template_type], [])
-    ])
+    ], try(local.config_templates[template_type], [])])
   }
 }
 
@@ -46,11 +47,21 @@ generate "generated_config_target" {
     for key, items in local.aggregated_config_templates :
     (
       templatefile(
-        "${get_repo_root()}/src/templates/wrappers/${key}.tftpl.hcl", {
+        join("/", [
+          get_repo_root(),
+          "src/templates/wrappers",
+          "${key}.tftpl.hcl"
+        ]),
+        {
           contents = join("\n", [
             for j, template in items :
             templatefile(
-              "${get_repo_root()}/src/templates/${key}/${template.name}.tftpl.hcl",
+              join("/", [
+                get_repo_root(),
+                "src/templates",
+                key,
+                "${template.name}.tftpl.hcl"
+              ]),
               try(template.args, {})
             )
           ])
