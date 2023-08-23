@@ -13,7 +13,7 @@
     {
       "match": "\\.hcl$",
       "isAsync": true,
-      "command": "terragrunt hclfmt"
+      "command": "terragrunt hclfmt ${file}"
     },
     {
       "match": "\\.env(\\.\\w+)?$",
