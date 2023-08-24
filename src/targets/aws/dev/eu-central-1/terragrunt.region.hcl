@@ -14,10 +14,12 @@ locals {
   region_short = "euc1"
   aws_profile  = "utkusarioglu"
 
-  parents = read_terragrunt_config(join("/", [
+  parents_region = read_terragrunt_config(join("/", [
     path_relative_from_include(),
-    "parents.region.hcl"
-  ])).locals.parents
+    "lineage.hcl"
+  ]))
+  parents          = local.parents_region.locals.parents
+  module_hierarchy = local.parents_region.locals.module_hierarchy
 
   project_name       = local.parents.repo.inputs.project_name
   project_name_short = local.parents.repo.inputs.project_name_short
@@ -56,5 +58,24 @@ locals {
         args = local.aws_provider_args
       }
     ]
+  }
+
+  // target_parts       = split("/", trimprefix(get_path_from_repo_root(), "src/targets/"))
+  // parent_precedence2 = ["repo", "platform", "environment", "region", "target", "module"]
+  // module_parents     = slice(local.parent_precedence2, 1, length(local.target_parts) + 1)
+  // zipped = zipmap(
+  //   local.module_parents,
+  //   local.target_parts
+  // )
+}
+
+terraform {
+  //   before_hook "echo" {
+  //     commands = ["validate"]
+  //     execute  = ["sh", "-c", "echo path from repo root: ${jsonencode(local.zipped)}"]
+  //   }
+  before_hook "echo2" {
+    commands = ["validate"]
+    execute  = ["sh", "-c", "echo module_avoid: ${jsonencode(local.parents_region.locals.module_descendants)}"]
   }
 }

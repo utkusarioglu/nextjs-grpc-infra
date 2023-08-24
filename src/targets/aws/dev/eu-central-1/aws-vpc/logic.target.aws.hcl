@@ -1,5 +1,5 @@
 locals {
-  parents_target    = read_terragrunt_config("./parents.target.hcl")
+  parents_target    = read_terragrunt_config("./lineage.hcl")
   parents           = local.parents_target.locals.parents
   template_types    = local.parents_target.locals.template_types
   parent_precedence = local.parents_target.locals.template_types
@@ -31,14 +31,14 @@ locals {
         args = local.remote_state_config
       }
     ]
-    providers = [
-      {
-        name = "aws-helm-kubernetes"
-        args = {
-          cluster_name = local.cluster_name
-        }
-      }
-    ]
+    // providers = [
+    //   {
+    //     name = "aws-helm-kubernetes"
+    //     args = {
+    //       cluster_name = local.cluster_name
+    //     }
+    //   }
+    // ]
   }
 
   aggregated_config_templates = {
@@ -51,6 +51,11 @@ locals {
 }
 
 terraform {
+  before_hook "echo" {
+    commands = ["validate"]
+    execute  = ["sh", "-c", "echo parents_map: ${jsonencode(local.parents_target.locals.parents_map)}"]
+  }
+
   after_hook "validate_tflint" {
     commands = ["validate"]
     execute  = ["sh", "-c", "tflint --config=.tflint.hcl -f default"]
