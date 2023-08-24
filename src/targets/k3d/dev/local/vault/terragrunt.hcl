@@ -32,7 +32,7 @@ dependencies {
 }
 
 locals {
-  parents = read_terragrunt_config("./terragrunt.logic.hcl").locals.parents
+  parents = read_terragrunt_config("./logic.target.k3d.hcl").locals.parents
 
   artifacts_abspath       = local.parents.repo.inputs.artifacts_abspath
   vault_artifacts_abspath = "${local.artifacts_abspath}/vault/k3d"

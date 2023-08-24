@@ -16,7 +16,7 @@ include "logic" {
 }
 
 locals {
-  parents = read_terragrunt_config("./terragrunt.logic.hcl").locals.parents
+  parents = read_terragrunt_config("./logic.target.k3d.hcl").locals.parents
 
   cluster_name = local.parents.region.locals.cluster_name
 
