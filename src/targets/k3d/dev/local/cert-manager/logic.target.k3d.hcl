@@ -1,7 +1,7 @@
 locals {
   constants = read_terragrunt_config(join("/", [
     get_repo_root(),
-    "terragrunt.constants.hcl"
+    "constants.repo.hcl"
   ])).locals
 
   parent_precedence = local.constants.parent_precedence

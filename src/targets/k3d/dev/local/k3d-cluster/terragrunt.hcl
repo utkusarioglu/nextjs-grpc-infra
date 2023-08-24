@@ -12,7 +12,7 @@ include "module" {
 }
 
 include "logic" {
-  path = "./terragrunt.logic.hcl"
+  path = "./logic.target.k3d.hcl"
 }
 
 locals {
