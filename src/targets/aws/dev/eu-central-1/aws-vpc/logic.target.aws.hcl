@@ -51,11 +51,6 @@ locals {
 }
 
 terraform {
-  before_hook "echo" {
-    commands = ["validate"]
-    execute  = ["sh", "-c", "echo parents_map: ${jsonencode(local.parents_target.locals.parents_map)}"]
-  }
-
   after_hook "validate_tflint" {
     commands = ["validate"]
     execute  = ["sh", "-c", "tflint --config=.tflint.hcl -f default"]

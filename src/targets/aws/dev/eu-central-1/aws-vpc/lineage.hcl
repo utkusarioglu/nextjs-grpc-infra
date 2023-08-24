@@ -13,9 +13,14 @@ locals {
     trimprefix(get_path_from_repo_root(),
     "${local.targets_path}/")
   )
-  module_depth       = length(local.target_parts)
-  module_ancestors   = slice(local.module_hierarchy, 0, local.module_depth + 1)
-  module_descendants = slice(local.module_hierarchy, local.module_depth, length(local.module_hierarchy))
+  module_depth     = length(local.target_parts)
+  module_ancestors = slice(local.module_hierarchy, 0, local.module_depth + 1)
+  module_descendants = slice(
+    local.module_hierarchy,
+    local.module_depth,
+    length(local.module_hierarchy)
+  )
+  module_role = local.module_descendants[0]
 
   parents_map = zipmap(
     local.module_ancestors,
@@ -33,7 +38,8 @@ locals {
     )
     },
 
-    try({
+    local.module_role == "target"
+    ? {
       module = read_terragrunt_config(join("/", [
         get_repo_root(),
         local.modules_path,
@@ -41,6 +47,7 @@ locals {
         "terragrunt.module.hcl"
         ])
       )
-    }, {})
+    }
+    : {}
   )
 }

@@ -10,16 +10,15 @@ inputs = {
 }
 
 locals {
-  region       = "eu-central-1"
   region_short = "euc1"
   aws_profile  = "utkusarioglu"
 
-  parents_region = read_terragrunt_config(join("/", [
+  lineage = read_terragrunt_config(join("/", [
     path_relative_from_include(),
     "lineage.hcl"
   ]))
-  parents          = local.parents_region.locals.parents
-  module_hierarchy = local.parents_region.locals.module_hierarchy
+  parents = local.lineage.locals.parents
+  region  = local.lineage.locals.parents_map[local.lineage.locals.module_role]
 
   project_name       = local.parents.repo.inputs.project_name
   project_name_short = local.parents.repo.inputs.project_name_short
@@ -69,13 +68,9 @@ locals {
   // )
 }
 
-terraform {
-  //   before_hook "echo" {
-  //     commands = ["validate"]
-  //     execute  = ["sh", "-c", "echo path from repo root: ${jsonencode(local.zipped)}"]
-  //   }
-  before_hook "echo2" {
-    commands = ["validate"]
-    execute  = ["sh", "-c", "echo module_avoid: ${jsonencode(local.parents_region.locals.module_descendants)}"]
-  }
-}
+// terraform {
+//   before_hook "echo2" {
+//     commands = ["validate"]
+//     execute  = ["sh", "-c", "echo region: ${jsonencode(local.region)}"]
+//   }
+// }
