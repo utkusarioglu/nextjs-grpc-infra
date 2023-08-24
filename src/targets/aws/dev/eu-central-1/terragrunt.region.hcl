@@ -14,12 +14,10 @@ locals {
   region_short = "euc1"
   aws_profile  = "utkusarioglu"
 
-  parents = {
-    for parent in ["repo", "environment", "platform"] :
-    parent => read_terragrunt_config(
-      find_in_parent_folders("terragrunt.${parent}.hcl")
-    )
-  }
+  parents = read_terragrunt_config(join("/", [
+    path_relative_from_include(),
+    "parents.region.hcl"
+  ])).locals.parents
 
   project_name       = local.parents.repo.inputs.project_name
   project_name_short = local.parents.repo.inputs.project_name_short
