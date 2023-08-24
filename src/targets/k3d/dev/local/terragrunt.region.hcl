@@ -11,16 +11,10 @@ inputs = {
 locals {
   region = "local"
 
-  parents = {
-    for parent in ["repo", "environment", "platform"] :
-    parent => read_terragrunt_config(
-      find_in_parent_folders("terragrunt.${parent}.hcl")
-    )
-  }
-
-  project_name = local.parents.repo.inputs.project_name
-  platform     = local.parents.platform.inputs.platform
-  environment  = local.parents.environment.inputs.environment
+  lineage      = read_terragrunt_config("./lineage.hcl")
+  project_name = local.lineage.locals.parents.repo.inputs.project_name
+  platform     = local.lineage.locals.parents.platform.inputs.platform
+  environment  = local.lineage.locals.parents.environment.inputs.environment
 
   region_identifier = [
     local.project_name,
