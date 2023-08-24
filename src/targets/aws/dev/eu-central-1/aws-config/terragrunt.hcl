@@ -12,7 +12,7 @@ include "module" {
 }
 
 include "logic" {
-  path = "./terragrunt.logic.hcl"
+  path = "./logic.target.aws.hcl"
 }
 
 dependencies {
@@ -36,7 +36,7 @@ inputs = {
 }
 
 locals {
-  logic = read_terragrunt_config("./terragrunt.logic.hcl").locals
+  logic = read_terragrunt_config("./logic.target.aws.hcl").locals
 }
 
 remote_state {

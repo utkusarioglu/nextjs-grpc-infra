@@ -1,26 +1,9 @@
 locals {
-  constants = read_terragrunt_config(join("/", [
-    get_repo_root(),
-    "terragrunt.constants.hcl"
-  ])).locals
+  parents_target    = read_terragrunt_config("./parents.target.hcl").locals
+  parents           = local.parents_target.parents
+  template_types    = local.parents_target.template_types
+  parent_precedence = local.parents_target.template_types
 
-  parent_precedence = local.constants.parent_precedence
-  template_types    = local.constants.template_types
-
-  parents = merge({
-    for parent in local.parent_precedence :
-    parent => read_terragrunt_config(
-      find_in_parent_folders("terragrunt.${parent}.hcl")
-    )
-    }, {
-    module = read_terragrunt_config(join("/", [
-      get_repo_root(),
-      "src/modules/",
-      basename(get_terragrunt_dir()),
-      "terragrunt.module.hcl"
-      ])
-    )
-  })
 
   region            = local.parents.region.inputs.region
   aws_profile       = local.parents.region.inputs.aws_profile
@@ -55,7 +38,7 @@ locals {
         args = {
           cluster_name = local.cluster_name
         }
-      },
+      }
     ]
   }
 

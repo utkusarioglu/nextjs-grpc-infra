@@ -40,12 +40,6 @@ locals {
       }
     ],
 
-    providers = [
-      {
-        name = "aws-dns",
-      }
-    ]
-
     required_providers = [
       {
         name = "aws-dns-region"
