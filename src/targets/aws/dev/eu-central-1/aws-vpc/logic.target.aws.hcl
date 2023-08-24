@@ -1,8 +1,8 @@
 locals {
-  parents_target    = read_terragrunt_config("./lineage.hcl")
-  parents           = local.parents_target.locals.parents
-  template_types    = local.parents_target.locals.template_types
-  parent_precedence = local.parents_target.locals.template_types
+  lineage          = read_terragrunt_config("./lineage.hcl")
+  parents          = local.lineage.locals.parents
+  template_types   = local.lineage.locals.template_types
+  module_hierarchy = local.lineage.locals.module_hierarchy
 
   region            = local.parents.region.inputs.region
   aws_profile       = local.parents.region.inputs.aws_profile
@@ -44,7 +44,7 @@ locals {
   aggregated_config_templates = {
     for template_type in local.template_types :
     template_type => flatten([[
-      for parent in flatten([local.parent_precedence, "module"]) :
+      for parent in local.module_hierarchy :
       try(local.parents[parent].locals.config_templates[template_type], [])
     ], try(local.config_templates[template_type], [])])
   }
