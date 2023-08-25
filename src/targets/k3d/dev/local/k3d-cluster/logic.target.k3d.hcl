@@ -20,6 +20,18 @@ locals {
 }
 
 terraform {
+  before_hook "echo parents_new" {
+    commands = ["validate"]
+    execute = [
+      "sh",
+      "-c",
+      join(" ", [
+        "echo",
+        "parents_new: ",
+        jsonencode(local.lineage.locals.debug_output)
+      ])
+    ]
+  }
   after_hook "validate_tflint" {
     commands = ["validate"]
     execute  = ["sh", "-c", "tflint --config=.tflint.hcl -f default"]
