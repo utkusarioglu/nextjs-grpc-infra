@@ -103,6 +103,12 @@ case $region_path in
     copy_helpers $REGION_PATH "$HELPER_FILE_IDENTIFIERS"
     ;;
 
+  aws/dev/eu-central-1)
+    REGION_PATH=src/targets/aws/dev/eu-central-1
+    HELPER_FILE_IDENTIFIERS='lineage logic.target.aws'
+    copy_helpers $REGION_PATH "$HELPER_FILE_IDENTIFIERS"
+    ;;
+
   *)
     echo "Error: Unrecognized region path"
     exit 2

@@ -1,5 +1,5 @@
 locals {
-  lineage          = read_terragrunt_config("./lineage.hcl")
+  lineage          = read_terragrunt_config("./lineage.helper.hcl")
   parents          = local.lineage.locals.parents
   template_types   = local.lineage.locals.template_types
   module_hierarchy = local.lineage.locals.module_hierarchy

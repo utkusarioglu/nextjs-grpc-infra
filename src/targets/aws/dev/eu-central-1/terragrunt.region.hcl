@@ -15,7 +15,7 @@ locals {
 
   lineage = read_terragrunt_config(join("/", [
     path_relative_from_include(),
-    "lineage.hcl"
+    "lineage.helper.hcl"
   ]))
   parents = local.lineage.locals.parents
   region  = local.lineage.locals.parents_map[local.lineage.locals.module_role]
