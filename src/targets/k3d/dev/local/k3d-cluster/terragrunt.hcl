@@ -12,11 +12,11 @@ include "module" {
 }
 
 include "logic" {
-  path = "./logic.target.k3d.hcl"
+  path = "./logic.target.k3d.helper.hcl"
 }
 
 locals {
-  parents = read_terragrunt_config("./logic.target.k3d.hcl").locals.parents
+  parents = read_terragrunt_config("./logic.target.k3d.helper.hcl").locals.parents
 
   cluster_name = local.parents.region.locals.cluster_name
 

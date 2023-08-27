@@ -11,7 +11,7 @@ inputs = {
 locals {
   region = "local"
 
-  lineage      = read_terragrunt_config("./lineage.hcl")
+  lineage      = read_terragrunt_config("./lineage.helper.hcl")
   project_name = local.lineage.locals.parents.repo.inputs.project_name
   platform     = local.lineage.locals.parents.platform.inputs.platform
   environment  = local.lineage.locals.parents.environment.inputs.environment

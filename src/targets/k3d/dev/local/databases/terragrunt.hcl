@@ -11,7 +11,7 @@ include "region" {
 }
 
 include "logic" {
-  path = "./logic.target.k3d.hcl"
+  path = "./logic.target.k3d.helper.hcl"
 }
 
 include "module" {
@@ -47,7 +47,7 @@ dependencies {
 }
 
 locals {
-  parents = read_terragrunt_config("./logic.target.k3d.hcl").locals.parents
+  parents = read_terragrunt_config("./logic.target.k3d.helper.hcl").locals.parents
 
   artifacts_abspath    = local.parents.repo.inputs.artifacts_abspath
   project_root_abspath = local.parents.repo.inputs.project_root_abspath
