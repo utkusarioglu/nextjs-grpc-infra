@@ -64,3 +64,5 @@ modules/vault/artifacts
 TODO.md
 
 .infracost
+
+src/targets/**/*.helper.hcl

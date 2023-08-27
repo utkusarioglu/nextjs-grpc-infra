@@ -19,9 +19,10 @@ case $region_path in
       echo "$target_directory"
       for helper_file_identifier in $helper_file_identifiers; do
         helper_filename="$helper_file_identifier.helper.hcl"
-        helper_relpath="$helpers_basepath/$helper_file_identifier"
-        helper_target="$target_directory$helper_filename"
-        echo "  -> $helper_target"
+        helper_source_relpath="$helpers_basepath/$helper_filename"
+        helper_target_relpath="$target_directory$helper_filename"
+        cp $helper_source_relpath $helper_target_relpath
+        echo "  -> $helper_target_relpath"
       done
       echo ""
     done
