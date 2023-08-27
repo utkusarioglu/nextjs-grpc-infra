@@ -301,7 +301,14 @@ jobs:
               update-ca-certificates --fresh
             '
           done
-      
+
+      - name: Copy helpers
+        run: |
+          docker exec -t nextjs-grpc-infra \
+            bash -c '
+              scripts/copy-helpers.sh k3d/dev/local
+            '
+
       - name: Run Tflint on cluster
         run: |
           docker exec -t nextjs-grpc-infra \

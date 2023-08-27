@@ -295,6 +295,13 @@ jobs:
             '
           done
 
+      - name: Copy helpers
+        run: |
+          docker exec -t nextjs-grpc-infra \
+            bash -c '
+              scripts/copy-helpers.sh k3d/dev/local
+            '
+
       - name: Create infrastructure
         working-directory: infra
         run: scripts/ci/create-infrastructure.sh 'src/targets/k3d/dev/local'

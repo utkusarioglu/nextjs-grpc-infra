@@ -248,6 +248,13 @@ jobs:
         working-directory: infra
         run: scripts/hosts-entries/add.sh host-gateway
 
+      - name: Copy helpers
+        run: |
+          docker exec -t nextjs-grpc-infra \
+            bash -c '
+              scripts/copy-helpers.sh k3d/dev/local
+            '
+
       - name: Run Test
         working-directory: infra
         env: 
