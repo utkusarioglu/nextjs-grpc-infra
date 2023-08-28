@@ -145,6 +145,17 @@ function main {
       )
     ;;
 
+    aws/dev/eu-central-1)
+      region_relpath="${TARGETS_BASE_RELPATH}/aws/dev/eu-central-1"
+      target_helper_ids+=(
+        lineage 
+        logic.target.aws
+      )
+      region_helper_ids+=(
+        lineage 
+      )
+    ;;
+
     *)
       echo_error 'Unregistered region id'
       exit 2
