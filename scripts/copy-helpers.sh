@@ -84,7 +84,7 @@ function copy_helpers {
     for target_helper_id in ${target_helper_ids_ref2[*]}; do
       helper_filename="${target_helper_id}.${HELPER_SUFFIX}"
       helper_relpath="${HELPERS_BASE_RELPATH}/${helper_filename}"
-      cp "$helper_filename" "$target_relpath"
+      cp "$helper_relpath" "$target_relpath"
     done
   done
 
@@ -92,7 +92,7 @@ function copy_helpers {
   for region_helper_id in ${region_helper_ids_ref[*]}; do
     helper_filename="${region_helper_id}.${HELPER_SUFFIX}"
     helper_relpath="${HELPERS_BASE_RELPATH}/${helper_filename}"
-    cp "$helper_filename" "$region_relpath/"
+    cp "$helper_relpath" "$region_relpath/"
   done
 }
 
