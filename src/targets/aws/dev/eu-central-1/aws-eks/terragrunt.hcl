@@ -11,18 +11,30 @@ include "module" {
   ])
 }
 
-dependencies {
-  paths = [
-    "../aws-vpc",
-  ]
-}
+// dependencies {
+//   paths = [
+//     "../aws-vpc",
+//   ]
+// }
 
 dependency "aws_vpc" {
   config_path = "../aws-vpc"
+
+  mock_outputs_allowed_terraform_commands = ["validate"]
+  mock_outputs = {
+    aws_vpc_private_subnets   = tolist(["mock"])
+    aws_vpc_vpc_id            = "mock"
+    aws_alb_security_group_id = "mock"
+  }
 }
 
 dependency "aws_kms" {
   config_path = "../aws-kms"
+
+  mock_outputs_allowed_terraform_commands = ["validate"]
+  mock_outputs = {
+    aws_vault_kms_unseal_policy_arn = "mock"
+  }
 }
 
 include "logic" {
@@ -31,7 +43,10 @@ include "logic" {
 
 
 locals {
-  logic = read_terragrunt_config("./logic.target.aws.helper.hcl")
+  logic        = read_terragrunt_config("./logic.target.aws.helper.hcl")
+  cluster_name = local.logic.locals.cluster_name
+  region       = local.logic.locals.region
+  aws_profile  = local.logic.locals.aws_profile
 }
 
 // locals {
@@ -98,9 +113,10 @@ remote_state {
 // }
 
 inputs = {
-  aws_vpc_private_subnets         = dependency.aws_vpc.outputs.aws_vpc_private_subnets
-  aws_vpc_vpc_id                  = dependency.aws_vpc.outputs.aws_vpc_vpc_id
-  aws_alb_security_group_id       = dependency.aws_vpc.outputs.aws_alb_security_group_id
+  aws_vpc_private_subnets   = dependency.aws_vpc.outputs.aws_vpc_private_subnets
+  aws_vpc_vpc_id            = dependency.aws_vpc.outputs.aws_vpc_vpc_id
+  aws_alb_security_group_id = dependency.aws_vpc.outputs.aws_alb_security_group_id
+
   aws_vault_kms_unseal_policy_arn = dependency.aws_kms.outputs.aws_vault_kms_unseal_policy_arn
 }
 
