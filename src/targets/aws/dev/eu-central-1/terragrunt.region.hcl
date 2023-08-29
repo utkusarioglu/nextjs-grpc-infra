@@ -57,6 +57,12 @@ locals {
         args = local.aws_provider_args
       }
     ]
+
+    required_providers = [
+      {
+        name = "aws"
+      }
+    ]
   }
 
   // target_parts       = split("/", trimprefix(get_path_from_repo_root(), "src/targets/"))

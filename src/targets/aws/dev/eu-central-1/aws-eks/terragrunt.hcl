@@ -25,63 +25,77 @@ dependency "aws_kms" {
   config_path = "../aws-kms"
 }
 
-locals {
-  parents = {
-    for parent in ["region"] :
-    parent => read_terragrunt_config(
-      find_in_parent_folders("terragrunt.${parent}.hcl")
-    )
-  }
-
-  region            = local.parents.region.inputs.region
-  aws_profile       = local.parents.region.inputs.aws_profile
-  region_identifier = local.parents.region.inputs.region_identifier
-  cluster_name      = local.parents.region.inputs.cluster_name
-
-  target_identifier = concat(local.region_identifier, [
-    basename(get_terragrunt_dir())
-  ])
-  target_name = join("-", local.target_identifier)
-  s3_key      = join("/", concat(local.target_identifier, ["terraform.tfstate"]))
-
-  remote_state_config = {
-    bucket         = local.target_name
-    key            = local.s3_key
-    region         = local.region
-    encrypt        = true
-    dynamodb_table = local.target_name
-    profile        = local.aws_profile
-  }
-
-  config_templates = {
-    backends = [
-      {
-        name = "aws"
-        args = local.remote_state_config
-      }
-    ]
-  }
+include "logic" {
+  path = "./logic.target.aws.helper.hcl"
 }
+
+
+locals {
+  logic = read_terragrunt_config("./logic.target.aws.helper.hcl")
+}
+
+// locals {
+// parents = {
+//   for parent in ["region"] :
+//   parent => read_terragrunt_config(
+//     find_in_parent_folders("terragrunt.${parent}.hcl")
+//   )
+// }
+
+// region            = local.parents.region.inputs.region
+// aws_profile       = local.parents.region.inputs.aws_profile
+// region_identifier = local.parents.region.inputs.region_identifier
+// cluster_name      = local.parents.region.inputs.cluster_name
+
+// target_identifier = concat(local.region_identifier, [
+//   basename(get_terragrunt_dir())
+// ])
+// target_name = join("-", local.target_identifier)
+// s3_key      = join("/", concat(local.target_identifier, ["terraform.tfstate"]))
+
+// remote_state_config = {
+//   bucket         = local.target_name
+//   key            = local.s3_key
+//   region         = local.region
+//   encrypt        = true
+//   dynamodb_table = local.target_name
+//   profile        = local.aws_profile
+// }
+
+// config_templates = {
+//   backends = [
+//     {
+//       name = "aws"
+//       args = local.remote_state_config
+//     }
+//   ]
+// }
+// }
 
 remote_state {
   backend = "s3"
-  config  = local.remote_state_config
+  config  = local.logic.locals.remote_state_config
 }
 
-generate "generated_config_target" {
-  path      = "generated-config.target.tf"
-  if_exists = "overwrite"
-  contents = join("\n", ([
-    for key, items in local.config_templates :
-    (join("\n", [
-      for j, template in items :
-      templatefile(
-        "${get_repo_root()}/src/templates/${key}/${template.name}.tftpl.hcl",
-        try(template.args, {})
-      )
-    ]))
-  ]))
-}
+// remote_state {
+//   backend = "s3"
+//   config  = local.remote_state_config
+// }
+
+// generate "generated_config_target" {
+//   path      = "generated-config.target.tf"
+//   if_exists = "overwrite"
+//   contents = join("\n", ([
+//     for key, items in local.config_templates :
+//     (join("\n", [
+//       for j, template in items :
+//       templatefile(
+//         "${get_repo_root()}/src/templates/${key}/${template.name}.tftpl.hcl",
+//         try(template.args, {})
+//       )
+//     ]))
+//   ]))
+// }
 
 inputs = {
   aws_vpc_private_subnets         = dependency.aws_vpc.outputs.aws_vpc_private_subnets
