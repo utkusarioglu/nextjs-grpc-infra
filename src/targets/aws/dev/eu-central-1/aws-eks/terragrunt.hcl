@@ -37,16 +37,24 @@ dependency "aws_kms" {
   }
 }
 
-include "logic" {
-  path = "./logic.target.aws.helper.hcl"
+include "generate" {
+  path = "./generate.target.aws.helper.hcl"
+}
+
+include "hooks" {
+  path = "./hooks.target.aws.helper.hcl"
 }
 
 
 locals {
-  logic        = read_terragrunt_config("./logic.target.aws.helper.hcl")
-  cluster_name = local.logic.locals.cluster_name
-  region       = local.logic.locals.region
-  aws_profile  = local.logic.locals.aws_profile
+  remote_state_target_helper_hcl = read_terragrunt_config("./remote-state.target.aws.helper.hcl")
+  remote_state_config            = local.remote_state_target_helper_hcl.locals.remote_state_config
+
+  lineage_helper_hcl = read_terragrunt_config("./lineage.helper.hcl")
+  parents            = local.lineage_helper_hcl.locals.parents
+  cluster_name       = local.parents.region.inputs.cluster_name
+  region             = local.parents.region.inputs.region
+  aws_profile        = local.parents.region.inputs.aws_profile
 }
 
 // locals {
@@ -89,7 +97,7 @@ locals {
 
 remote_state {
   backend = "s3"
-  config  = local.logic.locals.remote_state_config
+  config  = local.remote_state_config
 }
 
 // remote_state {

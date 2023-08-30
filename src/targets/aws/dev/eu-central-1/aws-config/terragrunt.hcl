@@ -40,8 +40,8 @@ inputs = {
 }
 
 locals {
-  prep                = read_terragrunt_config("./remote-state.target.aws.helper.hcl")
-  remote_state_config = local.prep.locals.remote_state_config
+  remote_state_target_helper_hcl = read_terragrunt_config("./remote-state.target.aws.helper.hcl")
+  remote_state_config            = local.remote_state_target_helper_hcl.locals.remote_state_config
 }
 
 remote_state {

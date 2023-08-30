@@ -1,12 +1,12 @@
 locals {
-  constants = read_terragrunt_config(join("/", [
+  constants_repo_hcl = read_terragrunt_config(join("/", [
     get_repo_root(),
     "constants.repo.hcl"
-  ])).locals
-
-  module_hierarchy = local.constants.module_hierarchy
-  targets_path     = local.constants.targets_path
-  modules_path     = local.constants.modules_path
+  ]))
+  module_hierarchy = local.constants_repo_hcl.locals.module_hierarchy
+  targets_path     = local.constants_repo_hcl.locals.targets_path
+  modules_path     = local.constants_repo_hcl.locals.modules_path
+  template_types   = local.constants_repo_hcl.locals.template_types
 
   target_parts = split(
     "/",
@@ -27,7 +27,6 @@ locals {
     flatten(["repo", local.target_parts])
   )
 
-  template_types = local.constants.template_types
 
   parents = merge({
     for parent_type, parent_name in local.parents_map :

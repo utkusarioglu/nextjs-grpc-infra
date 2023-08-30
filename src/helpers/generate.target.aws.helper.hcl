@@ -1,14 +1,11 @@
 locals {
-  lineage_helper_hcl = read_terragrunt_config(join("/", [
-    path_relative_to_include(),
-    "lineage.helper.hcl"
-  ]))
-  parents          = local.lineage_helper_hcl.locals.parents
-  template_types   = local.lineage_helper_hcl.locals.template_types
-  module_hierarchy = local.lineage_helper_hcl.locals.module_hierarchy
-  module_role      = local.lineage_helper_hcl.locals.module_role
+  lineage_helper_hcl = read_terragrunt_config("./lineage.helper.hcl")
+  template_types     = local.lineage_helper_hcl.locals.template_types
+  module_hierarchy   = local.lineage_helper_hcl.locals.module_hierarchy
+  parents            = local.lineage_helper_hcl.locals.parents
 
-  config_templates = []
+  config_templates_target_aws_hcl = read_terragrunt_config("./config-templates.target.aws.hcl")
+  config_templates                = local.config_templates_target_aws_hcl.locals.config_templates
 
   aggregated_config_templates = {
     for template_type in local.template_types :
@@ -16,13 +13,6 @@ locals {
       for parent in local.module_hierarchy :
       try(local.parents[parent].locals.config_templates[template_type], [])
     ], try(local.config_templates[template_type], [])])
-  }
-}
-
-terraform {
-  after_hook "validate_tflint" {
-    commands = ["validate"]
-    execute  = ["sh", "-c", "tflint --config=.tflint.hcl -f default"]
   }
 }
 

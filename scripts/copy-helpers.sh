@@ -149,7 +149,9 @@ function main {
       region_relpath="${TARGETS_BASE_RELPATH}/aws/dev/eu-central-1"
       target_helper_ids+=(
         lineage 
-        logic.target.aws
+        generate.target.aws
+        hooks.target.aws
+        remote-state.target.aws
       )
       region_helper_ids+=(
         lineage 

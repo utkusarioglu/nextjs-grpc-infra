@@ -11,12 +11,18 @@ include "module" {
   ])
 }
 
-include "logic" {
-  path = "./logic.target.aws.helper.hcl"
+include "generate" {
+  path = "./generate.target.aws.helper.hcl"
+}
+
+include "hooks" {
+  path = "./hooks.target.aws.helper.hcl"
 }
 
 locals {
-  logic = read_terragrunt_config("./logic.target.aws.helper.hcl")
+  remote_state_target_helper_hcl = read_terragrunt_config("./remote-state.target.aws.helper.hcl")
+  remote_state_config            = local.remote_state_target_helper_hcl.locals.remote_state_config
+  // logic = read_terragrunt_config("./logic.target.aws.helper.hcl")
   // parents = {
   //   for parent in ["region"] :
   //   parent => read_terragrunt_config(
@@ -55,7 +61,7 @@ locals {
 
 remote_state {
   backend = "s3"
-  config  = local.logic.locals.remote_state_config
+  config  = local.remote_state_config
 }
 
 // generate "generated_config_target" {
