@@ -31,6 +31,38 @@ locals {
         args = local.remote_state_config
       }
     ]
+
+    // these aren't needed until aws-config
+    data = [
+      {
+        name = "aws-eks-cluster"
+        args = {
+          cluster_name = local.cluster_name
+        }
+      },
+      {
+        name = "aws-eks-cluster-auth"
+        args = {
+          cluster_name = local.cluster_name
+        }
+      },
+    ]
+
+    // these aren't needed until aws-config
+    providers = [
+      {
+        name = "aws-helm"
+        args = {
+          cluster_name = local.cluster_name
+        }
+      },
+      {
+        name = "aws-kubernetes"
+        args = {
+          cluster_name = local.cluster_name
+        }
+      }
+    ]
     // providers = [
     //   {
     //     name = "aws-helm-kubernetes"

@@ -42,9 +42,6 @@ locals {
 
     required_providers = [
       {
-        name = "aws-dns-region"
-      },
-      {
         name = "helm"
       },
       {

@@ -11,8 +11,12 @@ include "module" {
   ])
 }
 
-include "logic" {
-  path = "./logic.target.aws.helper.hcl"
+include "generate" {
+  path = "./generate.target.aws.helper.hcl"
+}
+
+include "hooks" {
+  path = "./hooks.target.aws.helper.hcl"
 }
 
 dependencies {
@@ -36,10 +40,11 @@ inputs = {
 }
 
 locals {
-  logic = read_terragrunt_config("./logic.target.aws.helper.hcl").locals
+  prep                = read_terragrunt_config("./remote-state.target.aws.helper.hcl")
+  remote_state_config = local.prep.locals.remote_state_config
 }
 
 remote_state {
   backend = "s3"
-  config  = local.logic.remote_state_config
+  config  = local.remote_state_config
 }
