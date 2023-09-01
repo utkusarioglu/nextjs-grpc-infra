@@ -16,7 +16,7 @@ Group 5
 - Module /utkusarioglu-com/projects/nextjs-grpc/infra/src/targets/aws/dev/eu-central-1/vault - done
 
 Group 6
-- Module /utkusarioglu-com/projects/nextjs-grpc/infra/src/targets/aws/dev/eu-central-1/aws-route53-for-vault
+- Module /utkusarioglu-com/projects/nextjs-grpc/infra/src/targets/aws/dev/eu-central-1/aws-route53-for-vault - done
 
 Group 7
 - Module /utkusarioglu-com/projects/nextjs-grpc/infra/src/targets/aws/dev/eu-central-1/vault-config
