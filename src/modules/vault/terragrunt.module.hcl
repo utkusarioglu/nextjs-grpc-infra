@@ -32,6 +32,12 @@ locals {
 
     required_providers = [
       {
+        name = "kubernetes"
+      },
+      {
+        name = "helm"
+      },
+      {
         name = "tls"
       }
     ]

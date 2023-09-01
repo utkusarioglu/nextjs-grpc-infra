@@ -10,7 +10,7 @@ Group 3
 - Module /utkusarioglu-com/projects/nextjs-grpc/infra/src/targets/aws/dev/eu-central-1/k8s-namespaces - done
 
 Group 4
-- Module /utkusarioglu-com/projects/nextjs-grpc/infra/src/targets/aws/dev/eu-central-1/aws-ebs-volumes
+- Module /utkusarioglu-com/projects/nextjs-grpc/infra/src/targets/aws/dev/eu-central-1/aws-ebs-volumes - done
 
 Group 5
 - Module /utkusarioglu-com/projects/nextjs-grpc/infra/src/targets/aws/dev/eu-central-1/vault
