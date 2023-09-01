@@ -26,6 +26,15 @@ locals {
       {
         name = "deployment-config"
       },
+    ],
+
+    required_providers = [
+      {
+        name = "helm"
+      },
+      {
+        name = "kubernetes"
+      },
     ]
   }
 }
