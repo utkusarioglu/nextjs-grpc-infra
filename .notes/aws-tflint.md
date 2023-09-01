@@ -13,7 +13,7 @@ Group 4
 - Module /utkusarioglu-com/projects/nextjs-grpc/infra/src/targets/aws/dev/eu-central-1/aws-ebs-volumes - done
 
 Group 5
-- Module /utkusarioglu-com/projects/nextjs-grpc/infra/src/targets/aws/dev/eu-central-1/vault
+- Module /utkusarioglu-com/projects/nextjs-grpc/infra/src/targets/aws/dev/eu-central-1/vault - done
 
 Group 6
 - Module /utkusarioglu-com/projects/nextjs-grpc/infra/src/targets/aws/dev/eu-central-1/aws-route53-for-vault
