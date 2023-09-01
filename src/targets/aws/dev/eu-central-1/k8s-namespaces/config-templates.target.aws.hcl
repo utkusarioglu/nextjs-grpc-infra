@@ -45,5 +45,14 @@ locals {
         }
       }
     ]
+
+    required_providers = [
+      {
+        name = "helm"
+      },
+      {
+        name = "kubernetes"
+      },
+    ]
   }
 }
