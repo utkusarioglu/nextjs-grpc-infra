@@ -233,9 +233,9 @@ jobs:
             e2e/.certs/intermediate/ca.crt
           cat e2e/.certs/intermediate/ca.crt
 
-      - name: Remove risky config
-        working-directory: infra/src/targets
-        run: rm -rf aws
+      # - name: Remove risky config
+      #   working-directory: infra/src/targets
+      #   run: rm -rf aws
         
       - name: e2e env vars
         working-directory: e2e
