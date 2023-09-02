@@ -62,6 +62,10 @@ on:
       msImageTag: 
         required: false
         type: string
+      
+      targetRelPath:
+        required: true
+        type: string # relpath
 
 jobs:
   test-k3d-dev-local:
@@ -306,14 +310,14 @@ jobs:
         run: |
           docker exec -t nextjs-grpc-infra \
             bash -c '
-              scripts/copy-helpers.sh k3d/dev/local
+              scripts/copy-helpers.sh ${{ inputs.targetRelPath }}
             '
 
       - name: Run Tflint on cluster
         run: |
           docker exec -t nextjs-grpc-infra \
             bash -c '
-              cd src/targets/k3d/dev/local
+              cd src/targets/${{ inputs.targetRelPath }}
               terragrunt run-all validate --terragrunt-ignore-dependency-errors
             '
 
