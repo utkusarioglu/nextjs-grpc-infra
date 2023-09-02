@@ -28,8 +28,8 @@ Group 9
 - Module /utkusarioglu-com/projects/nextjs-grpc/infra/src/targets/aws/dev/eu-central-1/k8s-config - done
 
 Group 10
-- Module /utkusarioglu-com/projects/nextjs-grpc/infra/src/targets/aws/dev/eu-central-1/databases
-- Module /utkusarioglu-com/projects/nextjs-grpc/infra/src/targets/aws/dev/eu-central-1/operators
+- Module /utkusarioglu-com/projects/nextjs-grpc/infra/src/targets/aws/dev/eu-central-1/databases - done
+- Module /utkusarioglu-com/projects/nextjs-grpc/infra/src/targets/aws/dev/eu-central-1/operators - done
 
 Group 11
 - Module /utkusarioglu-com/projects/nextjs-grpc/infra/src/targets/aws/dev/eu-central-1/vault-for-databases
