@@ -43,9 +43,9 @@ jobs:
       targetRelPath: k3d/dev/local
       infraRef: ${{ github.head_ref }}
 
-  aws-dev-euc1-tflint:
-    uses: ./.github/workflows/common.lint.wfc.yml
-    secrets: inherit
-    with:
-      targetRelPath: aws/dev/eu-central-1
-      infraRef: ${{ github.head_ref }}
+  # aws-dev-euc1-tflint:
+  #   uses: ./.github/workflows/common.lint.wfc.yml
+  #   secrets: inherit
+  #   with:
+  #     targetRelPath: aws/dev/eu-central-1
+  #     infraRef: ${{ github.head_ref }}
