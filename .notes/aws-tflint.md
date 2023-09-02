@@ -35,7 +35,7 @@ Group 11
 - Module /utkusarioglu-com/projects/nextjs-grpc/infra/src/targets/aws/dev/eu-central-1/vault-for-databases - done
 
 Group 12
-- Module /utkusarioglu-com/projects/nextjs-grpc/infra/src/targets/aws/dev/eu-central-1/observability
+- Module /utkusarioglu-com/projects/nextjs-grpc/infra/src/targets/aws/dev/eu-central-1/observability - done
 
 Group 13
 - Module /utkusarioglu-com/projects/nextjs-grpc/infra/src/targets/aws/dev/eu-central-1/services
