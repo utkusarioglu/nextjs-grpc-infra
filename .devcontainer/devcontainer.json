@@ -16,7 +16,8 @@
         "hashicorp.hcl",
         "ms-kubernetes-tools.vscode-kubernetes-tools",
         "amazonwebservices.aws-toolkit-vscode",
-        "cschleiden.vscode-github-actions"
+        "cschleiden.vscode-github-actions",
+        "ms-azuretools.vscode-docker"
       ],
       "settings": {
         "workbench.colorCustomizations": {

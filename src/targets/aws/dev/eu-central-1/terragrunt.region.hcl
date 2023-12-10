@@ -11,7 +11,7 @@ inputs = {
 
 locals {
   region_short = "euc1"
-  aws_profile  = "utkusarioglu"
+  aws_profile  = "nextjs-grpc-automation"
 
   lineage = read_terragrunt_config(join("/", [
     path_relative_from_include(),
