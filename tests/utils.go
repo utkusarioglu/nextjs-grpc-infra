@@ -2,6 +2,7 @@ package test
 
 import (
 	"fmt"
+	"os"
 	"path/filepath"
 	"strings"
 	"testing"
@@ -63,4 +64,8 @@ func SetupCluster(t *testing.T, targetSubpath string) string {
 		terraform.TgApplyAll(t, terragruntOptions)
 	})
 	return timestamp
+}
+
+func IsObservabilityEnabled() bool {
+	return os.Getenv("K3D_DEV_LOCAL_DEPLOYMENT_MODE") != "no_observability"
 }

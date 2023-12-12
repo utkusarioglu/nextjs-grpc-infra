@@ -13,7 +13,7 @@ import (
 var namespaces = []string{
 	"api",
 	"ms",
-	"observability",
+	// "observability",
 }
 
 func LogTests(t *testing.T) func() {

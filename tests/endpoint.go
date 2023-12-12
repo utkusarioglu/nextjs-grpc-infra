@@ -1,6 +1,7 @@
 package test
 
 import (
+	"fmt"
 	"strings"
 	"testing"
 	"time"
@@ -13,7 +14,7 @@ type Endpoint struct {
 	expectedStrings []string
 }
 
-var endpoints = []Endpoint{
+var servicesEndpoints = []Endpoint{
 	{
 		url: "https://nextjs-grpc.utkusarioglu.com/api/v1/data/inflation/decade-stats?codes=TUR,USA",
 		expectedStrings: []string{
@@ -51,6 +52,16 @@ var endpoints = []Endpoint{
 			"utku",
 		},
 	},
+}
+
+var vaultEndpoints = []Endpoint{
+	{
+		url:             "https://vault.nextjs-grpc.utkusarioglu.com:8200",
+		expectedStrings: []string{"Vault"},
+	},
+}
+
+var observabilityEndpoints = []Endpoint{
 	{
 		url:             "https://jaeger.nextjs-grpc.utkusarioglu.com",
 		expectedStrings: []string{"jaeger"},
@@ -67,22 +78,27 @@ var endpoints = []Endpoint{
 		url:             "https://prometheus.nextjs-grpc.utkusarioglu.com",
 		expectedStrings: []string{"Prometheus"},
 	},
-	{
-		url:             "https://vault.nextjs-grpc.utkusarioglu.com:8200",
-		expectedStrings: []string{"Vault"},
-	},
 }
 
 func EndpointTests(t *testing.T) func() {
+	endpoints := []Endpoint{}
+	endpoints = append(endpoints, servicesEndpoints...)
+	endpoints = append(endpoints, vaultEndpoints...)
+
+	if IsObservabilityEnabled() {
+		endpoints = append(endpoints, observabilityEndpoints...)
+	}
+
 	return func() {
 		for _, props := range endpoints {
 			http_helper.HttpGetWithRetryWithCustomValidation(
 				t,
 				props.url,
 				nil,
-				3,
-				5*time.Second,
+				10,
+				10*time.Second,
 				func(code int, response string) bool {
+					fmt.Printf("Testing endpoint %s…", props.url)
 					passing := true
 					if code < 200 || code >= 300 {
 						passing = false

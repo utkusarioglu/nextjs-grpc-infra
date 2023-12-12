@@ -10,16 +10,15 @@ inputs = {
 }
 
 locals {
-  region       = "eu-central-1"
   region_short = "euc1"
-  aws_profile  = "utkusarioglu"
+  aws_profile  = "nextjs-grpc-automation"
 
-  parents = {
-    for parent in ["repo", "environment", "platform"] :
-    parent => read_terragrunt_config(
-      find_in_parent_folders("terragrunt.${parent}.hcl")
-    )
-  }
+  lineage = read_terragrunt_config(join("/", [
+    path_relative_from_include(),
+    "lineage.helper.hcl"
+  ]))
+  parents = local.lineage.locals.parents
+  region  = local.lineage.locals.parents_map[local.lineage.locals.module_role]
 
   project_name       = local.parents.repo.inputs.project_name
   project_name_short = local.parents.repo.inputs.project_name_short
@@ -58,20 +57,26 @@ locals {
         args = local.aws_provider_args
       }
     ]
+
+    required_providers = [
+      {
+        name = "aws"
+      }
+    ]
   }
+
+  // target_parts       = split("/", trimprefix(get_path_from_repo_root(), "src/targets/"))
+  // parent_precedence2 = ["repo", "platform", "environment", "region", "target", "module"]
+  // module_parents     = slice(local.parent_precedence2, 1, length(local.target_parts) + 1)
+  // zipped = zipmap(
+  //   local.module_parents,
+  //   local.target_parts
+  // )
 }
 
-generate "generated_config_region" {
-  path      = "generated-config.region.tf"
-  if_exists = "overwrite"
-  contents = join("\n", ([
-    for key, items in local.config_templates :
-    (join("\n", [
-      for j, template in items :
-      templatefile(
-        "${get_repo_root()}/src/templates/${key}/${template.name}.tftpl.hcl",
-        try(template.args, {})
-      )
-    ]))
-  ]))
-}
+// terraform {
+//   before_hook "echo2" {
+//     commands = ["validate"]
+//     execute  = ["sh", "-c", "echo region: ${jsonencode(local.region)}"]
+//   }
+// }

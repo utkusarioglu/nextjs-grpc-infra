@@ -7,9 +7,9 @@ resource "kubernetes_config_map" "postgres_storage_migrations_sql" {
   }
 
   binary_data = {
-    "postgres-storage-migrations-sql.tar" = "${filebase64(
+    "postgres-storage-migrations-sql.tar" = filebase64(
       var.postgres_storage_migrations_sql_tar_path
-    )}"
+    )
   }
 }
 
@@ -22,8 +22,8 @@ resource "kubernetes_config_map" "postgres_storage_migrations_data" {
   }
 
   binary_data = {
-    "postgres-storage-migrations-data.tar" = "${filebase64(
+    "postgres-storage-migrations-data.tar" = filebase64(
       var.postgres_storage_migrations_data_tar_path
-    )}"
+    )
   }
 }

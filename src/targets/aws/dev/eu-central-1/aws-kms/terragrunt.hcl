@@ -11,41 +11,54 @@ include "module" {
   ])
 }
 
+include "generate" {
+  path = "./generate.target.aws.helper.hcl"
+}
+
+include "hooks" {
+  path = "./hooks.target.aws.helper.hcl"
+}
+
 locals {
-  parents = {
-    for parent in ["region"] :
-    parent => read_terragrunt_config(
-      find_in_parent_folders("terragrunt.${parent}.hcl")
-    )
-  }
+  remote_state_target_helper_hcl = read_terragrunt_config("./remote-state.target.aws.helper.hcl")
+  remote_state_config            = local.remote_state_target_helper_hcl.locals.remote_state_config
+  // logic = read_terragrunt_config("./logic.target.aws.helper.hcl")
+  // parents = {
+  //   for parent in ["region"] :
+  //   parent => read_terragrunt_config(
+  //     find_in_parent_folders("terragrunt.${parent}.hcl")
+  //   )
+  // }
+  // lineage = read_terragrunt_config("./lineage.helper.hcl")
+  // parents = local.lineage.locals.parents
 
-  region            = local.parents.region.inputs.region
-  aws_profile       = local.parents.region.inputs.aws_profile
-  region_identifier = local.parents.region.inputs.region_identifier
+  // region            = local.parents.region.inputs.region
+  // aws_profile       = local.parents.region.inputs.aws_profile
+  // region_identifier = local.parents.region.inputs.region_identifier
 
-  target_identifier = concat(local.region_identifier, [
-    basename(get_terragrunt_dir())
-  ])
-  target_name = join("-", local.target_identifier)
-  s3_key      = join("/", concat(local.target_identifier, ["terraform.tfstate"]))
+  // target_identifier = concat(local.region_identifier, [
+  //   basename(get_terragrunt_dir())
+  // ])
+  // target_name = join("-", local.target_identifier)
+  // s3_key      = join("/", concat(local.target_identifier, ["terraform.tfstate"]))
 
-  remote_state_config = {
-    bucket         = local.target_name
-    key            = local.s3_key
-    region         = local.region
-    encrypt        = true
-    dynamodb_table = local.target_name
-    profile        = local.aws_profile
-  }
+  // remote_state_config = {
+  //   bucket         = local.target_name
+  //   key            = local.s3_key
+  //   region         = local.region
+  //   encrypt        = true
+  //   dynamodb_table = local.target_name
+  //   profile        = local.aws_profile
+  // }
 
-  config_templates = {
-    backends = [
-      {
-        name = "aws"
-        args = local.remote_state_config
-      }
-    ]
-  }
+  // config_templates = {
+  //   backends = [
+  //     {
+  //       name = "aws"
+  //       args = local.remote_state_config
+  //     }
+  //   ]
+  // }
 }
 
 remote_state {
@@ -53,17 +66,22 @@ remote_state {
   config  = local.remote_state_config
 }
 
-generate "generated_config_target" {
-  path      = "generated-config.target.tf"
-  if_exists = "overwrite"
-  contents = join("\n", ([
-    for key, items in local.config_templates :
-    (join("\n", [
-      for j, template in items :
-      templatefile(
-        "${get_repo_root()}/src/templates/${key}/${template.name}.tftpl.hcl",
-        try(template.args, {})
-      )
-    ]))
-  ]))
-}
+// remote_state {
+//   backend = "s3"
+//   config  = local.remote_state_config
+// }
+
+// generate "generated_config_target" {
+//   path      = "generated-config.target.tf"
+//   if_exists = "overwrite"
+//   contents = join("\n", ([
+//     for key, items in local.config_templates :
+//     (join("\n", [
+//       for j, template in items :
+//       templatefile(
+//         "${get_repo_root()}/src/templates/${key}/${template.name}.tftpl.hcl",
+//         try(template.args, {})
+//       )
+//     ]))
+//   ]))
+// }

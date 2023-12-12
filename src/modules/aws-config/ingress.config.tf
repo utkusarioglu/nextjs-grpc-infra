@@ -72,7 +72,7 @@ resource "helm_release" "ingress_gateway" {
 
   set {
     name  = "serviceAccount.name"
-    value = kubernetes_service_account.load_balancer_controller.metadata.0.name
+    value = kubernetes_service_account.load_balancer_controller.metadata[0].name
   }
 
   set {

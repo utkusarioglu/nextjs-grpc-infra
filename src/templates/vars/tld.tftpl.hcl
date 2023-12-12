@@ -1,0 +1,3 @@
+variable "tld" {
+  type = string
+}

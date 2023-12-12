@@ -11,7 +11,7 @@ resource "helm_release" "web_server" {
   values = [
     yamlencode({
       image = {
-        tag = "${var.web_server_image_tag}"
+        tag = var.web_server_image_tag
       }
       env = {
         RUN_MODE                = "production",

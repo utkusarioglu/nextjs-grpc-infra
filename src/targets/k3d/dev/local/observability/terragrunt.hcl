@@ -19,6 +19,10 @@ include "module" {
   ])
 }
 
+include "logic" {
+  path = "./logic.target.k3d.helper.hcl"
+}
+
 dependencies {
   paths = [
     // target-dependent

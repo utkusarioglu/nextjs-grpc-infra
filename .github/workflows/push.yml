@@ -29,9 +29,23 @@ jobs:
       infraRef: ${{ github.ref_name }}
       # e2eRef: experiment/chore/infra-integration
 
-  # aws-dev-euc1-e2e-test:
-  #   uses: ./.github/workflows/aws-dev-euc1.e2e.test.wfc.yml
+  # # aws-dev-euc1-e2e-test:
+  # #   uses: ./.github/workflows/aws-dev-euc1.e2e.test.wfc.yml
+  # #   secrets: inherit
+  # #   with:
+  # #     infraRef: ${{ github.ref_name }}
+  # #     e2eRef: experiment/chore/infra-integration
+
+  k3d-dev-local-tflint:
+    uses: ./.github/workflows/common.lint.wfc.yml
+    secrets: inherit
+    with:
+      targetRelPath: k3d/dev/local
+      infraRef: ${{ github.head_ref }}
+
+  # aws-dev-euc1-tflint:
+  #   uses: ./.github/workflows/common.lint.wfc.yml
   #   secrets: inherit
   #   with:
-  #     infraRef: ${{ github.ref_name }}
-  #     e2eRef: experiment/chore/infra-integration
+  #     targetRelPath: aws/dev/eu-central-1
+  #     infraRef: ${{ github.head_ref }}

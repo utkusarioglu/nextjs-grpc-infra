@@ -11,13 +11,13 @@ include "module" {
   ])
 }
 
+include "logic" {
+  path = "./logic.target.k3d.helper.hcl"
+}
+
 locals {
-  parents = {
-    for parent in ["region"] :
-    parent => read_terragrunt_config(
-      find_in_parent_folders("terragrunt.${parent}.hcl")
-    )
-  }
+  parents = read_terragrunt_config("./logic.target.k3d.helper.hcl").locals.parents
+
   cluster_name = local.parents.region.locals.cluster_name
 
   k3d_config_path        = "${get_repo_root()}/src/configs/k3d.config.yml"
@@ -69,19 +69,5 @@ terraform {
       local.destroy_cluster_action,
       local.cluster_name
     ]
-  }
-
-  after_hook "validate_tflint" {
-    commands = ["validate"]
-    // execute = [
-    //   "sh", "-c", <<EOT
-    //     echo "Run tflint for project '${path_relative_to_include()}'..."
-    //     (cd "$project" && tflint --config="${path_relative_from_include()}/.tflint.hcl" --loglevel=warn -f default)
-    //     error_code=$?
-    //     echo "Run tflint for project '${path_relative_to_include()}'...DONE\n"
-    //     exit $error_code
-    //   EOT
-    // ]
-    execute = ["sh", "-c", "tflint --config=.tflint.hcl -f default"]
   }
 }

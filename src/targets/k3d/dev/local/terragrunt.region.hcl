@@ -11,16 +11,10 @@ inputs = {
 locals {
   region = "local"
 
-  parents = {
-    for parent in ["repo", "environment", "platform"] :
-    parent => read_terragrunt_config(
-      find_in_parent_folders("terragrunt.${parent}.hcl")
-    )
-  }
-
-  project_name = local.parents.repo.inputs.project_name
-  platform     = local.parents.platform.inputs.platform
-  environment  = local.parents.environment.inputs.environment
+  lineage      = read_terragrunt_config("./lineage.helper.hcl")
+  project_name = local.lineage.locals.parents.repo.inputs.project_name
+  platform     = local.lineage.locals.parents.platform.inputs.platform
+  environment  = local.lineage.locals.parents.environment.inputs.environment
 
   region_identifier = [
     local.project_name,
@@ -31,6 +25,20 @@ locals {
   cluster_name = join("-", local.region_identifier)
 
   config_templates = {
+    required_providers = [
+      {
+        name = "helm"
+        args = {
+          cluster_name = local.cluster_name
+        }
+      },
+      {
+        name = "kubernetes"
+        args = {
+          cluster_name = local.cluster_name
+        }
+      },
+    ]
     providers = [
       {
         name = "k3d-helm"
@@ -46,19 +54,4 @@ locals {
       },
     ]
   }
-}
-
-generate "generated_config_region" {
-  path      = "generated-config.region.tf"
-  if_exists = "overwrite"
-  contents = join("\n", ([
-    for key, items in local.config_templates :
-    (join("\n", [
-      for j, template in items :
-      templatefile(
-        "${get_repo_root()}/src/templates/${key}/${template.name}.tftpl.hcl",
-        try(template.args, {})
-      )
-    ]))
-  ]))
 }

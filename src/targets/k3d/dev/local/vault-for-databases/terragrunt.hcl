@@ -15,8 +15,18 @@ include "module" {
   ])
 }
 
+include "logic" {
+  path = "./logic.target.k3d.helper.hcl"
+}
+
 dependency "vault_config" {
   config_path = "../vault-config"
+
+  mock_outputs = {
+    vault_secrets_mount_path = "mock"
+  }
+
+  mock_outputs_allowed_terraform_commands = ["validate"]
 }
 
 dependencies {
