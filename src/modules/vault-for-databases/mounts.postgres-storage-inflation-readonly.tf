@@ -20,8 +20,8 @@ resource "vault_database_secret_backend_role" "postgres_storage_inflation_readon
   for_each = local.deployment_configs.postgres_storage_inflation_roles.for_each
 
   name    = each.key
-  backend = vault_database_secrets_mount.postgres_storage_inflation.0.path
-  db_name = vault_database_secrets_mount.postgres_storage_inflation.0.postgresql.0.name
+  backend = vault_database_secrets_mount.postgres_storage_inflation[0].path
+  db_name = vault_database_secrets_mount.postgres_storage_inflation[0].postgresql[0].name
 
   // these two clash with periodic token nature
   default_ttl = 1 * 60 * 60 // 1h

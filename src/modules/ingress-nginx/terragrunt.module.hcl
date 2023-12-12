@@ -24,6 +24,18 @@ locals {
   ]
 
   config_templates = {
+    providers = [
+      {
+        name = "tls"
+      }
+    ]
+
+    required_providers = [
+      {
+        name = "tls"
+      }
+    ]
+
     vars = [
       {
         name = "helm"
@@ -38,7 +50,10 @@ locals {
         name = "tls-intermediate-key"
       },
       {
-        name = "url"
+        name = "tld"
+      },
+      {
+        name = "sld"
       },
       {
         name = "observability-subdomains"
@@ -47,23 +62,23 @@ locals {
         name = "vault-subdomain"
       },
       {
-        name = "project"
+        name = "project-name"
       }
     ]
   }
 }
 
-generate "generated_config_module" {
-  path      = "generated-config.module.tf"
-  if_exists = "overwrite"
-  contents = join("\n", ([
-    for key, items in local.config_templates :
-    (join("\n", [
-      for j, template in items :
-      templatefile(
-        "${get_repo_root()}/src/templates/${key}/${template.name}.tftpl.hcl",
-        try(template.args, {})
-      )
-    ]))
-  ]))
-}
+// generate "generated_config_module" {
+//   path      = "generated-config.module.tf"
+//   if_exists = "overwrite"
+//   contents = join("\n", ([
+//     for key, items in local.config_templates :
+//     (join("\n", [
+//       for j, template in items :
+//       templatefile(
+//         "${get_repo_root()}/src/templates/${key}/${template.name}.tftpl.hcl",
+//         try(template.args, {})
+//       )
+//     ]))
+//   ]))
+// }

@@ -19,6 +19,10 @@ include "module" {
   ])
 }
 
+include "logic" {
+  path = "./logic.target.k3d.helper.hcl"
+}
+
 dependencies {
   paths = [
     "../k3d-cluster",
@@ -28,23 +32,10 @@ dependencies {
 }
 
 locals {
-  parents = {
-    for parent in ["repo"] :
-    parent => read_terragrunt_config(
-      find_in_parent_folders("terragrunt.${parent}.hcl")
-    )
-  }
+  parents = read_terragrunt_config("./logic.target.k3d.helper.hcl").locals.parents
 
   artifacts_abspath       = local.parents.repo.inputs.artifacts_abspath
   vault_artifacts_abspath = "${local.artifacts_abspath}/vault/k3d"
-
-  // config_templates = {
-  //   vars = [
-  //     {
-  //       name = "k3d-volumes"
-  //     },
-  //   ]
-  // }
 }
 
 inputs = {

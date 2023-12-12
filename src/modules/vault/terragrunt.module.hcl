@@ -24,11 +24,24 @@ locals {
   ]
 
   config_templates = {
-    locals = [
+    providers = [
       {
-        name = "ingress"
+        name = "tls"
       }
     ]
+
+    required_providers = [
+      {
+        name = "tls"
+      }
+    ]
+
+    locals = [
+      {
+        name = "ingress-class-mapping"
+      }
+    ]
+
     vars = [
       {
         name = "helm"
@@ -46,22 +59,22 @@ locals {
         name = "tls-intermediate-key"
       },
       {
-        name = "url"
+        name = "tld"
       },
       {
-        name = "paths"
+        name = "sld"
+      },
+      {
+        name = "configs-abspath"
       },
       {
         name = "platform"
       },
       {
-        name = "project"
+        name = "project-name"
       },
       {
         name = "vault-subdomain"
-      },
-      {
-        name = "ingress-sg"
       },
       {
         name = "cluster-ca"
@@ -70,17 +83,17 @@ locals {
   }
 }
 
-generate "generated_config_module" {
-  path      = "generated-config.module.tf"
-  if_exists = "overwrite"
-  contents = join("\n", ([
-    for key, items in local.config_templates :
-    (join("\n", [
-      for j, template in items :
-      templatefile(
-        "${get_repo_root()}/src/templates/${key}/${template.name}.tftpl.hcl",
-        try(template.args, {})
-      )
-    ]))
-  ]))
-}
+// generate "generated_config_module" {
+//   path      = "generated-config.module.tf"
+//   if_exists = "overwrite"
+//   contents = join("\n", ([
+//     for key, items in local.config_templates :
+//     (join("\n", [
+//       for j, template in items :
+//       templatefile(
+//         "${get_repo_root()}/src/templates/${key}/${template.name}.tftpl.hcl",
+//         try(template.args, {})
+//       )
+//     ]))
+//   ]))
+// }

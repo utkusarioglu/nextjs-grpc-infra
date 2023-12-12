@@ -6,7 +6,7 @@ resource "kubernetes_storage_class" "source_code_sc" {
   }
 
   allow_volume_expansion = true
-  storage_provisioner    = helm_release.host_volumes_provisioner.0.name
+  storage_provisioner    = helm_release.host_volumes_provisioner[0].name
   reclaim_policy         = "Retain"
   parameters = {
     nodePath = var.nodes_source_code_root

@@ -1,6 +1,7 @@
 # create some variables
 variable "eks_managed_node_groups" {
   description = "Map of EKS managed node group definitions to create"
+  type        = map(any)
 }
 
 variable "autoscaling_average_cpu" {

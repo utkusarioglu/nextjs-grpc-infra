@@ -20,21 +20,4 @@ terraform {
 
 locals {
   required_var_files = []
-
-  config_templates = {}
-}
-
-generate "generated_config_module" {
-  path      = "generated-config.module.tf"
-  if_exists = "overwrite"
-  contents = join("\n", ([
-    for key, items in local.config_templates :
-    (join("\n", [
-      for j, template in items :
-      templatefile(
-        "${get_repo_root()}/src/templates/${key}/${template.name}.tftpl.hcl",
-        try(template.args, {})
-      )
-    ]))
-  ]))
 }

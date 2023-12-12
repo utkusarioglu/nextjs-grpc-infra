@@ -4,7 +4,7 @@ resource "kubernetes_storage_class" "postgres_tablespaces_sc" {
     name = local.postgres_storage.tablespaces.sc_name
   }
 
-  storage_provisioner = helm_release.host_volumes_provisioner.0.name
+  storage_provisioner = helm_release.host_volumes_provisioner[0].name
   reclaim_policy      = "Delete"
   volume_binding_mode = "Immediate"
   parameters = {

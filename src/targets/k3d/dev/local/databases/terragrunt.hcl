@@ -10,6 +10,10 @@ include "region" {
   path = find_in_parent_folders("terragrunt.region.hcl")
 }
 
+include "logic" {
+  path = "./logic.target.k3d.helper.hcl"
+}
+
 include "module" {
   path = join("/", [
     get_repo_root(),
@@ -21,6 +25,12 @@ include "module" {
 
 dependency "vault_config" {
   config_path = "../vault-config"
+
+  mock_outputs = {
+    vault_secrets_mount_path = "mock"
+  }
+
+  mock_outputs_allowed_terraform_commands = ["validate"]
 }
 
 dependencies {
@@ -37,12 +47,7 @@ dependencies {
 }
 
 locals {
-  parents = {
-    for parent in ["repo"] :
-    parent => read_terragrunt_config(
-      find_in_parent_folders("terragrunt.${parent}.hcl")
-    )
-  }
+  parents = read_terragrunt_config("./logic.target.k3d.helper.hcl").locals.parents
 
   artifacts_abspath    = local.parents.repo.inputs.artifacts_abspath
   project_root_abspath = local.parents.repo.inputs.project_root_abspath
@@ -123,4 +128,30 @@ terraform {
       local.postgres_storage_migration_artifacts_abspath
     ]
   }
+
+  // after_hook "validate_tflint" {
+  //   commands = ["validate"]
+  //   execute  = ["sh", "-c", "tflint --config=.tflint.hcl -f default"]
+  // }
 }
+
+// generate "generated_config_target" {
+//   path      = "aggregated_config_templates.tf"
+//   if_exists = "overwrite"
+//   contents = join("\n\n", ([
+//     for key, items in local.aggregated_config_templates :
+//     (
+//       templatefile(
+//         "${get_repo_root()}/src/templates/wrappers/${key}.tftpl.hcl", {
+//           contents = join("\n", [
+//             for j, template in items :
+//             templatefile(
+//               "${get_repo_root()}/src/templates/${key}/${template.name}.tftpl.hcl",
+//               try(template.args, {})
+//             )
+//           ])
+//         }
+//       )
+//     )
+//   ]))
+// }

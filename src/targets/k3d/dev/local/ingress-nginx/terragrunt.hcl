@@ -19,13 +19,14 @@ include "module" {
   ])
 }
 
+include "logic" {
+  path = "./logic.target.k3d.helper.hcl"
+}
+
 dependencies {
   paths = [
     "../k3d-cluster",
     "../k8s-namespaces",
     "../services",
-    // "../ns-api",
-    // "../ns-ms"
-    // "../tier-3" // needs jaeger
   ]
 }

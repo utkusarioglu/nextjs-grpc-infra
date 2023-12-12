@@ -1,0 +1,3 @@
+variable "sld" {
+  type = string
+}

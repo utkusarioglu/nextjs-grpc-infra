@@ -1,7 +1,8 @@
 # create VPC using the official AWS module
 module "vpc" {
-  source  = "terraform-aws-modules/vpc/aws"
-  version = "3.14.0"
+  source = "terraform-aws-modules/vpc/aws"
+  # version = "3.14.0"
+  version = "5.1.1"
 
   name = "${var.name_prefix}-vpc"
   cidr = var.main_network_block
@@ -38,11 +39,11 @@ module "vpc" {
     "kubernetes.io/cluster/${var.cluster_name}" = "shared"
   }
   public_subnet_tags = {
-    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
-    "kubernetes.io/role/elb"                    = "1"
+    # "kubernetes.io/cluster/${var.cluster_name}" = "shared"
+    "kubernetes.io/role/elb" = "1"
   }
   private_subnet_tags = {
-    "kubernetes.io/cluster/${var.cluster_name}" = "shared"
-    "kubernetes.io/role/internal-elb"           = "1"
+    # "kubernetes.io/cluster/${var.cluster_name}" = "shared"
+    "kubernetes.io/role/internal-elb" = "1"
   }
 }

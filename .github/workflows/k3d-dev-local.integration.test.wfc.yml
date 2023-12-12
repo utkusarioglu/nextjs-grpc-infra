@@ -119,6 +119,8 @@ jobs:
         PROJECT_ROOT_ABSPATH: ${{ github.workspace }}
         HOME: ${{ github.workspace }}
 
+        K3D_DEV_LOCAL_DEPLOYMENT_MODE: no_observability
+          
     steps:
       - name: Checkout `certificates`
         uses: actions/checkout@v3
@@ -245,6 +247,11 @@ jobs:
       - name: Alter hosts
         working-directory: infra
         run: scripts/hosts-entries/add.sh host-gateway
+
+      - name: Copy helpers
+        working-directory: infra
+        run: |
+          scripts/copy-helpers.sh k3d/dev/local
 
       - name: Run Test
         working-directory: infra

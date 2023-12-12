@@ -27,29 +27,38 @@ locals {
         name = "deployment-config"
       },
       {
-        name = "paths"
+        name = "configs-abspath"
       },
       {
         name = "vault-secrets-mount-path"
       }
     ]
+
     providers = [
       {
         name = "vault"
       }
     ]
-    data = [
+
+    required_providers = [
       {
-        name = "postgres-storage-postgres-role-credentials"
-      },
+        name = "vault"
+      }
+    ]
+
+    data = [
+      // {
+      //   name = "postgres-storage-postgres-role-credentials"
+      // },
       {
         name = "postgres-storage-vault-manager-roles-credentials",
       }
     ]
+
     locals = [
-      {
-        name = "postgres-storage-postgres-role-credentials"
-      },
+      // {
+      //   name = "postgres-storage-postgres-master-credentials"
+      // },
       {
         name = "postgres-storage-vault-manager-roles-credentials",
       }
@@ -57,17 +66,17 @@ locals {
   }
 }
 
-generate "generated_config_module" {
-  path      = "generated-config.module.tf"
-  if_exists = "overwrite"
-  contents = join("\n", ([
-    for key, items in local.config_templates :
-    (join("\n", [
-      for j, template in items :
-      templatefile(
-        "${get_repo_root()}/src/templates/${key}/${template.name}.tftpl.hcl",
-        try(template.args, {})
-      )
-    ]))
-  ]))
-}
+// generate "generated_config_module" {
+//   path      = "generated-config.module.tf"
+//   if_exists = "overwrite"
+//   contents = join("\n", ([
+//     for key, items in local.config_templates :
+//     (join("\n", [
+//       for j, template in items :
+//       templatefile(
+//         "${get_repo_root()}/src/templates/${key}/${template.name}.tftpl.hcl",
+//         try(template.args, {})
+//       )
+//     ]))
+//   ]))
+// }
