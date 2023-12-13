@@ -64,7 +64,7 @@ PGPASSWORD=${postgres_password} \
     WITH LOGIN
     CREATEROLE
     IN GROUP ${vault_manager_group_name}
-    ENCRYPTED PASSWORD '${vault_manager_inflation_password}' 
+    ENCRYPTED PASSWORD '${vault_manager_inflation_password}'
     CONNECTION LIMIT 5;
   GRANT ALL ON DATABASE inflation 
     TO ${vault_manager_inflation_username}

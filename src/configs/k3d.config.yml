@@ -4,7 +4,7 @@ metadata:
   name: nextjs-grpc-k3d-dev-local
 servers: 1
 agents: 5
-image: rancher/k3s:v1.24.10-k3s1
+image: rancher/k3s:v1.28.4-k3s2
 kubeAPI:
   host: ${CLUSTER_HOST}
   # hostIP: "127.0.0.1" # This may be breaking it

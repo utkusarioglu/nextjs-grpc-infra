@@ -8,7 +8,7 @@ locals {
         count = 1
       }
       loki = {
-        count = 1
+        count = 0
       }
       otel_collectors = {
         count = 1
@@ -17,7 +17,7 @@ locals {
         count = 1
       }
       kubernetes_dashboard = {
-        count = 1
+        count = 0
       }
     }
 
