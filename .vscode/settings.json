@@ -50,5 +50,17 @@
   "yaml.schemas": {
     "https://json.schemastore.org/helmfile.json": "**/*.helm",
     "https://json.schemastore.org/github-workflow.json": "file:///utkusarioglu-com/projects/nextjs-grpc/infra/.github/workflows/k3d-dev-local.test.yml"
-  }
+  },
+  "sqltools.connections": [
+    {
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 5432,
+      "driver": "PostgreSQL",
+      "name": "postgres",
+      "database": "postgres",
+      "username": "postgres",
+      "password": "6hMg0IWZMB"
+    }
+  ]
 }

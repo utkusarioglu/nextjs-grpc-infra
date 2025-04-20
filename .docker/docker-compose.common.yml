@@ -1,9 +1,8 @@
-version: "3.11"
-
 services:
   nextjs-grpc-infra:
     container_name: nextjs-grpc-infra
-    image: utkusarioglu/tf-k8s-devcontainer:1.4.19
+    image: utkusarioglu/tf-devcontainer:23-ubuntu-test-23
+    # image: utkusarioglu/tf-k8s-devcontainer:1.4.19
     environment:
       TZ: Etc/UTC0
       NODES_VOLUMES_ROOT: /dev/xvdf
